@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@clerk/clerk-expo": "^0.20.2",
+    "@expo-google-fonts/inter": "^0.2.3",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "expo": "~50.0.5",
+    "expo-font": "~11.10.2",
     "expo-status-bar": "~1.11.1",
     "expo-web-browser": "~12.8.2",
     "native-base": "^3.4.28",
