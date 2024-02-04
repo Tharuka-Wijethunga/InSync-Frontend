@@ -1,5 +1,6 @@
 export default{
     Blue: '#1A91FF',
+    DBlue: '#0077E6',
     Red: '#EF4444',
     Green: '#16A34A',
     BGColor: '#E2E8F0',
