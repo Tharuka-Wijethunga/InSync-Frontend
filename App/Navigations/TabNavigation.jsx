@@ -1,5 +1,5 @@
 import React from 'react';
-import Colors from "../Utils/Colors";
+import Colors from "../Config/Colors";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from "../Screens/Dashboard/Dashboard";
 import AddRecords from "../Screens/AddRecords/AddRecords";
@@ -21,6 +21,10 @@ export default function TabNavigation() {
                 headerTitleAlign: "center",
                 tabBarActiveTintColor: Colors.Blue,
                 tabBarInactiveTintColor: Colors.IconColor,
+                headerTitleStyle: {
+                    fontWeight: "bold",
+                    fontSize: '20'
+                }
             }}>
                 <Tab.Screen
                     name='Dashboard'
