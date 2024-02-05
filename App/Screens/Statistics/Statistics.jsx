@@ -1,6 +1,6 @@
 import { Text, StyleSheet } from "react-native";
 import React from 'react';
-import Colors from "../../Utils/Colors";
+import Colors from "../../Config/Colors";
 import {NativeBaseProvider, Button, View} from "native-base";
 
 export default function Statistics() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Text, View, VStack} from "native-base";
-import Colors from "../../Utils/Colors";
+import Colors from "../../Config/Colors";
 
 const BalanceCard = (props) => {
     return (
