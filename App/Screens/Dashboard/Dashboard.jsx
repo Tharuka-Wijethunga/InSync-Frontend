@@ -3,7 +3,7 @@ import React from 'react';
 import Colors from "../../Config/Colors";
 import {Box, Text, HStack, NativeBaseProvider, View, VStack, FlatList} from "native-base";
 import BalanceCard from "./BalanceCard";
-import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import Activity from "./Activity";
 
 export default function Dashboard() {

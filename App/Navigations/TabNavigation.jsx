@@ -8,9 +8,7 @@ import UserProfile from "../Screens/UserProfile/UserProfile";
 import {NavigationContainer} from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Octicons, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
-import Hstack from "native-base/src/theme/components/hstack";
-import {IconButton} from "native-base";
-import {Text} from "react-native";
+
 
 const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
