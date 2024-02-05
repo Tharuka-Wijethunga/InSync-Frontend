@@ -5,7 +5,6 @@ import {Box, Text, HStack, NativeBaseProvider, View, VStack, FlatList} from "nat
 import BalanceCard from "./BalanceCard";
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import Activity from "./Activity";
-import flex from "native-base/src/components/primitives/Flex";
 
 export default function Dashboard() {
     return (
@@ -20,7 +19,7 @@ export default function Dashboard() {
                         <Box w="100%" h="148" bg="white" borderRadius="2xl" shadow={3}>
                             <VStack space={6} padding={4}>
                                 <View>
-                                    <Text fontWeight="medium" fontSize={24}>
+                                    <Text fontWeight="medium" fontSize={20}>
                                         Upcoming Expenses
                                     </Text>
                                 </View>
@@ -35,7 +34,7 @@ export default function Dashboard() {
                                             </Text>
                                         </View>
                                         <View>
-                                            <MaterialIcons name="keyboard-arrow-right" size={42} color="black" />
+                                            <MaterialIcons name="keyboard-arrow-right" size={36} color="black" />
                                         </View>
                                     </HStack>
                                 </View>
@@ -47,13 +46,13 @@ export default function Dashboard() {
                             <View>
                                 <VStack padding={4}>
                                     <View mb={6}>
-                                        <Text fontWeight="medium" fontSize={24}>
+                                        <Text fontWeight="medium" fontSize={20}>
                                             Recent Activities
                                         </Text>
                                     </View>
                                     <Activity />
                                     <View alignSelf="flex-end">
-                                        <MaterialIcons name="keyboard-arrow-right" size={42} color="black"/>
+                                        <MaterialIcons name="keyboard-arrow-right" size={36} color="black"/>
                                     </View>
                                 </VStack>
                             </View>
