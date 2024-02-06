@@ -19,17 +19,17 @@ export default function Dashboard() {
                         <Box w="100%" h="148" bg="white" borderRadius="2xl" shadow={3}>
                             <VStack space={6} padding={4}>
                                 <View>
-                                    <Text fontWeight="medium" fontSize={20}>
+                                    <Text fontWeight="medium" fontSize="20">
                                         Upcoming Expenses
                                     </Text>
                                 </View>
                                 <View>
-                                    <Text fontSize={18} lineHeight={17} color={Colors.DBlue}>
+                                    <Text fontSize="18" lineHeight={17} color={Colors.DBlue}>
                                         LKR
                                     </Text>
                                     <HStack width="100%" justifyContent="space-between">
                                         <View>
-                                            <Text fontSize={48} fontWeight={"bold"} lineHeight={48} color={Colors.DBlue}>
+                                            <Text fontSize="48" fontWeight={"bold"} lineHeight={48} color={Colors.DBlue}>
                                                 34500
                                             </Text>
                                         </View>
@@ -43,10 +43,10 @@ export default function Dashboard() {
                     </HStack>
                     <HStack flexGrow={1}>
                         <Box w="100%" bg="white"  borderRadius="2xl" shadow={3}>
-                            <View>
+
                                 <VStack padding={4}>
                                     <View mb={6}>
-                                        <Text fontWeight="medium" fontSize={20}>
+                                        <Text fontWeight="medium" fontSize="20">
                                             Recent Activities
                                         </Text>
                                     </View>
@@ -55,7 +55,7 @@ export default function Dashboard() {
                                         <MaterialIcons name="keyboard-arrow-right" size={36} color="black"/>
                                     </View>
                                 </VStack>
-                            </View>
+
                         </Box>
                     </HStack>
                 </VStack>

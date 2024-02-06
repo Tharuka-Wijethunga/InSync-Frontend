@@ -41,10 +41,10 @@ const Activity = () => {
                     {item.icon}
                 </Avatar>
                 <VStack>
-                    <Text fontWeight={"semibold"} fontSize={16}>
+                    <Text fontWeight={"semibold"} fontSize="16">
                         {item.category}
                     </Text>
-                    <Text color="coolGray.600" fontSize={12}>
+                    <Text color="coolGray.600" fontSize="12">
                         {item.date}
                     </Text>
                 </VStack>
