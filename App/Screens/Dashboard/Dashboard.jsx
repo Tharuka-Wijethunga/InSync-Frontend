@@ -63,7 +63,9 @@ export default function Dashboard() {
                                         <Modal.Content width={"100%"}>
                                             <Modal.CloseButton/>
                                             <Modal.Header>Recent Activities</Modal.Header>
-                                            <Modal.Body></Modal.Body>
+                                            <Modal.Body>
+                                                <Activity/>
+                                            </Modal.Body>
                                         </Modal.Content>
                                     </View>
                                 </Modal>
