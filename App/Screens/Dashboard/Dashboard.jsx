@@ -1,12 +1,15 @@
 import {StyleSheet} from "react-native";
 import React from 'react';
 import Colors from "../../Config/Colors";
-import {Box, Text, HStack, NativeBaseProvider, View, VStack, FlatList} from "native-base";
+import {Box, Text, HStack, NativeBaseProvider, View, VStack, IconButton, Modal} from "native-base";
 import BalanceCard from "./BalanceCard";
 import { MaterialIcons } from '@expo/vector-icons';
 import Activity from "./Activity";
 
 export default function Dashboard() {
+    const [modalVisible,setModalVisible] = React.useState(false);
+    const initialRef = React.useRef(null);
+    const finalRef = React.useRef(null);
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
@@ -16,7 +19,7 @@ export default function Dashboard() {
                         <BalanceCard account="Cash" balance="23500" />
                     </HStack>
                     <HStack>
-                        <Box w="100%" h="148" bg="white" borderRadius="2xl" shadow={3}>
+                        <Box w="100%" h="148" bg="white" rounded="2xl" shadow={3}>
                             <VStack space={6} padding={4}>
                                 <View>
                                     <Text fontWeight="medium" fontSize="20">
@@ -43,19 +46,28 @@ export default function Dashboard() {
                     </HStack>
                     <HStack flexGrow={1}>
                         <Box w="100%" bg="white"  borderRadius="2xl" shadow={3}>
-
-                                <VStack padding={4}>
-                                    <View mb={6}>
-                                        <Text fontWeight="medium" fontSize="20">
-                                            Recent Activities
-                                        </Text>
+                            <VStack padding={4}>
+                                <View mb={6}>
+                                    <Text fontWeight="medium" fontSize="20">
+                                        Recent Activities
+                                    </Text>
+                                </View>
+                                <Activity />
+                                <View alignSelf="flex-end">
+                                    <IconButton icon={<MaterialIcons name="keyboard-arrow-right" size={36} color="black"/>}
+                                        onPress={()=> setModalVisible(!modalVisible)}
+                                    />
+                                </View>
+                                <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)} >
+                                    <View bgColor={"white"} style={styles.container}>
+                                        <Modal.Content width={"100%"}>
+                                            <Modal.CloseButton/>
+                                            <Modal.Header>Recent Activities</Modal.Header>
+                                            <Modal.Body></Modal.Body>
+                                        </Modal.Content>
                                     </View>
-                                    <Activity />
-                                    <View alignSelf="flex-end">
-                                        <MaterialIcons name="keyboard-arrow-right" size={36} color="black"/>
-                                    </View>
-                                </VStack>
-
+                                </Modal>
+                            </VStack>
                         </Box>
                     </HStack>
                 </VStack>
