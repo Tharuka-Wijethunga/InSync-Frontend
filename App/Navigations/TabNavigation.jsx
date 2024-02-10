@@ -8,6 +8,7 @@ import UserProfile from "../Screens/UserProfile/UserProfile";
 import {NavigationContainer} from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Octicons, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import Hstack from "native-base/src/theme/components/hstack";
 import {IconButton} from "native-base";
 import {Text} from "react-native";
@@ -20,6 +21,7 @@ export default function TabNavigation() {
                 tabBarShowLabel: false,
                 tabBarActiveTintColor: Colors.Blue,
                 tabBarInactiveTintColor: Colors.IconColor,
+                headerTitleAlign:"center",
             }}>
                 <Tab.Screen
                     name='Dashboard'
@@ -32,7 +34,7 @@ export default function TabNavigation() {
                     name='Add Records'
                     component={AddRecords}
                     options={{
-                        tabBarIcon: ({color}) => <Ionicons name="add-circle" size={32} color={color}/>,
+                        tabBarIcon: ({color}) => <Ionicons name="add-circle" size={34} color={color}/>,
                     }}
                 />
                 <Tab.Screen

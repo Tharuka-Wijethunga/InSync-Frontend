@@ -6,7 +6,6 @@ import Dashboard from "./App/Screens/Dashboard/Dashboard";
 
 export default function App() {
     return (
-
         <TabNavigation/>
     );
 }
