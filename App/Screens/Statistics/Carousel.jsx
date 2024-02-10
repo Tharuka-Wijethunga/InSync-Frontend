@@ -1,6 +1,7 @@
 import {StyleSheet,FlatList,Dimensions} from "react-native";
-import {Text, View, Box, HStack, VStack} from "native-base";
+import {Text, View, Box, HStack, VStack, Badge} from "native-base";
 import React, {useState} from "react";
+import DonutChart from "./DonutChart";
 
 
 
@@ -11,13 +12,16 @@ export default  function Carousel(){
 
     const caroselData=[
         {
-            id:"01"
+            id:"01",
+            month:"Previous Month"
         },
         {
-            id:"02"
+            id:"02",
+            month:"This Month"
         },
         {
-            id:"03"
+            id:"03",
+            month:"Next Month"
         },
     ];
 
@@ -66,11 +70,17 @@ export default  function Carousel(){
         })
     };
 
-    const renderItem=()=>{
+    const renderItem=({item})=>{
         return(
             <View>
                 <Box flexGrow={1} width={screenWidth} paddingBottom={4}  alignItems={"center"}>
-                    <Box h="100%" width="94%" bg="white" rounded="md" shadow={3}></Box>
+                    <Box h="100%" width="94%" bg="white" rounded="20" shadow={3} paddingX={5} paddingY={5}>
+                        <VStack flex={1} space={1}>
+                                <DonutChart></DonutChart>
+                                <Badge position="absolute" bottom={0}   alignSelf="center" variant="outline" width="155" height="34" rounded="16" borderColor="#1A91FF" borderWidth={1.5} _text={{fontSize:15,color:"#1A91FF"}}>{item.month}</Badge>
+                        </VStack>
+
+                    </Box>
                 </Box>
             </View>
         )

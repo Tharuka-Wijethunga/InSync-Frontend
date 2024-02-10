@@ -4,6 +4,7 @@ import Colors from "../../Utils/Colors";
 import {NativeBaseProvider, Button, View, ScrollView} from "native-base";
 import PokemonCard from "../../../Components/PokemonCard";
 import Carousel from "./Carousel";
+import DonutChart from "./DonutChart";
 
 
 const pokemonCardOne={
@@ -29,7 +30,10 @@ export default function Statistics() {
                 {/*    <PokemonCard {...pokemonCardOne}></PokemonCard>*/}
                 {/*    <PokemonCard {...pokemonCardOne}></PokemonCard>*/}
                 {/*</ScrollView>*/}
-               <Carousel></Carousel>
+                <Carousel>
+                </Carousel>
+
+
             </View>
 
 
