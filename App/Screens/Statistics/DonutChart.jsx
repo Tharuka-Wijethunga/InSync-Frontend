@@ -63,6 +63,7 @@ export default  function DonutChart() {
                         }}
                     />
                 </View>
+            {/*maxH is used to show only 6 categories,to see more scroll*/}
             <View maxH={"280"}>
                 <FlatList data={pieData} renderItem={renderItem}></FlatList>
             </View>
