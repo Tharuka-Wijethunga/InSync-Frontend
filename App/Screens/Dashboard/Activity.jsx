@@ -3,7 +3,7 @@ import {HStack, Text, VStack, FlatList, Avatar, Spacer} from "native-base";
 import {FontAwesome5} from "@expo/vector-icons";
 import Colors from "../../Config/Colors";
 
-const Activity = () => {
+const Activity = ({maxLines=null}) => {
     const data = [
         {
             icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
@@ -32,11 +32,67 @@ const Activity = () => {
             date: "15 Nov 2023",
             amount: "1000",
             type: "Expense"
+        },
+        {
+            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
+            category: "Income",
+            date: "24 Nov 2023",
+            amount: "2500",
+            type: "Income"
+        },
+        {
+            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
+            category: "Fuel",
+            date: "15 Nov 2023",
+            amount: "1000",
+            type: "Expense"
+        },
+        {
+            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
+            category: "Income",
+            date: "24 Nov 2023",
+            amount: "2500",
+            type: "Income"
+        },
+        {
+            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
+            category: "Fuel",
+            date: "15 Nov 2023",
+            amount: "1000",
+            type: "Expense"
+        },
+        {
+            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
+            category: "Income",
+            date: "24 Nov 2023",
+            amount: "2500",
+            type: "Income"
+        },
+        {
+            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
+            category: "Fuel",
+            date: "15 Nov 2023",
+            amount: "1000",
+            type: "Expense"
+        },
+        {
+            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
+            category: "Income",
+            date: "24 Nov 2023",
+            amount: "2500",
+            type: "Income"
+        },
+        {
+            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
+            category: "Fuel",
+            date: "15 Nov 2023",
+            amount: "1000",
+            type: "Expense"
         }
     ];
     return (
-        <FlatList data={data} renderItem={({item}) =>
-            <HStack space={[2, 3]} justifyContent="space-between" paddingBottom={4}>
+        <FlatList data={maxLines ? data.slice(0, maxLines) : data} renderItem={({item}) =>
+            <HStack space={[2, 3]} justifyContent="space-between" paddingBottom={4} flex={1}>
                 <Avatar size="42px" bgColor={Colors.Blue}>
                     {item.icon}
                 </Avatar>

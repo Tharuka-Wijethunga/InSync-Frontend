@@ -1,16 +1,31 @@
 import React from 'react';
 import {StyleSheet} from "react-native";
-import Colors from "../../Config/Colors";
-import {Modal, View} from "native-base";
+import {HStack, IconButton, Modal, Text, View} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
+import Activity from "./Activity";
 
-const RecentActivities = () => {
+const RecentActivities = ({modalVisible, setModalVisible}) => {
     return (
-        <Modal>
+        <Modal isOpen={modalVisible} animationPreset="slide">
             <View style={styles.container}>
-                <View alignSelf="flex-end">
-                    <MaterialIcons name="keyboard-arrow-left" size={36} color="black"/>
-                </View>
+                <Modal.Content w="100%" h="100%" bg="white" rounded={"2xl"}>
+                    <Modal.Header bg={"white"}>
+                        <HStack justifyContent="space-between" alignItems="center">
+                            <IconButton
+                                icon={<MaterialIcons name="keyboard-arrow-left" size={28} color="black"/>}
+                                onPress={() => setModalVisible(!modalVisible)}
+                                borderRadius="full"
+                                _pressed={{
+                                    bg: "blueGray.200:alpha.50"
+                                }}
+                            />
+                            <Text fontSize={18} fontWeight={"medium"}>Recent Activities</Text>
+                        </HStack>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Activity/>
+                    </Modal.Body>
+                </Modal.Content>
             </View>
         </Modal>
     );
@@ -19,11 +34,10 @@ const RecentActivities = () => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        backgroundColor: "white",
         alignItems: 'center',
         flex: 1,
         borderRadius: "2xl",
-        paddingTop:15,
+        paddingTop: 15,
         paddingLeft: 10,
         paddingRight: 10,
         paddingBottom: 15
