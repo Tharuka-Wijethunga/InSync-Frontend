@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import React from 'react';
-import Colors from "../../Utils/Colors";
+import Colors from "../../Config/Colors";
 import {NativeBaseProvider, View} from "native-base";
 import Carousel from "./Carousel";
 
@@ -10,7 +10,6 @@ export default function Statistics() {
             <View style={styles.container}>
                 <Carousel/>
             </View>
-            {/*lihaj*/}
         </NativeBaseProvider>
     )
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Colors from "../Utils/Colors";
+import Colors from "../Config/Colors";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Dashboard from "../Screens/Dashboard/Dashboard";
 import AddRecords from "../Screens/AddRecords/AddRecords";
@@ -8,10 +8,7 @@ import UserProfile from "../Screens/UserProfile/UserProfile";
 import {NavigationContainer} from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Octicons, FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
-import Hstack from "native-base/src/theme/components/hstack";
-import {IconButton} from "native-base";
-import {Text} from "react-native";
+
 
 const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
@@ -19,9 +16,9 @@ export default function TabNavigation() {
         <NavigationContainer>
             <Tab.Navigator screenOptions={{
                 tabBarShowLabel: false,
+                headerTitleAlign: "center",
                 tabBarActiveTintColor: Colors.Blue,
-                tabBarInactiveTintColor: Colors.IconColor,
-                headerTitleAlign:"center",
+                tabBarInactiveTintColor: Colors.IconColor
             }}>
                 <Tab.Screen
                     name='Dashboard'
@@ -34,7 +31,7 @@ export default function TabNavigation() {
                     name='Add Records'
                     component={AddRecords}
                     options={{
-                        tabBarIcon: ({color}) => <Ionicons name="add-circle" size={34} color={color}/>,
+                        tabBarIcon: ({color}) => <Ionicons name="add-circle" size={32} color={color}/>,
                     }}
                 />
                 <Tab.Screen
