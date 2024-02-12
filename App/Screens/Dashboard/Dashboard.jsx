@@ -4,7 +4,7 @@ import Colors from "../../Config/Colors";
 import {Box, Text, HStack, NativeBaseProvider, View, VStack, IconButton} from "native-base";
 import BalanceCard from "./BalanceCard";
 import {MaterialIcons} from '@expo/vector-icons';
-import Activity from "./Activity";
+import Records from "./Records";
 import RecentActivities from "./RecentActivities";
 import UpcomingCard from "./UpcomingCard";
 
@@ -30,7 +30,7 @@ export default function Dashboard() {
                                         Recent Activities
                                     </Text>
                                 </View>
-                                <Activity maxLines={4}/>
+                                <Records maxLines={4}/>
                                 <View alignSelf="flex-end">
                                     <IconButton
                                         icon={<MaterialIcons name="keyboard-arrow-right" size={36} color="black"/>}

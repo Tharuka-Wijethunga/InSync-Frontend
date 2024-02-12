@@ -1,14 +1,15 @@
 import React from 'react';
-import {StyleSheet} from "react-native";
+import {StyleSheet, Platform} from "react-native";
 import {HStack, IconButton, Modal, Text, View} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
-import Activity from "./Activity";
+import Records from "./Records";
+import flex from "native-base/src/components/primitives/Flex";
 
 const RecentActivities = ({modalVisible, setModalVisible}) => {
     return (
-        <Modal isOpen={modalVisible} animationPreset="slide">
+        <Modal isOpen={modalVisible} animationPreset="fade">
             <View style={styles.container}>
-                <Modal.Content w="100%" h="100%" bg="white" rounded={"2xl"}>
+                <Modal.Content w="100%" h="100%"  bg="white" rounded={"2xl"} style={styles.content} >
                     <Modal.Header bg={"white"}>
                         <HStack justifyContent="space-between" alignItems="center">
                             <IconButton
@@ -23,7 +24,7 @@ const RecentActivities = ({modalVisible, setModalVisible}) => {
                         </HStack>
                     </Modal.Header>
                     <Modal.Body>
-                        <Activity/>
+                        <Records/>
                     </Modal.Body>
                 </Modal.Content>
             </View>
@@ -40,7 +41,17 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         paddingLeft: 10,
         paddingRight: 10,
-        paddingBottom: 15
+        paddingBottom: 15,
+
+    },
+    content: {
+        ...Platform.select({
+            android: {
+                margin: "auto",
+                height: '100%'
+            }
+        })
     }
 })
+
 export default RecentActivities;
