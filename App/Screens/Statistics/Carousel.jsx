@@ -1,7 +1,8 @@
-import {StyleSheet,FlatList,Dimensions} from "react-native";
-import {Text, View, Box, HStack, VStack, Badge} from "native-base";
+import {FlatList,Dimensions} from "react-native";
+import {View, Box, VStack, Badge} from "native-base";
 import React, {useState} from "react";
 import DonutChart from "./DonutChart";
+import Colors from "../../Utils/Colors";
 
 
 
@@ -79,7 +80,7 @@ export default  function Carousel(){
                             {/*DonutChart get the rest of the Body*/}
                                 <DonutChart></DonutChart>
                             {/*Badge is fixed at Bottom*/}
-                                <Badge position="absolute" bottom={0}   alignSelf="center" variant="outline" width="155" height="34" rounded="16" borderColor="#1A91FF" borderWidth={1.5} _text={{fontSize:15,color:"#1A91FF"}}>{item.month}</Badge>
+                                <Badge position="absolute" bottom={0}   alignSelf="center" variant="outline" width="155" height="34" rounded="16" borderColor={Colors.Blue} borderWidth={1.5} _text={{fontSize:15,color:Colors.Blue}}>{item.month}</Badge>
                         </VStack>
 
                     </Box>
