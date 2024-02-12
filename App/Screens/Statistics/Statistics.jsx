@@ -10,6 +10,7 @@ export default function Statistics() {
             <View style={styles.container}>
                 <Carousel/>
             </View>
+            {/*lihaj*/}
         </NativeBaseProvider>
     )
 }
