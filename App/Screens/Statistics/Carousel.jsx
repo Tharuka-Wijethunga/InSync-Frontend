@@ -8,7 +8,7 @@ import Colors from "../../Utils/Colors";
 
 export default  function Carousel(){
 
-    const screenWidth =Dimensions.get("window").width;
+    const screenWidth =Dimensions.get("screen").width;
     const [activeIndex,setActiveIndex]=useState(0);
 
     const caroselData=[
@@ -74,11 +74,11 @@ export default  function Carousel(){
     const renderItem=({item})=>{
         return(
             <View>
-                <Box flexGrow={1} width={screenWidth} paddingBottom={4}  alignItems={"center"}>
-                    <Box h="100%" width="94%" bg="white" rounded="20" shadow={3} paddingX={5} paddingY={5}>
+                <Box flexGrow={1} width={screenWidth} paddingBottom={4} alignItems={"center"}>
+                    <Box h="100%" width="92%" bg="white" rounded="2xl" shadow={3} paddingX={5} paddingY={5}>
                         <VStack flex={1} >
                             {/*DonutChart get the rest of the Body*/}
-                                <DonutChart></DonutChart>
+                                <DonutChart/>
                             {/*Badge is fixed at Bottom*/}
                                 <Badge position="absolute" bottom={0}   alignSelf="center" variant="outline" width="155" height="34" rounded="16" borderColor={Colors.Blue} borderWidth={1.5} _text={{fontSize:15,color:Colors.Blue}}>{item.month}</Badge>
                         </VStack>

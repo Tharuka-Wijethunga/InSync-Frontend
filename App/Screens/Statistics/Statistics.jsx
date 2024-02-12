@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     container:{
         backgroundColor: Colors.BGColor,
         flex:1,
-        paddingTop:10,
-        paddingBottom:10,
+        paddingTop:15,
+        paddingBottom:15,
     }
 })
