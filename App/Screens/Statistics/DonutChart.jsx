@@ -11,7 +11,7 @@ export default  function DonutChart() {
         {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3',categoryName:"Shopping", amount:4000},
         {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97',categoryName:"Shopping", amount:4000},
         {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97',categoryName:"Shopping", amount:4000},
-
+        {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97',categoryName:"Shopping", amount:4000},
     ];
 
     const renderItem=({item})=>{
