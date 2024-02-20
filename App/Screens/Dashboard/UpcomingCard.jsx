@@ -33,7 +33,7 @@ const UpcomingCard = () => {
                                         _pressed={{
                                             bg: "blueGray.200:alpha.50"
                                         }}
-                                        onPress={() => navigation.navigate('Statistics')}
+                                        onPress={() => navigation.navigate('Statistics', { screen: 'Next Month' })}
                                     />
                                 </View>
                             </HStack>
