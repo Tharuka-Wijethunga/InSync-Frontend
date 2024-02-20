@@ -4,13 +4,13 @@ import {FlatList} from "react-native";
 
 export default  function NextMonth() {
     const pieData = [
-        {value: 47, color: '#009FFF', gradientCenterColor: '#006DFF',categoryName:"Food", amount:47000},
-        {value: 40, color: '#93FCF8', gradientCenterColor: '#3BE9DE',categoryName:"Shopping", amount:4000},
-        {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3',categoryName:"Shopping", amount:4000},
-        {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97',categoryName:"Shopping", amount:4000},
-        {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3',categoryName:"Shopping", amount:4000},
-        {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97',categoryName:"Shopping", amount:4000},
-        {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97',categoryName:"Shopping", amount:4000},
+        {value: 60, color: '#F87171',gradientCenterColor: '#F87171',categoryName:"Food", amount:30000},
+        {value: 9, color: '#60A5FA',gradientCenterColor: '#60A5FA',categoryName:"Shopping", amount:4500},
+        {value: 2, color: '#4ADE80',gradientCenterColor: '#4ADE80',categoryName:"Health", amount:1000},
+        {value: 10, color: '#A8A29E',gradientCenterColor: '#A8A29E',categoryName:"Vehicle", amount:5000},
+        {value: 12, color: '#FACC15',gradientCenterColor: '#FACC15',categoryName:"Rent", amount:6000},
+        {value: 1, color: '#818CF8',gradientCenterColor: '#818CF8',categoryName:"Transport", amount:500},
+        {value: 6, color: '#FB923C',gradientCenterColor: '#FB923C',categoryName:"Other", amount:3000},
 
     ];
 
