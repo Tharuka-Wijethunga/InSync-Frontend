@@ -10,9 +10,7 @@ const Tab = createMaterialTopTabNavigator();
 export default function TopNavigation(){
     return (
         <View >
-            <Box alignItems="center"
-                 justifyContent="center" h="100%"   bg="white" rounded="2xl" shadow={3}>
-            <Box h="100%" w="100%" paddingTop={3.5} paddingBottom={3.5}>
+            <Box h="100%" w="100%" overflow={"hidden"} rounded="2xl">
         <Tab.Navigator  backBehavior="initialRoute" initialRouteName="This Month" screenOptions={{ tabBarAndroidRipple: false,
             tabBarPressColor:null,
             tabBarLabelStyle: {fontWeight: "500"}
@@ -21,7 +19,6 @@ export default function TopNavigation(){
             <Tab.Screen name="This Month" component={ThisMonth} />
             <Tab.Screen name="Next Month" component={NextMonth} />
         </Tab.Navigator>
-            </Box>
             </Box>
         </View>
 
