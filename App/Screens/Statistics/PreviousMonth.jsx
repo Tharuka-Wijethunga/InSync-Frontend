@@ -49,7 +49,7 @@ export default  function PreviousMonth() {
                     donut
                     showGradient
                     radius={90}
-                    innerRadius={60}
+                    innerRadius={55}
                     centerLabelComponent={() => {
                         return (
                             <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -57,7 +57,7 @@ export default  function PreviousMonth() {
                                     style={{fontSize: 22, fontWeight: 'bold'}}>
                                     All
                                 </Text>
-                                <Text style={{fontSize: 14}}>$1000,00</Text>
+                                <Text style={{fontSize: 14}}>LKR 50000</Text>
                             </View>
                         );
                     }}

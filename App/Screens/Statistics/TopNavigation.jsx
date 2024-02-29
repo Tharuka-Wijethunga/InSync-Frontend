@@ -15,6 +15,7 @@ export default function TopNavigation(){
             <Box h="100%" w="100%" paddingTop={3.5} paddingBottom={3.5}>
         <Tab.Navigator  backBehavior="initialRoute" initialRouteName="This Month" screenOptions={{ tabBarAndroidRipple: false,
             tabBarPressColor:null,
+            tabBarLabelStyle: {fontWeight: "500"}
         }}>
             <Tab.Screen name="Past Month" component={PreviousMonth} />
             <Tab.Screen name="This Month" component={ThisMonth} />

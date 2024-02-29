@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from "react-native";
-import {HStack, IconButton, Modal, Text, View} from "native-base";
+import {HStack, IconButton, Modal, Text, View, VStack} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
 import Activity from "./Activity";
 
@@ -23,7 +23,9 @@ const RecentActivities = ({modalVisible, setModalVisible}) => {
                         </HStack>
                     </Modal.Header>
                     <Modal.Body>
+
                         <Activity/>
+
                     </Modal.Body>
                 </Modal.Content>
             </View>
