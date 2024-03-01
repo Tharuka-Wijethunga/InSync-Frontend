@@ -2,7 +2,7 @@ import {FlatList,Dimensions} from "react-native";
 import {View, Box, VStack, Badge} from "native-base";
 import React, {useState} from "react";
 import DonutChart from "./DonutChart";
-import Colors from "../../Utils/Colors";
+import Colors from "../../Config/Colors";
 
 
 

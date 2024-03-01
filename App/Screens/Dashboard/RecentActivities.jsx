@@ -7,7 +7,7 @@ import flex from "native-base/src/components/primitives/Flex";
 
 const RecentActivities = ({modalVisible, setModalVisible}) => {
     return (
-        <Modal isOpen={modalVisible} animationPreset="fade">
+        <Modal isOpen={modalVisible} animationPreset="slide">
             <View style={styles.container}>
                 <Modal.Content w="100%" h="100%"  bg="white" rounded={"2xl"} style={styles.content} >
                     <Modal.Header bg={"white"}>
