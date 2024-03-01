@@ -41,7 +41,7 @@ export default function Dashboard() {
                             <HStack flexGrow={1} flex={1}>
                                 <Box w="100%" bg="white" borderRadius="2xl" shadow={3}>
                                     <VStack padding={4}>
-                                        <View mb={6}>
+                                        <View mb={2}>
                                             <Text fontWeight="medium" fontSize="20">
                                                 Recent Activities
                                             </Text>
