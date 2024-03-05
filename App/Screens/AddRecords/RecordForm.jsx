@@ -10,9 +10,8 @@ export default function RecordForm() {
     const navigation = useNavigation();
     return (
             <View backgroundColor={"white"} h="100%"  paddingTop={100} >
-                    <Button alignSelf={"center"}  w={200} onPress={()=>navigation.navigate('Category')}>Click me</Button>
-            </View>
 
+            </View>
     )
 }
 

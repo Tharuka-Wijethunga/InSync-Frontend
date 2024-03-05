@@ -1,10 +1,10 @@
-import { Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import React from 'react';
 import Colors from "../../Config/Colors";
-import {NativeBaseProvider, Button, View} from "native-base";
+import {NativeBaseProvider, View} from "native-base";
 import {useNavigation} from "@react-navigation/native";
-import Category from "./Category";
 import RecordForm from "./RecordForm";
+
 import StackNavigation from "./StackNavigation";
 
 
