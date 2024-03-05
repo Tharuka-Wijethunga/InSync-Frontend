@@ -3,13 +3,15 @@ import {Box, Button, HStack, IconButton, Input, NativeBaseProvider, Text, View, 
 import Colors from "../../Config/Colors";
 import {FontAwesome6, MaterialIcons} from "@expo/vector-icons";
 import {StyleSheet} from "react-native";
+import {useNavigation} from "@react-navigation/native";
 
 const RecordForm = () => {
+    const navigation = useNavigation();
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
-                <VStack space={4} w="94%" >
-                    <Box bg="white" rounded="2xl" shadow={3}>
+                <VStack space={4} w="94%">
+                    <Box w="100%" rounded="2xl" shadow={3} bg="white">
                         <VStack paddingX={4} paddingY={3} space={4}>
                             <Box h="46px" bg={Colors.BGColor} rounded="9999"></Box>
                             <VStack space={2}>
@@ -59,7 +61,7 @@ const RecordForm = () => {
                                     <IconButton
                                         icon={<MaterialIcons name="keyboard-arrow-right" size={36}
                                                              color="black"/>}
-                                        // onPress={()=>}
+                                        onPress={()=>navigation.navigate('Category')}
                                         borderRadius="full"
                                         _pressed={{
                                             bg: "blueGray.200:alpha.50"
@@ -67,8 +69,27 @@ const RecordForm = () => {
                                     />
                                 </HStack>
                             </VStack>
-                            <VStack>
+                            <VStack space={3}>
                                 <Text fontSize={16} fontWeight="medium">Date & Time</Text>
+                                <Input
+                                    variant="filled"
+                                    placeholder="Today, 13.30"
+                                    InputRightElement={
+                                        <Text fontWeight="bold" paddingRight={4}>
+                                            LKR
+                                        </Text>
+                                    }
+                                    placeholderTextColor="black"
+                                    bg={Colors.BGColor}
+                                    rounded="20"
+                                    h="62px"
+                                    fontSize={20}
+                                    textAlign="left"
+                                    caretHidden={true}
+                                    borderWidth={0}
+                                    keyboardType="numeric"
+                                    color={Colors.Red}
+                                />
                             </VStack>
                         </VStack>
                     </Box>
@@ -87,7 +108,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.BGColor,
         alignItems: 'center',
         flex: 1,
-        paddingTop: 15
+
     }
 })
 export default RecordForm;

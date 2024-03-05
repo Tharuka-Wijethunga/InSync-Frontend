@@ -4,7 +4,6 @@ import Colors from "../../Config/Colors";
 import {NativeBaseProvider, View} from "native-base";
 import TopNavigation from "./TopNavigation";
 
-
 export default function Statistics() {
     return (
         <NativeBaseProvider>
