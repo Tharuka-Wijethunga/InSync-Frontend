@@ -1,13 +1,20 @@
 import { StyleSheet } from "react-native";
 import React from 'react';
 import Colors from "../../Config/Colors";
-import {NativeBaseProvider} from "native-base";
+import {NativeBaseProvider, Button, View} from "native-base";
+import {useNavigation} from "@react-navigation/native";
+import Category from "./Category";
 import RecordForm from "./RecordForm";
+import StackNavigation from "./StackNavigation";
+
 
 export default function AddRecords() {
+    const navigation = useNavigation();
     return (
         <NativeBaseProvider>
-            <RecordForm/>
+            <View style={styles.container}>
+                <StackNavigation><RecordForm></RecordForm></StackNavigation>
+            </View>
         </NativeBaseProvider>
     )
 }

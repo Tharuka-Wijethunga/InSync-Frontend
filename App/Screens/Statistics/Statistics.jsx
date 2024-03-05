@@ -2,13 +2,14 @@ import { StyleSheet } from "react-native";
 import React from 'react';
 import Colors from "../../Config/Colors";
 import {NativeBaseProvider, View} from "native-base";
-import Carousel from "./Carousel";
+import TopNavigation from "./TopNavigation";
+
 
 export default function Statistics() {
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
-                <Carousel/>
+                <TopNavigation></TopNavigation>
             </View>
         </NativeBaseProvider>
     )
@@ -20,5 +21,8 @@ const styles = StyleSheet.create({
         flex:1,
         paddingTop:15,
         paddingBottom:15,
+        paddingLeft:10,
+        paddingRight:10,
+
     }
 })

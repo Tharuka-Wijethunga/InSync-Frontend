@@ -11,13 +11,13 @@ export default  function DonutChart() {
         {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3',categoryName:"Shopping", amount:4000},
         {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97',categoryName:"Shopping", amount:4000},
         {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97',categoryName:"Shopping", amount:4000},
-        {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97',categoryName:"Shopping", amount:4000},
+
     ];
 
     const renderItem=({item})=>{
         return(
             <View>
-                <Box pl={["3", "4"]} pr={["3", "5"]} py="3">
+                <Box pl={["5", "4"]} pr={["5", "5"]} py="3">
                 <HStack space={[2,3]} justifyContent={"space-between"} alignItems={"center"}>
                     {renderDot(item.color)}
                     <Text>{item.categoryName}</Text>
@@ -38,7 +38,7 @@ export default  function DonutChart() {
 
 
     return (
-        <View>
+        <View flex={1} backgroundColor={"white"} >
 
                 <Text style={{fontSize: 16, fontWeight: 'bold',}}>
                     Spending
@@ -64,7 +64,7 @@ export default  function DonutChart() {
                     />
                 </View>
             {/*maxH is used to show only 6 categories,to see more scroll*/}
-            <View maxH={"280"}>
+            <View maxH={"280"} >
                 <FlatList data={pieData} renderItem={renderItem}></FlatList>
             </View>
 

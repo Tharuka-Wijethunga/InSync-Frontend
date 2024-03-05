@@ -3,13 +3,12 @@ import {StyleSheet, Platform} from "react-native";
 import {HStack, IconButton, Modal, Text, View} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
 import Records from "./Records";
-import flex from "native-base/src/components/primitives/Flex";
 
 const RecentActivities = ({modalVisible, setModalVisible}) => {
     return (
         <Modal isOpen={modalVisible} animationPreset="slide">
             <View style={styles.container}>
-                <Modal.Content w="100%" h="100%"  bg="white" rounded={"2xl"} style={styles.content} >
+                <Modal.Content w="100%" h="100%" bg="white" rounded={"2xl"}>
                     <Modal.Header bg={"white"}>
                         <HStack justifyContent="space-between" alignItems="center">
                             <IconButton
