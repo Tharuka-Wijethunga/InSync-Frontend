@@ -1,9 +1,11 @@
 import React from 'react';
 import {Box, Button, HStack, IconButton, Input, NativeBaseProvider, Text, View, VStack} from "native-base";
 import Colors from "../../Config/Colors";
-import {FontAwesome6, MaterialIcons} from "@expo/vector-icons";
+import {FontAwesome6, MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {StyleSheet} from "react-native";
 import {useNavigation} from "@react-navigation/native";
+import DateInput from "./DateInput";
+import TimeInput from "./TimeInput";
 
 const RecordForm = () => {
     const navigation = useNavigation();
@@ -71,25 +73,11 @@ const RecordForm = () => {
                             </VStack>
                             <VStack space={3}>
                                 <Text fontSize={16} fontWeight="medium">Date & Time</Text>
-                                <Input
-                                    variant="filled"
-                                    placeholder="Today, 13.30"
-                                    InputRightElement={
-                                        <Text fontWeight="bold" paddingRight={4}>
-                                            LKR
-                                        </Text>
-                                    }
-                                    placeholderTextColor="black"
-                                    bg={Colors.BGColor}
-                                    rounded="20"
-                                    h="62px"
-                                    fontSize={20}
-                                    textAlign="left"
-                                    caretHidden={true}
-                                    borderWidth={0}
-                                    keyboardType="numeric"
-                                    color={Colors.Red}
-                                />
+                                <HStack space={2}>
+                                    <MaterialCommunityIcons name="calendar-clock" size={36} color={Colors.Blue}/>
+                                    <DateInput/>
+                                    <TimeInput/>
+                                </HStack>
                             </VStack>
                         </VStack>
                     </Box>
