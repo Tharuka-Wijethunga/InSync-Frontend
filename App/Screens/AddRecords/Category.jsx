@@ -9,9 +9,8 @@ import {
     Avatar, IconButton, Divider
 } from "native-base";
 import {FontAwesome5, MaterialIcons} from "@expo/vector-icons";
-import Borders from "native-base/src/theme/base/borders";
 import {useNavigation} from "@react-navigation/native";
-
+import CatIcon from "./CatIcon";
 
 export default function Category() {
     const navigation = useNavigation();
@@ -31,76 +30,26 @@ export default function Category() {
                         <Text fontSize={18} fontWeight={"medium"} paddingRight={6}>Categories</Text>
                     </HStack>
                     <View h={0.5} bg="gray.400"/>
-                <HStack>
-                    <VStack w={"50%"}>
-                        <Avatar size="70px" bgColor={Colors.Blue} alignSelf={"center"}>
-                            <FontAwesome5 name="hand-holding-usd" size={30} color="white"/>
-                        </Avatar>
-                        <Text textAlign={"center"} fontSize={14} fontWeight={"medium"}>Food</Text>
-                    </VStack>
-                    <VStack w={"50%"}>
-                        <Avatar size="70px" bgColor={Colors.Blue} alignSelf={"center"}>
-                            <FontAwesome5 name="hand-holding-usd" size={30} color="white"/>
-                        </Avatar>
-                        <Text textAlign={"center"} fontSize={14} fontWeight={"medium"}>Food</Text>
-                    </VStack>
-                </HStack>
-                <HStack>
-                    <VStack w={"50%"}>
-                        <Avatar size="70px" bgColor={Colors.Blue} alignSelf={"center"}>
-                            <FontAwesome5 name="hand-holding-usd" size={30} color="white"/>
-                        </Avatar>
-                        <Text textAlign={"center"} fontSize={14} fontWeight={"medium"}>Food</Text>
-                    </VStack>
-                    <VStack w={"50%"}>
-                        <Avatar size="70px" bgColor={Colors.Blue} alignSelf={"center"}>
-                            <FontAwesome5 name="hand-holding-usd" size={30} color="white"/>
-                        </Avatar>
-                        <Text textAlign={"center"} fontSize={14} fontWeight={"medium"}>Food</Text>
-                    </VStack>
-                </HStack>
-                <HStack>
-                    <VStack w={"50%"}>
-                        <Avatar size="70px" bgColor={Colors.Blue} alignSelf={"center"}>
-                            <FontAwesome5 name="hand-holding-usd" size={30} color="white"/>
-                        </Avatar>
-                        <Text textAlign={"center"} fontSize={14} fontWeight={"medium"}>Food</Text>
-                    </VStack>
-                    <VStack w={"50%"}>
-                        <Avatar size="70px" bgColor={Colors.Blue} alignSelf={"center"}>
-                            <FontAwesome5 name="hand-holding-usd" size={30} color="white"/>
-                        </Avatar>
-                        <Text textAlign={"center"} fontSize={14} fontWeight={"medium"}>Food</Text>
-                    </VStack>
-                </HStack>
-                <HStack>
-                    <VStack w={"50%"}>
-                        <Avatar size="70px" bgColor={Colors.Blue} alignSelf={"center"}>
-                            <FontAwesome5 name="hand-holding-usd" size={30} color="white"/>
-                        </Avatar>
-                        <Text textAlign={"center"} fontSize={14} fontWeight={"medium"}>Food</Text>
-                    </VStack>
-                    <VStack w={"50%"}>
-                        <Avatar size="70px" bgColor={Colors.Blue} alignSelf={"center"}>
-                            <FontAwesome5 name="hand-holding-usd" size={30} color="white"/>
-                        </Avatar>
-                        <Text textAlign={"center"} fontSize={14} fontWeight={"medium"}>Food</Text>
-                    </VStack>
-                </HStack>
-                <HStack>
-                    <VStack w={"50%"}>
-                        <Avatar size="70px" bgColor={Colors.Blue} alignSelf={"center"}>
-                            <FontAwesome5 name="hand-holding-usd" size={30} color="white"/>
-                        </Avatar>
-                        <Text textAlign={"center"} fontSize={14} fontWeight={"medium"}>Food</Text>
-                    </VStack>
-                    <VStack w={"50%"}>
-                        <Avatar size="70px" bgColor={Colors.Blue} alignSelf={"center"}>
-                            <FontAwesome5 name="hand-holding-usd" size={30} color="white"/>
-                        </Avatar>
-                        <Text textAlign={"center"} fontSize={14} fontWeight={"medium"}>Food</Text>
-                    </VStack>
-                </HStack>
+                    <HStack>
+                        <CatIcon icon={<FontAwesome5 name="hand-holding-usd" size={30} color="white"/>} name="Food"/>
+                        <CatIcon icon={<FontAwesome5 name="hand-holding-usd" size={30} color="white"/>} name="Food"/>
+                    </HStack>
+                    <HStack>
+                        <CatIcon icon={<FontAwesome5 name="hand-holding-usd" size={30} color="white"/>} name="Food"/>
+                        <CatIcon icon={<FontAwesome5 name="hand-holding-usd" size={30} color="white"/>} name="Food"/>
+                    </HStack>
+                    <HStack>
+                        <CatIcon icon={<FontAwesome5 name="hand-holding-usd" size={30} color="white"/>} name="Food"/>
+                        <CatIcon icon={<FontAwesome5 name="hand-holding-usd" size={30} color="white"/>} name="Food"/>
+                    </HStack>
+                    <HStack>
+                        <CatIcon icon={<FontAwesome5 name="hand-holding-usd" size={30} color="white"/>} name="Food"/>
+                        <CatIcon icon={<FontAwesome5 name="hand-holding-usd" size={30} color="white"/>} name="Food"/>
+                    </HStack>
+                    <HStack>
+                        <CatIcon icon={<FontAwesome5 name="hand-holding-usd" size={30} color="white"/>} name="Food"/>
+                        <CatIcon icon={<FontAwesome5 name="hand-holding-usd" size={30} color="white"/>} name="Food"/>
+                    </HStack>
                 </VStack>
             </ScrollView>
         </View>
