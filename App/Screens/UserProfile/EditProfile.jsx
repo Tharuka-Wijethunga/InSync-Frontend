@@ -1,11 +1,28 @@
 import React from 'react';
 import Colors from "../../Config/Colors";
-import {Input,Button, Box, VStack, View,FormControl,Text,WarningOutlineIcon} from "native-base";
+import {Input, Button, Box, VStack, View, FormControl, Text, WarningOutlineIcon, HStack, IconButton} from "native-base";
+import {MaterialIcons} from "@expo/vector-icons";
+import {useNavigation} from "@react-navigation/native";
 export default function EditProfile() {
+    const navigation = useNavigation();
     return (
         <View paddingY={3} flex={1}>
-            <Box backgroundColor={"white"} w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3} padding={5}  >
-                <VStack space={3}>
+            <Box backgroundColor={"white"} w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3}   >
+
+                <HStack justifyContent="space-between" alignItems="center"  paddingLeft={1} marginTop={2}>
+                    <IconButton
+                        icon={<MaterialIcons name="keyboard-arrow-left" size={28} color="black"/>}
+                        onPress={() => navigation.navigate('Profile')}
+                        borderRadius="full"
+                        _pressed={{
+                            bg: "blueGray.200:alpha.50"
+                        }}
+                    />
+                    <Text fontSize={18} fontWeight={"medium"} paddingRight={6} >Edit Profile</Text>
+                </HStack>
+                <View h={0.5} w={"100%"} bg="gray.400"/>
+
+                <VStack space={3} padding={5}>
 
                     <FormControl paddingBottom={4}>
                         <FormControl.Label>Change Profile Details</FormControl.Label>
