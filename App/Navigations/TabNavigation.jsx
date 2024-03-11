@@ -18,18 +18,13 @@ export default function TabNavigation() {
                 tabBarShowLabel: false,
                 headerTitleAlign: "center",
                 tabBarActiveTintColor: Colors.Blue,
-                tabBarInactiveTintColor: Colors.IconColor,
-                headerTitleStyle: {
-                    fontWeight: "bold",
-                    fontSize: '20'
-                }
+                tabBarInactiveTintColor: Colors.IconColor
             }}>
                 <Tab.Screen
                     name='Dashboard'
                     component={Dashboard}
                     options={{
                         tabBarIcon: ({color}) => <Octicons name="home" size={28} color={color}/>,
-
                     }}
                 />
                 <Tab.Screen
