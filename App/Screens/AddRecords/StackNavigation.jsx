@@ -16,7 +16,6 @@ export default function StackNavigation() {
                     screenOptions={{
                         presentation: "transparentModal",
                         cardStyle: {backgroundColor: 'transparent'},
-                        headerBackImage: () => <MaterialIcons name="keyboard-arrow-left" size={28} color="black"/>,
                     }}>
                     <Stack.Screen name="RecordForm" options={{headerShown: false}} component={RecordForm}/>
                     <Stack.Screen name="Category"
@@ -24,7 +23,6 @@ export default function StackNavigation() {
                                       headerShown: false,
                                       headerBackTitleVisible: false,
                                       headerTitle: "",
-                                      headerRight: () => <Text fontSize={17} fontWeight={"semibold"}>Category</Text>,
                                       headerRightContainerStyle: {paddingRight: 30},
                                       headerBackgroundContainerStyle: {borderBottomWidth: 1, borderBottomColor: "black"}
                                   }} component={Category}/>

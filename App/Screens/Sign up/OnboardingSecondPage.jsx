@@ -4,8 +4,11 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { NativeBaseProvider, Checkbox, Box } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '../../Config/Colors';
+import {useNavigation} from "@react-navigation/native";
 
-const OnboardingSecondPage = ({navigation}) => {
+const OnboardingSecondPage = () => {
+    const navigation = useNavigation();
+
     const [carVanChecked, setCarVanChecked] = useState(false);
     const [bikeChecked, setBikeChecked] = useState(false);
     const [threeWheelerChecked, setThreeWheelerChecked] = useState(false);
@@ -17,7 +20,7 @@ const OnboardingSecondPage = ({navigation}) => {
 
     const handleNext = () => {
         if (carVanChecked || bikeChecked || threeWheelerChecked || noneChecked) {
-            navigation.navigate('onbf3');
+            navigation.navigate({name: 'OnboardingThirdPage'});
         } else {
             // You can provide feedback to the user that they need to select at least one option
             alert('Please select at least one asset option.');
@@ -33,7 +36,7 @@ const OnboardingSecondPage = ({navigation}) => {
                     <Text fontWeight={"bold"} fontSize={16} color={Colors.black} >Back</Text>
                 </TouchableOpacity>
                 <Image
-                    source={require("assets/pic.png")}
+                    source={require("../../../assets/pic.png")}
                     style={styles.image}
                     resizeMode="contain"
                 />

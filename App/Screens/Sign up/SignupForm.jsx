@@ -6,7 +6,7 @@ import Colors from "../../Config/Colors";
 import {useNavigation} from "@react-navigation/native";
 
 
-const Signup = () => {
+const SignupForm = () => {
     const navigation = useNavigation();
 
     const [fullName, setFullName] = useState('');
@@ -34,7 +34,7 @@ const Signup = () => {
         }
         if (validateForm()) {
             console.log('Logging in with:', { fullName, email, gender, password });
-            navigation.navigate({name: 'OnboardingFirstPage'});
+            navigation.navigate('OnboardingFirstPage');
         }
     };
 
@@ -109,8 +109,9 @@ const Signup = () => {
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
+
     return (
-        <NativeBaseProvider>
+
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <Box style={[styles.container, { width: windowWidth, height: windowHeight }]}>
                     <TouchableOpacity onPress={handleBack} style={styles.backButton}>
@@ -207,7 +208,7 @@ const Signup = () => {
                     </VStack>
                 </Box>
             </TouchableWithoutFeedback>
-        </NativeBaseProvider>
+
     );
 }
 
@@ -237,4 +238,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Signup;
+export default SignupForm;

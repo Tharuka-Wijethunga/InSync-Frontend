@@ -3,13 +3,15 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { NativeBaseProvider, Box } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '../../Config/Colors';
+import {useNavigation} from "@react-navigation/native";
 
-const OnboardingFourthPage = ({navigation}) => {
+const OnboardingFourthPage = () => {
+    const navigation = useNavigation();
     const handleBack = () => {
         navigation.goBack();
     };
     const handleNext = () => {
-        // Implement logic to navigate to the next screen or complete onboarding
+        navigation.reset({index: 0, routes: [{name: 'TabNavigation'}]});// Implement logic to navigate to the next screen or complete onboarding
     };
     return (
         <NativeBaseProvider>
@@ -21,7 +23,7 @@ const OnboardingFourthPage = ({navigation}) => {
                 <Text style={styles.title}>Welcome !</Text>
 
                 <Image
-                    source={require("assets/pic3.jpg")}
+                    source={require("../../../assets/pic3.jpg")}
                     style={styles.image}
                     resizeMode="contain"
                 />

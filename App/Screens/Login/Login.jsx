@@ -3,9 +3,11 @@ import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard
 import {Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, Link, HStack} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
-import logo from 'assets/bank.png';
+import logo from './../../../assets/bank.png';
+import {useNavigation} from "@react-navigation/native";
 
-const Login = ({ navigation }) => {
+const Login = () => {
+    const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
@@ -22,7 +24,7 @@ const Login = ({ navigation }) => {
         }
         if (validateForm()) {
             console.log('Logging in with:', { email, password });
-            navigation.navigate('Dashboard');
+            navigation.reset({index: 0, routes: [{name: 'TabNavigation'}]});
         }
         //  login authentication logic here
         // For demonstration purposes, I'm just navigating to a placeholder screen
@@ -48,7 +50,7 @@ const Login = ({ navigation }) => {
         return true;
     };
     const handleSignup = () => {
-        navigation.navigate('signup'); // Navigate to the signup screen
+        navigation.reset({index: 0, routes: [{name: 'SignupNavigator'}]}); // Navigate to the signup screen
     };
 
     const windowWidth = Dimensions.get('window').width;
@@ -59,7 +61,7 @@ const Login = ({ navigation }) => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <Box style={[styles.container, { width: windowWidth, height: windowHeight }]}>
                     <VStack space={4} alignItems="center" width="100%">
-                        <Text fontSize={40} fontWeight="bold" color="black">InSync!</Text>
+                        <Text fontSize={40} fontWeight="bold" color="black">InSync</Text>
                         <Text fontSize={13} color="gray.500" mt={-4}>Login to continue.</Text>
                         <Image source={logo} style={styles.logo} />
 
@@ -94,8 +96,6 @@ const Login = ({ navigation }) => {
                             <Text fontSize={14} fontWeight="bold">New to InSync?</Text>
                             <Link onPress={handleSignup}><Text color={Colors.Blue}>Sign up</Text></Link>
                         </HStack>
-
-
                     </VStack>
                 </Box>
             </TouchableWithoutFeedback>
