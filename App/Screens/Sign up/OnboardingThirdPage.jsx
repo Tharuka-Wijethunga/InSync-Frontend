@@ -4,8 +4,11 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedba
 import { NativeBaseProvider,Box, Input } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '../../Config/Colors';
+import {useNavigation} from "@react-navigation/native";
 
-const OnboardingThirdPage = ({navigation}) => {
+const OnboardingThirdPage = () => {
+    const navigation = useNavigation();
+
     const [incomeRange, setIncomeRange] = useState('');
     const [isValid, setIsValid] = useState(false);
 
@@ -15,7 +18,7 @@ const OnboardingThirdPage = ({navigation}) => {
     const handleNext = () => {
         if (incomeRange !== '') {
             setIsValid(true);
-            navigation.navigate('onbf4');
+            navigation.navigate({name: 'OnboardingFourthPage'});
         } else {
             // You can provide feedback to the user that they need to select an income range
             alert('Please give an income range.');
@@ -32,7 +35,7 @@ const OnboardingThirdPage = ({navigation}) => {
                         <Text fontWeight={"bold"} fontSize={16} color={Colors.black} >Back</Text>
                     </TouchableOpacity>
                     <Image
-                        source={require("assets/pic4.jpg")} // Provide the path to your image file
+                        source={require("../../../assets/pic4.jpg")} // Provide the path to your image file
                         style={styles.image}
                         resizeMode="contain" // Ensure the image fits within the container
                     />

@@ -3,8 +3,11 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedba
 import { NativeBaseProvider, Box, Input } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '../../Config/Colors';
+import {useNavigation} from "@react-navigation/native";
 
-const OnboardingFirstPage = ({ navigation }) => {
+const OnboardingFirstPage = () => {
+    const navigation = useNavigation();
+
     const [incomeRange, setIncomeRange] = useState('');
     const [isInputFocused, setIsInputFocused] = useState(false);
 
@@ -14,7 +17,7 @@ const OnboardingFirstPage = ({ navigation }) => {
 
     const handleNext = () => {
         if (incomeRange !== '') {
-            navigation.navigate('onbf2');
+            navigation.navigate({name: 'OnboardingSecondPage'});
         } else {
             alert('Please give an income range.');
         }
@@ -38,7 +41,7 @@ const OnboardingFirstPage = ({ navigation }) => {
                     </TouchableOpacity>
                     <View style={styles.imageContainer}>
                         <Image
-                            source={require("assets/pic2.jpg")}
+                            source={require("../../../assets/pic2.jpg")}
                             style={styles.image}
                             resizeMode="contain"
                         />
