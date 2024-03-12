@@ -53,13 +53,10 @@ const Login = () => {
         navigation.navigate({name: 'Signup'}); // Navigate to the signup screen
     };
 
-    const windowWidth = Dimensions.get('window').width;
-    const windowHeight = Dimensions.get('window').height;
-
     return (
         <NativeBaseProvider>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <Box style={[styles.container, { width: windowWidth, height: windowHeight }]}>
+                <Box style={[styles.container, { width: '100%', height: '100%' }]}>
                     <VStack space={4} alignItems="center" width="100%">
                         <Text fontSize={40} fontWeight="bold" color="black">InSync</Text>
                         <Text fontSize={13} color="gray.500" mt={-4}>Login to continue.</Text>

@@ -16,7 +16,8 @@ export default function TabNavigation() {
             tabBarShowLabel: false,
             headerTitleAlign: "center",
             tabBarActiveTintColor: Colors.Blue,
-            tabBarInactiveTintColor: Colors.IconColor
+            tabBarInactiveTintColor: Colors.IconColor,
+
         }}>
             <Tab.Screen
                 name='Dashboard'
