@@ -5,43 +5,38 @@ import Colors from "../../Config/Colors";
 
 const EditProfile = ({ navigation }) => {
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
+
+        //fill this "lihaj" hardcoded value from by taking as a variable from the back end
+        firstName:'Lihaj'|| '',
+        lastName:'Wickramsinghe' ||'',
+        email: 'lihajwickramasinghe@gmail.com'||'',
         password: '',
         confirmPassword: '',
     });
     const [errors, setErrors] = useState({});
 
     const validate = () => {
-        let isValid = true;
         setErrors({}); // Clear previous errors
 
         const newErrors = {};
-        if (!formData.firstName) {
-            newErrors.firstName = 'First Name is required.';
-            isValid = false;
-        }
-        if (!formData.lastName) {
-            newErrors.lastName = 'Last Name is required.';
-            isValid = false;
-        }
-        if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            newErrors.email = 'Invalid Email format.';
-            isValid = false;
-        }
-        if (!formData.password || formData.password.length < 6) {
-            newErrors.password = 'Password must be at least 6 characters.';
-            isValid = false;
-        }
+        let isValid = true;
+
+        // Check if passwords match
         if (formData.password !== formData.confirmPassword) {
             newErrors.confirmPassword = 'Passwords do not match.';
+            isValid = false;
+        }
+
+        // Check if a new password is entered and meets the minimum length requirement
+        if (formData.password && formData.password.length < 6) {
+            newErrors.password = 'Password must be at least 6 characters.';
             isValid = false;
         }
 
         setErrors(newErrors);
         return isValid;
     };
+
 
     const handleChange = (field, value) => {
         setFormData({ ...formData, [field]: value });
@@ -81,7 +76,6 @@ const EditProfile = ({ navigation }) => {
                             value={formData.firstName}
                             onChangeText={(text) => handleChange('firstName', text)}
                         />
-                        {'firstName' in errors && <FormControl.ErrorMessage>{errors.firstName}</FormControl.ErrorMessage>}
                     </FormControl>
 
                     <FormControl isInvalid={'lastName' in errors}>
@@ -91,7 +85,6 @@ const EditProfile = ({ navigation }) => {
                             value={formData.lastName}
                             onChangeText={(text) => handleChange('lastName', text)}
                         />
-                        {'lastName' in errors && <FormControl.ErrorMessage>{errors.lastName}</FormControl.ErrorMessage>}
                     </FormControl>
 
                     <FormControl  isInvalid={'email' in errors}>
@@ -101,7 +94,6 @@ const EditProfile = ({ navigation }) => {
                             value={formData.email}
                             onChangeText={(text) => handleChange('email', text)}
                         />
-                        {'email' in errors && <FormControl.ErrorMessage>{errors.email}</FormControl.ErrorMessage>}
                     </FormControl>
 
                     <FormControl  isInvalid={'password' in errors}>
