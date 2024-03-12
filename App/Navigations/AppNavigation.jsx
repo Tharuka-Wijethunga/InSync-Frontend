@@ -14,9 +14,8 @@ const AppNavigation = ({initialRoute}) => {
             <Stack.Navigator initialRouteName={initialRoute}
                 screenOptions={{headerShown: false }}
             >
-                <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen name="TabNavigation" component={TabNavigation} />
                 <Stack.Screen name="SignupNavigator" component={SignupNavigator} />
+                <Stack.Screen name="TabNavigation" component={TabNavigation} />
 
             </Stack.Navigator>
         </NavigationContainer>

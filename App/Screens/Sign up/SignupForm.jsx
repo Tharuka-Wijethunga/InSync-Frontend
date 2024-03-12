@@ -20,7 +20,7 @@ const SignupForm = () => {
     const [showModal, setShowModal] = useState(false); // State to toggle
     const [selectedGender, setSelectedGender] = useState('');
     const handleBack = () => {
-        navigation.goBack();
+        navigation.reset({index: 0, routes: [{name: 'Login'}]});
     };
 
     const togglePasswordVisibility = () => {

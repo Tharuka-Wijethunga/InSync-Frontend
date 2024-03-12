@@ -18,7 +18,7 @@ const OnboardingThirdPage = () => {
     const handleNext = () => {
         if (incomeRange !== '') {
             setIsValid(true);
-            navigation.reset({index: 0, routes: [{name: 'OnboardingFourthPage'}]});
+            navigation.navigate({name: 'OnboardingFourthPage'});
         } else {
             // You can provide feedback to the user that they need to select an income range
             alert('Please give an income range.');

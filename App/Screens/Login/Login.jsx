@@ -50,7 +50,7 @@ const Login = () => {
         return true;
     };
     const handleSignup = () => {
-        navigation.reset({index: 0, routes: [{name: 'SignupNavigator'}]}); // Navigate to the signup screen
+        navigation.navigate({name: 'Signup'}); // Navigate to the signup screen
     };
 
     const windowWidth = Dimensions.get('window').width;
