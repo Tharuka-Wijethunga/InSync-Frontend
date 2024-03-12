@@ -11,6 +11,8 @@
   "dependencies": {
     "@clerk/clerk-expo": "^0.20.2",
     "@expo-google-fonts/inter": "^0.2.3",
+    "@react-native-community/cli": "^12.3.6",
+    "@react-native-community/datetimepicker": "^7.6.2",
     "@expo/vector-icons": "^14.0.0",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/material-top-tabs": "^6.6.6",

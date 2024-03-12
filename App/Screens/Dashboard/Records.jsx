@@ -3,7 +3,7 @@ import {HStack, Text, VStack, FlatList, Avatar, Spacer} from "native-base";
 import {FontAwesome5} from "@expo/vector-icons";
 import Colors from "../../Config/Colors";
 
-const Activity = ({maxLines=null}) => {
+const Records = ({maxLines=null}) => {
     const data = [
         {
             icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
@@ -92,7 +92,7 @@ const Activity = ({maxLines=null}) => {
     ];
     return (
         <FlatList data={maxLines ? data.slice(0, maxLines) : data} renderItem={({item}) =>
-            <HStack space={[2, 3]} justifyContent="space-between" paddingBottom={4} flex={1}>
+            <HStack space={[2, 3]} justifyContent="space-between" paddingTop={4} flex={1}>
                 <Avatar size="42px" bgColor={Colors.Blue}>
                     {item.icon}
                 </Avatar>
@@ -113,4 +113,4 @@ const Activity = ({maxLines=null}) => {
     )
 };
 
-export default Activity;
+export default Records;
