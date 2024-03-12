@@ -68,7 +68,7 @@ export default function Profile() {
                                 _pressed={{
                                     bg: "blueGray.200:alpha.50"
                                 }}
-                                onPress={() => navigation.reset({ index: 0, routes: [{ name: 'Login' }] })}
+                                onPress={() => navigation.navigate("Help")}
                             />
                         </View>
                     </HStack>
