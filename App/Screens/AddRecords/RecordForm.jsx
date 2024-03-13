@@ -6,6 +6,9 @@ import {StyleSheet} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import DateInput from "./DateInput";
 import TimeInput from "./TimeInput";
+import Date from "./DateTime/Date";
+import Time from "./DateTime/Time"
+
 
 const RecordForm = () => {
     const navigation = useNavigation();
@@ -73,10 +76,12 @@ const RecordForm = () => {
                             </VStack>
                             <VStack space={3}>
                                 <Text fontSize={16} fontWeight="medium">Date & Time</Text>
-                                <HStack space={2}>
-                                    <MaterialCommunityIcons name="calendar-clock" size={36} color={Colors.Blue}/>
-                                    <DateInput/>
-                                    <TimeInput/>
+                                <HStack space={2} alignItems={"center"}>
+                                    <MaterialCommunityIcons  name="calendar-clock" size={30} color={Colors.Blue}/>
+                                    {/*<DateInput/>*/}
+                                    {/*<TimeInput/>*/}
+                                    <Date/>
+                                    <Time/>
                                 </HStack>
                             </VStack>
                         </VStack>

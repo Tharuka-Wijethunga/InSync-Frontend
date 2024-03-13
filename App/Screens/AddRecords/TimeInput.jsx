@@ -4,7 +4,7 @@ import {View} from "native-base";
 const TimeInput = () => {
     const [mydate, setDate] = useState(new Date());
     const [displaymode, setMode] = useState('time');
-    const [isDisplayDate, setShow] = useState(true);
+    const [isDisplayDate, setShow] = useState(false);
     const changeSelectedDate = (event, selectedDate) => {
         const currentDate = selectedDate || mydate;
         setDate(currentDate);
