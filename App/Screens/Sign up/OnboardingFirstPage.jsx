@@ -33,13 +33,14 @@ const OnboardingFirstPage = () => {
         setIsInputFocused(false);
     };
     const windowHeight = Dimensions.get('window').height;
+
     return (
         <NativeBaseProvider>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <SafeAreaView style={styles.container}>
                         <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                            <MaterialIcons name="keyboard-arrow-left" size={24} color={Colors.black} />
-                            <Text fontWeight="bold" color={Colors.black} >Back</Text>
+                            <MaterialIcons name="keyboard-arrow-left" size={24} color='black' />
+                            <Text fontWeight="bold">Back</Text>
                         </TouchableOpacity>
                     <KeyboardAwareScrollView  resetScrollToCoords={{ x: 0, y: 0 }}
                                               contentContainerStyle={{ flex: 1 }}
@@ -49,10 +50,12 @@ const OnboardingFirstPage = () => {
                                 <Image
                                     source={require("../../../assets/pic2.jpg")}
                                     style={styles.image}
+                                    marginTop={windowHeight*0.28}
+                                    resizeMode={"contain"}
                                     alt='income'
                                 />
 
-                                <VStack space={3} paddingX={6} marginTop={windowHeight*0.60}>
+                                <VStack space={3} paddingX={6} marginTop={20}>
                                     <Text style={styles.title}>What's your Income range ?</Text>
                                     <View marginBottom={10}>
                                         <Input
@@ -80,8 +83,6 @@ const OnboardingFirstPage = () => {
                                     </View>
                                 </VStack>
                             </View>
-
-
 
                     </KeyboardAwareScrollView>
 
@@ -112,8 +113,6 @@ const styles = StyleSheet.create({
     image: {
         width: '50%',
         height: '22%',
-        position: 'absolute',
-        top: '30%',
         alignSelf: "center"
     },
 
