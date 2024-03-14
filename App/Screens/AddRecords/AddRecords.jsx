@@ -4,7 +4,6 @@ import Colors from "../../Config/Colors";
 import {NativeBaseProvider, View} from "native-base";
 import {useNavigation} from "@react-navigation/native";
 import RecordForm from "./RecordForm";
-import StackNavigation from "./StackNavigation";
 
 
 export default function AddRecords() {
@@ -12,9 +11,7 @@ export default function AddRecords() {
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
-                <StackNavigation>
-                    <RecordForm/>
-                </StackNavigation>
+                <RecordForm/>
             </View>
         </NativeBaseProvider>
     )

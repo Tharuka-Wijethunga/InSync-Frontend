@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import {HStack, IconButton, Input, View} from "native-base";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {MaterialCommunityIcons} from "@expo/vector-icons";
-import Colors from "../../Config/Colors";
-import TimeInput from "./TimeInput";
 
-const DateInput = () => {
+
+
+const DateIos = () => {
     const [mydate, setDate] = useState(new Date());
     const [displaymode, setMode] = useState('date');
     const [isDisplayDate, setShow] = useState(true);
@@ -33,4 +32,4 @@ const DateInput = () => {
     );
 };
 
-export default DateInput;
+export default DateIos;

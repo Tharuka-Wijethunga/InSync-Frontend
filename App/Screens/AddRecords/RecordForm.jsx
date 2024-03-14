@@ -1,21 +1,61 @@
-import React from 'react';
-import {Box, Button, HStack, IconButton, Input, NativeBaseProvider, Text, View, VStack} from "native-base";
+import React ,{useState}from 'react';
+import {Box, Button, HStack, IconButton, Input, NativeBaseProvider, Text, View, VStack,Modal} from "native-base";
 import Colors from "../../Config/Colors";
 import {FontAwesome6, MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {StyleSheet} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-import DateInput from "./DateInput";
-import TimeInput from "./TimeInput";
+import Date from "./DateTime/Date";
+import Time from "./DateTime/Time"
+import Category from "./Category";
+
 
 const RecordForm = () => {
     const navigation = useNavigation();
+    const [incomePressed, setIncomePressed] = useState(false);
+    const [expensePressed, setExpensePressed] = useState(false);
+    const [modalVisible, setModalVisible] = React.useState(false);
+
+    const handleIncomePress = () => {
+        setIncomePressed(true);
+        setExpensePressed(false);
+    };
+
+    const handleExpensePress = () => {
+        setExpensePressed(true);
+        setIncomePressed(false);
+    };
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
                 <VStack space={4} w="94%">
                     <Box w="100%" rounded="2xl" shadow={3} bg="white">
                         <VStack paddingX={4} paddingY={3} space={4}>
-                            <Box h="46px" bg={Colors.BGColor} rounded="9999"></Box>
+                            <Box h="50px" bg={Colors.BGColor} rounded="9999" alignItems={"center"} justifyContent={"center"}>
+                                <HStack space={1}>
+                                    <Button
+                                        onPress={handleIncomePress}
+                                        backgroundColor={"white"}
+                                        bg={incomePressed ? 'green.500' : 'white'}
+                                        borderRadius={'full'}
+                                        w={'48%'}
+                                        size={'md'}
+                                        alignSelf="center"
+                                    >
+                                        <Text color={incomePressed ? 'white' : 'black'}>Income</Text>
+                                    </Button>
+                                    <Button
+                                        onPress={handleExpensePress}
+                                        backgroundColor={"white"}
+                                        bg={expensePressed ? 'red.500' : 'white'}
+                                        borderRadius={'full'}
+                                        w={'48%'}
+                                        size={'md'}
+                                        alignSelf="center"
+                                    >
+                                        <Text color={expensePressed ? 'white' : 'black'}>EXPENSE</Text>
+                                    </Button>
+                                </HStack>
+                            </Box>
                             <VStack space={2}>
                                 <Text fontSize={20} fontWeight="medium">Amount</Text>
                                 <Input
@@ -59,24 +99,26 @@ const RecordForm = () => {
                             </VStack>
                             <VStack>
                                 <Text fontSize={16} fontWeight="medium">Category</Text>
-                                <HStack>
+                                <HStack alignItems={"center"}>
                                     <IconButton
                                         icon={<MaterialIcons name="keyboard-arrow-right" size={36}
                                                              color="black"/>}
-                                        onPress={()=>navigation.navigate('Category')}
+                                        onPress={() => setModalVisible(!modalVisible)}
                                         borderRadius="full"
                                         _pressed={{
                                             bg: "blueGray.200:alpha.50"
                                         }}
                                     />
+                                    <Category modalVisible={modalVisible}
+                                                   setModalVisible={setModalVisible}/>
                                 </HStack>
                             </VStack>
                             <VStack space={3}>
                                 <Text fontSize={16} fontWeight="medium">Date & Time</Text>
-                                <HStack space={2}>
-                                    <MaterialCommunityIcons name="calendar-clock" size={36} color={Colors.Blue}/>
-                                    <DateInput/>
-                                    <TimeInput/>
+                                <HStack space={2} alignItems={"center"}>
+                                    <MaterialCommunityIcons  name="calendar-clock" size={30} color={Colors.Blue}/>
+                                    <Date/>
+                                    <Time/>
                                 </HStack>
                             </VStack>
                         </VStack>
