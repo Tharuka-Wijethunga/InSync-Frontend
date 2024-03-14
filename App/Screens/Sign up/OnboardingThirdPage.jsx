@@ -1,62 +1,78 @@
-
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { NativeBaseProvider,Box, Input } from 'native-base';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, {useState} from 'react';
+import {
+    StyleSheet,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    Keyboard,
+    Dimensions
+} from 'react-native';
+import {NativeBaseProvider, Input, VStack, Text, View, Image} from 'native-base';
+import {MaterialIcons} from '@expo/vector-icons';
 import Colors from '../../Config/Colors';
 import {useNavigation} from "@react-navigation/native";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
 const OnboardingThirdPage = () => {
     const navigation = useNavigation();
 
-    const [incomeRange, setIncomeRange] = useState('');
-    const [isValid, setIsValid] = useState(false);
+    const [loanAmount, setLoanAmount] = useState('');
 
     const handleBack = () => {
         navigation.goBack();
     };
     const handleNext = () => {
-        if (incomeRange !== '') {
-            setIsValid(true);
-            navigation.navigate({name: 'OnboardingFourthPage'});
-        } else {
-            // You can provide feedback to the user that they need to select an income range
-            alert('Please give an income range.');
-            setIsValid(false);
-        }
+        navigation.navigate({name: 'OnboardingFourthPage'});
     };
-
+    const windowHeight = Dimensions.get('window').height;
     return (
         <NativeBaseProvider>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <Box style={styles.container}>
+                <SafeAreaView style={styles.container}>
                     <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                        <MaterialIcons name="keyboard-arrow-left" size={24} color={Colors.black} />
-                        <Text fontWeight={"bold"} fontSize={16} color={Colors.black} >Back</Text>
+                        <MaterialIcons name="keyboard-arrow-left" size={24}/>
+                        <Text fontWeight={"bold"}>Back</Text>
                     </TouchableOpacity>
-                    <Image
-                        source={require("../../../assets/pic4.jpg")} // Provide the path to your image file
-                        style={styles.image}
-                        resizeMode="contain" // Ensure the image fits within the container
-                    />
-                    <Text style={styles.title}>Monthly loan payment (if any) ?</Text>
-                    <View style={styles.inputContainer}>
-                        <Input
-                            variant="underlined"
-                            placeholder="LKR."
-                            value={incomeRange}
-                            onChangeText={text => {
-                                setIncomeRange(text);
-                            }}
-                            keyboardType="numeric" // Only allow numeric input
-                        />
-
-                    </View>
-
-                    <TouchableOpacity onPress={ handleNext} style={styles.nextButton} >
-                        <MaterialIcons name="keyboard-arrow-right" size={24} color={Colors.BGColor} />
-                    </TouchableOpacity>
-                </Box>
+                    <KeyboardAwareScrollView resetScrollToCoords={{x: 0, y: 0}}
+                                             contentContainerStyle={{flex: 1}}
+                                             scrollEnabled={false}
+                                             style={{flex: 1}}>
+                        <View style={{flex: 1}}>
+                            <Image
+                                source={require("../../../assets/pic4.jpg")}
+                                style={styles.image}
+                                marginTop={windowHeight * 0.24}
+                                resizeMode="contain"
+                                alt="loan"
+                            />
+                            <VStack space={3} paddingX={6} marginTop={20}>
+                                <Text style={styles.title}>Monthly loan payment{'\n'}(if any)?</Text>
+                                <View marginBottom={10}>
+                                    <Input
+                                        w='100%'
+                                        variant="underlined"
+                                        InputLeftElement={
+                                            <Text fontWeight="medium" marginRight={4} color={Colors.IconColor}>
+                                                LKR
+                                            </Text>
+                                        }
+                                        fontSize={20}
+                                        value={loanAmount}
+                                        onChangeText={text => {
+                                            setLoanAmount(text);
+                                        }}
+                                        keyboardType="numeric"
+                                    />
+                                </View>
+                                <View paddingRight={2}>
+                                    <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
+                                        <MaterialIcons name="keyboard-arrow-right" size={40} color='white'/>
+                                    </TouchableOpacity>
+                                </View>
+                            </VStack>
+                        </View>
+                    </KeyboardAwareScrollView>
+                </SafeAreaView>
             </TouchableWithoutFeedback>
         </NativeBaseProvider>
     );
@@ -65,7 +81,6 @@ const OnboardingThirdPage = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white'
     },
@@ -77,34 +92,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize: 30,
+        fontSize: 28,
         fontWeight: 'bold',
-        marginBottom:'2%',
-        marginTop: '10%',
+        lineHeight: 30
     },
     image: {
-        width: '90%',
-        height:'30%',
-        marginBottom: '6%',
+        width: '60%',
+        height: '24%',
+        alignSelf: "center"
     },
-    inputContainer: {
-        width: '80%',
-        position: 'relative',
-    },
-    question: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10,
-    },
-    nextButton: {
-        position: 'absolute',
-        bottom: '3%',
-        right: '6%',
-        backgroundColor: Colors.Blue,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius:200,
 
+    nextButton: {
+        backgroundColor: Colors.Blue,
+        borderRadius: 20,
+        alignSelf: "flex-end"
     },
 });
 

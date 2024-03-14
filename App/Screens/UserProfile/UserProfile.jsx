@@ -9,7 +9,7 @@ export default function UserProfile() {
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
-                <ProfileNavigation><Profile></Profile></ProfileNavigation>
+                <ProfileNavigation><Profile/></ProfileNavigation>
             </View>
         </NativeBaseProvider>
     )

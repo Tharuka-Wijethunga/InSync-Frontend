@@ -6,6 +6,7 @@ import Login from "../Screens/Login/Login";
 import Signup from "../Screens/Sign up/Signup";
 import TabNavigation from "./TabNavigation";
 import SignupNavigator from "../Screens/Sign up/SignupNavigator";
+import ProfileNavigation from "../Screens/UserProfile/ProfileNavigation";
 
 const AppNavigation = ({initialRoute}) => {
     const Stack = createNativeStackNavigator();

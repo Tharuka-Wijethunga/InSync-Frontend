@@ -163,9 +163,9 @@ const SignupForm = () => {
                             <Modal.Body>
                                 <Radio.Group name="gender" value={selectedGender} onChange={handleGenderSelection}>
                                     <VStack space={2}>
-                                        <Radio value="Male">Male</Radio>
-                                        <Radio value="Female">Female</Radio>
-                                        <Radio value="Other">Other</Radio>
+                                        <Radio value="Male" colorScheme='blue'>Male</Radio>
+                                        <Radio value="Female" colorScheme='blue'>Female</Radio>
+                                        <Radio value="Other" colorScheme='blue'>Other</Radio>
                                     </VStack>
                                 </Radio.Group>
                             </Modal.Body>

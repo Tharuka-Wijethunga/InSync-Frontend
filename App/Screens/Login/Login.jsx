@@ -17,7 +17,6 @@ const Login = () => {
     };
 
     const handleLogin = () => {
-        // Perform your login logic here
         if (!email || !password) {
             Alert.alert('Error', 'Please fill in all fields');
             return;
@@ -85,10 +84,9 @@ const Login = () => {
                         <Button onPress={handleLogin} colorScheme={"blue"} width="100%" rounded={20} mt={7}>
                             <Text color="white" textAlign="center" fontSize="16">Login</Text>
                         </Button>
-                        <Text fontSize={11}>Forget Password? <Link onPress={handleSignup} fontSize={10}><Text color={Colors.Blue}></Text></Link></Text>
-
+                        <Link onPress={handleSignup} fontSize={10}><Text fontSize={11}>Forgot Password?</Text></Link>
                         <HStack space={1} alignItems="center" mt={10}>
-                            <Text fontSize={14} fontWeight="bold">New to InSync?</Text>
+                            <Text fontSize={14} fontWeight="bold" paddingRight={2}>New to InSync?</Text>
                             <Link onPress={handleSignup}><Text color={Colors.Blue}>Sign up</Text></Link>
                         </HStack>
                     </VStack>
