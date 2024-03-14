@@ -1,28 +1,17 @@
 import React from 'react';
-import Colors from "../../Config/Colors";
-import {
-    View,
-    Text,
-    VStack,
-    HStack,
-    ScrollView,
-    Avatar, IconButton, Divider
-} from "native-base";
+import {Button, HStack, IconButton, Modal, ScrollView, Text, View, VStack} from "native-base";
 import {FontAwesome5, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
-import {useNavigation} from "@react-navigation/native";
 import CatIcon from "./CatIcon";
 
-
-export default function Category() {
-    const navigation = useNavigation();
+const CategoryModal = ({modalVisible, setModalVisible}) => {
     return (
-        <View backgroundColor={"white"} h="97%" w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3}>
-
+        <Modal isOpen={modalVisible} animationPreset="slide" safeAreaTop={12} backdropVisible={false}>
+            <View backgroundColor={"white"} h="83%" w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3}>
                 <VStack h="100%" alignSelf="center" paddingTop={2} >
                     <HStack justifyContent="space-between" alignItems="center" paddingLeft={4} >
                         <IconButton
                             icon={<MaterialIcons name="keyboard-arrow-left" size={28} color="black"/>}
-                            onPress={() => navigation.navigate('RecordForm')}
+                            onPress={() => setModalVisible(false)}
                             borderRadius="full"
                             _pressed={{
                                 bg: "blueGray.200:alpha.50"
@@ -34,7 +23,7 @@ export default function Category() {
                     <ScrollView showsVerticalScrollIndicator={false} maxH={550}>
                         <VStack space={4} paddingBottom={3} paddingTop={4}>
                             <HStack>
-                                <CatIcon icon={<MaterialCommunityIcons name="food" size={30} color="white" />} color={"yellow.400"} name="Foods & Drinks" />
+                                <CatIcon icon={<MaterialCommunityIcons name="food" size={30} color="white" />}  color={"yellow.400"} name="Foods & Drinks" />
                                 <CatIcon icon={<MaterialCommunityIcons name="shopping" size={30} color="white" />} color={"purple.400"} name="Shopping"/>
                             </HStack>
                             <HStack>
@@ -58,6 +47,10 @@ export default function Category() {
                     </ScrollView>
                 </VStack>
 
-        </View>
-    )
-}
+            </View>
+        </Modal>
+    );
+};
+
+
+export default CategoryModal;
