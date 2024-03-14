@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Colors from "../../Config/Colors";
 import {Text, Box, HStack, VStack, Avatar, Spacer, IconButton, View} from "native-base";
