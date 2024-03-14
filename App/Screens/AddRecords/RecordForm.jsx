@@ -1,7 +1,20 @@
 import React ,{useState}from 'react';
-import {Box, Button, HStack, IconButton, Input, NativeBaseProvider, Text, View, VStack,Modal} from "native-base";
+import {
+    Box,
+    Button,
+    HStack,
+    IconButton,
+    Input,
+    NativeBaseProvider,
+    Text,
+    View,
+    VStack,
+    Modal,
+    Avatar,
+    Spacer, Pressable
+} from "native-base";
 import Colors from "../../Config/Colors";
-import {FontAwesome6, MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
+import {FontAwesome6, MaterialIcons, MaterialCommunityIcons, FontAwesome5} from "@expo/vector-icons";
 import {StyleSheet} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Date from "./DateTime/Date";
@@ -14,6 +27,11 @@ const RecordForm = () => {
     const [incomePressed, setIncomePressed] = useState(false);
     const [expensePressed, setExpensePressed] = useState(false);
     const [modalVisible, setModalVisible] = React.useState(false);
+
+    const [selectedCategory,setSelectedCategory]=useState("tag-plus" );
+    const [avatarColor,setAvatarColor]=useState(Colors.IconColor);
+    const [categorydName,setCategorydName]=useState("Select a Category");
+
 
     const handleIncomePress = () => {
         setIncomePressed(true);
@@ -98,25 +116,35 @@ const RecordForm = () => {
                                 </HStack>
                             </VStack>
                             <VStack>
-                                <Text fontSize={16} fontWeight="medium">Category</Text>
-                                <HStack alignItems={"center"}>
-                                    <IconButton
-                                        icon={<MaterialIcons name="keyboard-arrow-right" size={36}
-                                                             color="black"/>}
-                                        onPress={() => setModalVisible(!modalVisible)}
-                                        borderRadius="full"
-                                        _pressed={{
-                                            bg: "blueGray.200:alpha.50"
-                                        }}
-                                    />
-                                    <Category modalVisible={modalVisible}
-                                                   setModalVisible={setModalVisible}/>
-                                </HStack>
+                                <Text fontSize={16} fontWeight="medium" paddingBottom={1}>Category</Text>
+
+                                <Pressable
+                                    onPress={() => setModalVisible(!modalVisible)}
+                                    borderRadius="full"
+                                    padding={1.5}
+                                    _pressed={{
+                                        bg: "blueGray.200:alpha.50"
+                                    }}>
+                                    <HStack  w={"100%"} space={3} alignItems={"center"}>
+                                        <Avatar size="45px" bgColor={avatarColor} alignSelf={"center"}>
+                                            <MaterialCommunityIcons name={selectedCategory} size={25} color={"white"}/>
+                                        </Avatar>
+
+                                            <Text fontWeight={"medium"}>{categorydName}</Text>
+                                        <Spacer/>
+                                            <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
+                                            <Category setSelectedCategory={setSelectedCategory}
+                                                      setAvatarColor={setAvatarColor}
+                                                      setCategorydName={setCategorydName}
+                                                      modalVisible={modalVisible}
+                                                      setModalVisible={setModalVisible}/>
+                                    </HStack>
+                                </Pressable>
                             </VStack>
                             <VStack space={3}>
                                 <Text fontSize={16} fontWeight="medium">Date & Time</Text>
-                                <HStack space={2} alignItems={"center"}>
-                                    <MaterialCommunityIcons  name="calendar-clock" size={30} color={Colors.Blue}/>
+                                <HStack paddingLeft={2} space={2} alignItems={"center"}>
+                                    <MaterialCommunityIcons  name="calendar-clock" size={34} color={Colors.Blue}/>
                                     <Date/>
                                     <Time/>
                                 </HStack>

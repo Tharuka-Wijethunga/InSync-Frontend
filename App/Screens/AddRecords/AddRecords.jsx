@@ -23,6 +23,5 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.BGColor,
         flex: 1,
         paddingTop: 15,
-
     }
 })
