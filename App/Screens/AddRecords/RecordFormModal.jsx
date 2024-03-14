@@ -1,17 +1,19 @@
 import React ,{useState}from 'react';
-import {Box, Button, HStack, IconButton, Input, NativeBaseProvider, Text, View, VStack} from "native-base";
+import {Box, Button, HStack, IconButton, Input, NativeBaseProvider, Text, View, VStack,Modal} from "native-base";
 import Colors from "../../Config/Colors";
 import {FontAwesome6, MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {StyleSheet} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Date from "./DateTime/Date";
 import Time from "./DateTime/Time"
+import CategoryModal from "./CategoryModal";
 
 
 const RecordForm = () => {
     const navigation = useNavigation();
     const [incomePressed, setIncomePressed] = useState(false);
     const [expensePressed, setExpensePressed] = useState(false);
+    const [modalVisible, setModalVisible] = React.useState(false);
 
     const handleIncomePress = () => {
         setIncomePressed(true);
@@ -98,16 +100,17 @@ const RecordForm = () => {
                             <VStack>
                                 <Text fontSize={16} fontWeight="medium">Category</Text>
                                 <HStack alignItems={"center"}>
-                                    <MaterialCommunityIcons  name="food" size={30} color="black" />
                                     <IconButton
                                         icon={<MaterialIcons name="keyboard-arrow-right" size={36}
                                                              color="black"/>}
-                                        onPress={()=>navigation.navigate('Category')}
+                                        onPress={() => setModalVisible(!modalVisible)}
                                         borderRadius="full"
                                         _pressed={{
                                             bg: "blueGray.200:alpha.50"
                                         }}
                                     />
+                                    <CategoryModal modalVisible={modalVisible}
+                                                   setModalVisible={setModalVisible}/>
                                 </HStack>
                             </VStack>
                             <VStack space={3}>

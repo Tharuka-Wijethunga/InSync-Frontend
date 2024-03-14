@@ -47,8 +47,8 @@ export default function DateAndroid() {
                     backgroundColor={Colors.BGColor}
                     value={formattedDate}
                     editable={false}
-                    fontWeight={"medium"}
-                    fontSize={18}
+                    fontWeight={"normal"}
+                    fontSize={16}
                 />
             </Pressable>
         </View>

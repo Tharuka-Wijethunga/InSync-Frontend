@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {HStack, IconButton, Input, View} from "native-base";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {MaterialCommunityIcons} from "@expo/vector-icons";
-import Colors from "../../Config/Colors";
-import TimeInput from "./TimeInput";
+
+
 
 const DateIos = () => {
     const [mydate, setDate] = useState(new Date());

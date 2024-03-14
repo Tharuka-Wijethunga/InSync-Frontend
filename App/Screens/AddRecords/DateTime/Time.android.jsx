@@ -43,8 +43,8 @@ export default function TimeAndroid() {
                     backgroundColor={Colors.BGColor}
                     value={formattedTime}
                     editable={false}
-                    fontWeight={"medium"}
-                    fontSize={18}
+                    fontWeight={"normal"}
+                    fontSize={16}
                 />
             </Pressable>
         </View>
