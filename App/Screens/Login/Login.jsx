@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions, Image } from 'react-native';
+import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
 import {Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, Link, HStack} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
@@ -10,7 +10,7 @@ const Login = () => {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+    const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -26,8 +26,6 @@ const Login = () => {
             console.log('Logging in with:', { email, password });
             navigation.reset({index: 0, routes: [{name: 'TabNavigation'}]});
         }
-        //  login authentication logic here
-        // For demonstration purposes, I'm just navigating to a placeholder screen
 
     };
     const validateForm = () => {
@@ -50,7 +48,7 @@ const Login = () => {
         return true;
     };
     const handleSignup = () => {
-        navigation.navigate({name: 'Signup'}); // Navigate to the signup screen
+        navigation.navigate({name: 'Signup'});
     };
 
     return (
@@ -112,8 +110,8 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     logo: {
-        width: '30%', // Adjust width as needed
-        height: '15%', // Adjust height as needed
+        width: '30%',
+        height: '15%',
         resizeMode: 'contain',
     },
 });

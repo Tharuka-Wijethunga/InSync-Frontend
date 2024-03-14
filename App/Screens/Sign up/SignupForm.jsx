@@ -1,6 +1,19 @@
 import React, { useState } from 'react';
 import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions } from 'react-native';
-import {Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, HStack, Checkbox, Modal, Radio} from 'native-base';
+import {
+    Box,
+    Button,
+    Input,
+    Icon,
+    NativeBaseProvider,
+    Text,
+    VStack,
+    HStack,
+    Checkbox,
+    Modal,
+    Radio,
+    View
+} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
 import {useNavigation} from "@react-navigation/native";
@@ -133,13 +146,16 @@ const SignupForm = () => {
                            style={styles.input}
                     />
                     <TouchableOpacity onPress={() => setShowGenderModal(true)} style={styles.inputWrapper}>
-                        <Input mt={2}
-                               variant="rounded"
-                               borderColor={Colors.Blue}
-                               placeholder="Gender"
-                               value={gender}
-                               editable={false}
-                        />
+                        <View pointerEvents="none">
+                            <Input mt={2}
+                                   variant="rounded"
+                                   borderColor={Colors.Blue}
+                                   placeholder="Gender"
+                                   value={gender}
+                                   editable={false}
+                            />
+                        </View>
+
                     </TouchableOpacity>
                     <Modal isOpen={showGenderModal} onClose={() => setShowGenderModal(false)}>
                         <Modal.Content borderRadius={30}>
