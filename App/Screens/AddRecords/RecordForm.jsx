@@ -13,26 +13,11 @@ import {
     Pressable
 } from "native-base";
 import Colors from "../../Config/Colors";
-import {FontAwesome6, MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
+import {MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {Keyboard, StyleSheet, TouchableWithoutFeedback} from "react-native";
-import {useNavigation} from "@react-navigation/native";
 import Date from "./DateTime/Date";
 import Time from "./DateTime/Time"
 import Category from "./Category";
-import SimpleSelectButton from "react-native-simple-select-button";
-
-
-const theme = extendTheme({
-    components: {
-        Button: {
-            baseStyle:{
-                _pressed: {
-                    backgroundColor: 'blue',
-                },
-            },
-        },
-    },
-});
 
 const RecordForm = () => {
     const [incomePressed, setIncomePressed] = useState(false);
