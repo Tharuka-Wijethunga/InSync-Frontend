@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Colors from "../../Config/Colors";
 import {Text, Box, HStack, VStack, Avatar, Spacer, IconButton, View} from "native-base";
@@ -68,7 +67,7 @@ export default function Profile() {
                                 _pressed={{
                                     bg: "blueGray.200:alpha.50"
                                 }}
-                                onPress={() => navigation.navigate("Help")}
+                                onPress={() => navigation.reset({index: 0, routes: [{name: 'SignupNavigator'}]})}
                             />
                         </View>
                     </HStack>

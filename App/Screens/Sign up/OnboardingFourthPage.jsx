@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { NativeBaseProvider, Box } from 'native-base';
-import { MaterialIcons } from '@expo/vector-icons';
+import React from 'react';
+import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
+import {NativeBaseProvider, View, Text, Image, VStack} from 'native-base';
+import {MaterialIcons} from '@expo/vector-icons';
 import Colors from '../../Config/Colors';
 import {useNavigation} from "@react-navigation/native";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const OnboardingFourthPage = () => {
     const navigation = useNavigation();
@@ -11,26 +12,36 @@ const OnboardingFourthPage = () => {
         navigation.goBack();
     };
     const handleNext = () => {
-        navigation.reset({index: 0, routes: [{name: 'TabNavigation'}]});// Implement logic to navigate to the next screen or complete onboarding
+        navigation.reset({index: 0, routes: [{name: 'TabNavigation'}]});
     };
+
+    const windowHeight = Dimensions.get('window').height;
+
     return (
         <NativeBaseProvider>
-            <Box style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                    <MaterialIcons name="keyboard-arrow-left" size={24} color={Colors.black} />
-                    <Text fontWeight={"bold"} fontSize={16} color={Colors.black} >Back</Text>
+                    <MaterialIcons name="keyboard-arrow-left" size={24}/>
+                    <Text fontWeight={"bold"}>Back</Text>
                 </TouchableOpacity>
-                <Text style={styles.title}>Welcome !</Text>
+                <VStack style={{flex: 1}}>
+                    <Text style={styles.title} marginTop={windowHeight * 0.20}>Welcome !</Text>
+                    <View marginTop={20}>
+                        <Image
+                            source={require("../../../assets/pic3.jpg")}
+                            style={styles.image}
+                            alt="Welcome"
+                        />
+                    </View>
+                    <View marginTop={-20}>
+                        <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
+                            <Text style={styles.buttonText}>Let's Sync In!</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                <Image
-                    source={require("../../../assets/pic3.jpg")}
-                    style={styles.image}
-                    resizeMode="contain"
-                />
-                <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
-                    <Text style={styles.buttonText}>Let's Sync In !</Text>
-                </TouchableOpacity>
-            </Box>
+                </VStack>
+
+            </SafeAreaView>
         </NativeBaseProvider>
     );
 };
@@ -38,7 +49,6 @@ const OnboardingFourthPage = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
     },
@@ -52,16 +62,14 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 40,
         fontWeight: 'bold',
-        marginBottom:'2%',
-        marginTop: '10%',
+        lineHeight: 42,
+        alignSelf: "center"
     },
     nextButton: {
-        position: 'absolute',
-        top: 650,
         backgroundColor: Colors.Blue,
         paddingVertical: 10,
         paddingHorizontal: 60,
-        borderRadius: 100,
+        borderRadius: 20,
     },
     buttonText: {
         color: 'white',
@@ -69,9 +77,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     image: {
-        width: '90%',
-        height: '30%',
-        marginTop: '6%',
+        width: '100%',
+        height: '50%',
+        alignSelf: "center"
     },
 });
 

@@ -1,8 +1,7 @@
-// OnboardingSecondPage.js
-import React, { useState } from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity, Dimensions} from 'react-native';
-import {NativeBaseProvider, Checkbox, Box, VStack} from 'native-base';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, {useState} from 'react';
+import {StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
+import {NativeBaseProvider, Checkbox, VStack, View, Text, Image} from 'native-base';
+import {MaterialIcons} from '@expo/vector-icons';
 import Colors from '../../Config/Colors';
 import {useNavigation} from "@react-navigation/native";
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -22,53 +21,44 @@ const OnboardingSecondPage = () => {
         if (carVanChecked || bikeChecked || threeWheelerChecked || noneChecked) {
             navigation.navigate({name: 'OnboardingThirdPage'});
         } else {
-            // You can provide feedback to the user that they need to select at least one option
             alert('Please select at least one asset option.');
         }
     };
 
-    const OptionItem = ({ label, checked, onPress }) => {
-        return (
-            <View style={styles.option}>
-                <Checkbox
-                    color={Colors.Blue}
-                    checked={checked}
-                    onPress={onPress}
-                />
-                <Text style={styles.optionText}>{label}</Text>
-            </View>
-        );
-    };
-
-    const windowHeight = Dimensions.get('window').height;
-
+    const screen = Dimensions.get('screen');
 
     return (
         <NativeBaseProvider>
             <SafeAreaView style={styles.container}>
                 <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                    <MaterialIcons name="keyboard-arrow-left" size={24} color='black' />
+                    <MaterialIcons name="keyboard-arrow-left" size={24}/>
                     <Text fontWeight='bold'>Back</Text>
                 </TouchableOpacity>
                 <Image
                     source={require("../../../assets/pic.png")}
                     style={styles.image}
                     resizeMode="contain"
-                    marginTop={windowHeight*0.20}
+                    marginTop={screen.height * 0.20}
+                    alt='assets'
                 />
                 <VStack marginTop={20} space={10}>
                     <Text style={styles.title}>Choose Your Assets</Text>
-                    <VStack style={styles.optionsContainer} space={4} >
-                        <Checkbox checked={carVanChecked} onPress={() => setCarVanChecked(!carVanChecked)}  value="Car/Van">
+                    <VStack style={styles.optionsContainer} space={4}>
+                        <Checkbox checked={carVanChecked} onPress={() => setCarVanChecked(!carVanChecked)}
+                                  value="Car/Van" colorScheme={"blue"}>
                             Car/Van
                         </Checkbox>
-                        <Checkbox checked={bikeChecked} onPress={() => setBikeChecked(!bikeChecked)}  value="Bike">
+                        <Checkbox checked={bikeChecked} onPress={() => setBikeChecked(!bikeChecked)} value="Bike"
+                                  colorScheme={"blue"}>
                             Bike
                         </Checkbox>
-                        <Checkbox checked={threeWheelerChecked} onPress={() => setThreeWheelerChecked(!threeWheelerChecked)}  value="Threewheeler">
-                            Threewheeler
+                        <Checkbox checked={threeWheelerChecked}
+                                  onPress={() => setThreeWheelerChecked(!threeWheelerChecked)} value="Threewheeler"
+                                  colorScheme={"blue"}>
+                            Three-wheeler
                         </Checkbox>
-                        <Checkbox checked={noneChecked} onPress={() => setNoneChecked(!noneChecked)}  value="None">
+                        <Checkbox checked={noneChecked} onPress={() => setNoneChecked(!noneChecked)} value="None"
+                                  colorScheme={"blue"}>
                             None
                         </Checkbox>
                     </VStack>
@@ -84,7 +74,7 @@ const OnboardingSecondPage = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+
         alignItems: 'center',
         backgroundColor: 'white'
     },
@@ -98,6 +88,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 28,
         fontWeight: 'bold',
+        lineHeight: 30
     },
     optionsContainer: {
         alignSelf: 'flex-start',
