@@ -5,8 +5,8 @@ import CatIcon from "./CatIcon";
 
 const CategoryModal = ({modalVisible, setModalVisible}) => {
     return (
-        <Modal isOpen={modalVisible} animationPreset="slide" safeAreaTop={12} backdropVisible={false}>
-            <View backgroundColor={"white"} h="83%" w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3}>
+        <Modal isOpen={modalVisible} animationPreset="slide">
+            <View backgroundColor={"white"} h="97%" w="94%"  rounded="2xl" alignSelf="center" shadow={3} flex={1}>
                 <VStack h="100%" alignSelf="center" paddingTop={2} >
                     <HStack justifyContent="space-between" alignItems="center" paddingLeft={4} >
                         <IconButton
@@ -43,7 +43,6 @@ const CategoryModal = ({modalVisible, setModalVisible}) => {
                                 <CatIcon icon={<MaterialCommunityIcons name="menu" size={30} color="white" />} color={"rose.400"} name="Other"/>
                             </HStack>
                         </VStack>
-
                     </ScrollView>
                 </VStack>
 
