@@ -4,15 +4,16 @@ import Colors from "../../Config/Colors";
 import {NativeBaseProvider, View} from "native-base";
 import {useNavigation} from "@react-navigation/native";
 import RecordForm from "./RecordForm";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 
 export default function AddRecords() {
     const navigation = useNavigation();
     return (
         <NativeBaseProvider>
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <RecordForm/>
-            </View>
+            </SafeAreaView>
         </NativeBaseProvider>
     )
 }
