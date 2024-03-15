@@ -1,4 +1,4 @@
-import React ,{useState}from 'react';
+import React ,{useState, useRef, useEffect} from 'react';
 import {
     Box,
     Button,
@@ -9,23 +9,22 @@ import {
     Text,
     View,
     VStack,
-    Modal,
     Avatar,
-    Spacer, Pressable
+    Spacer,
+    Pressable
 } from "native-base";
 import Colors from "../../Config/Colors";
-import {FontAwesome6, MaterialIcons, MaterialCommunityIcons, FontAwesome5} from "@expo/vector-icons";
-import {StyleSheet} from "react-native";
-import {useNavigation} from "@react-navigation/native";
+import {MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
+import {Keyboard, StyleSheet, TouchableWithoutFeedback} from "react-native";
 import Date from "./DateTime/Date";
 import Time from "./DateTime/Time"
 import Category from "./Category";
 
-
 const RecordForm = () => {
-    const navigation = useNavigation();
     const [incomePressed, setIncomePressed] = useState(false);
-    const [expensePressed, setExpensePressed] = useState(false);
+    const [expensePressed, setExpensePressed] = useState(true);
+    const [bankPressed, setBankPressed] = useState(false);
+    const [cashPressed, setCashPressed] = useState(true);
     const [modalVisible, setModalVisible] = React.useState(false);
 
     const [selectedCategory,setSelectedCategory]=useState("tag-plus" );
@@ -42,49 +41,86 @@ const RecordForm = () => {
         setExpensePressed(true);
         setIncomePressed(false);
     };
+    const handleBankPress = () => {
+        setBankPressed(true);
+        setCashPressed(false);
+    };
+
+    const handleCashPress = () => {
+        setCashPressed(true);
+        setBankPressed(false);
+    };
+
+    const [placeholder, setPlaceholder] = useState('-0');
+    const [placeholderColor, setPlaceholderColor] = useState(Colors.Red);
+
+    const inputRef = useRef();
+
+    useEffect(()=> {
+        if (inputRef.current){
+            inputRef.current.focus();
+        }
+    }, [])
+
     return (
-        <NativeBaseProvider>
+        <NativeBaseProvider theme={theme}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
                 <VStack space={4} w="94%">
                     <Box w="100%" rounded="2xl" shadow={3} bg="white">
                         <VStack paddingX={4} paddingY={3} space={4}>
-                            <Box h="50px" bg={Colors.BGColor} rounded="9999" alignItems={"center"} justifyContent={"center"}>
+                            <Box h="50px" bg={Colors.BGColor} rounded="2xl" alignItems={"center"} justifyContent={"center"}>
                                 <HStack space={1}>
-                                    <Button
-                                        onPress={handleIncomePress}
-                                        backgroundColor={"white"}
-                                        bg={incomePressed ? 'green.500' : 'white'}
-                                        borderRadius={'full'}
-                                        w={'48%'}
-                                        size={'md'}
-                                        alignSelf="center"
+                                    <Pressable w='48%'
+                                               borderRadius={20}
+                                               height={34}
+                                               justifyContent='center'
+                                               onPress={()=>{
+                                                   handleExpensePress();
+                                                   setPlaceholder('-0');
+                                                   setPlaceholderColor(Colors.Red);
+                                               }}
+                                               style={{backgroundColor: expensePressed ? '#EF4444' : 'white'}}
                                     >
-                                        <Text color={incomePressed ? 'white' : 'black'}>Income</Text>
-                                    </Button>
-                                    <Button
-                                        onPress={handleExpensePress}
-                                        backgroundColor={"white"}
-                                        bg={expensePressed ? 'red.500' : 'white'}
-                                        borderRadius={'full'}
-                                        w={'48%'}
-                                        size={'md'}
-                                        alignSelf="center"
+                                        <Text fontSize={14}
+                                              color={(expensePressed ? 'white':'black')}
+                                              alignSelf='center'
+                                        >
+                                            Expense
+                                        </Text>
+                                    </Pressable>
+                                    <Pressable w='48%'
+                                               borderRadius={20}
+                                               height={34}
+                                               justifyContent='center'
+                                               onPress={()=>{
+                                                   handleIncomePress();
+                                                   setPlaceholder('+0');
+                                                   setPlaceholderColor(Colors.Green);
+                                               }}
+                                               style={{backgroundColor: incomePressed ? '#16A34A' : 'white'}}
                                     >
-                                        <Text color={expensePressed ? 'white' : 'black'}>EXPENSE</Text>
-                                    </Button>
+                                        <Text fontSize={14}
+                                              color={(incomePressed ? 'white':'black')}
+                                              alignSelf='center'
+                                        >
+                                            Income
+                                        </Text>
+                                    </Pressable>
                                 </HStack>
                             </Box>
                             <VStack space={2}>
                                 <Text fontSize={20} fontWeight="medium">Amount</Text>
                                 <Input
+                                    ref={inputRef}
                                     variant="filled"
-                                    placeholder="-0"
+                                    placeholder={placeholder}
                                     InputLeftElement={
                                         <Text fontWeight="bold" paddingLeft={4}>
                                             LKR
                                         </Text>
                                     }
-                                    placeholderTextColor={Colors.Red}
+                                    placeholderTextColor={placeholderColor}
                                     bg={Colors.BGColor}
                                     rounded="20"
                                     h="80px"
@@ -93,26 +129,37 @@ const RecordForm = () => {
                                     caretHidden={true}
                                     borderWidth={0}
                                     keyboardType="numeric"
-                                    color={Colors.Red}
+                                    color={placeholderColor}
                                 />
                             </VStack>
                             <VStack>
-                                <Text fontSize={16} fontWeight="medium">Payment type</Text>
+                                <Text fontSize={16} fontWeight="medium">Account type</Text>
                                 <HStack space={20}>
-                                    <IconButton
-                                        icon={<FontAwesome6 name="credit-card" size={36} color={Colors.IconColor} />}
-                                        _pressed={{
-                                            _icon: {color: Colors.Blue}
-                                        }}
-                                        bgColor="transparent"
-                                    />
-                                    <IconButton
-                                        icon={<FontAwesome6 name="money-bill-1" size={38} color={Colors.IconColor}/>}
-                                        bgColor="transparent"
-                                        _pressed={{
-                                            _icon: {color: Colors.Blue}
-                                        }}
-                                    />
+                                    <VStack alignItems='center'>
+                                        <IconButton
+                                            icon={<MaterialCommunityIcons name="piggy-bank-outline" size={36}  color={bankPressed ? Colors.Blue : Colors.IconColor} />}
+                                            onPress={()=>{handleBankPress()}}
+                                            bgColor="transparent"
+                                        />
+                                        <Text fontSize={14} color={bankPressed ? Colors.Blue : Colors.IconColor} fontWeight='normal'>
+                                            Bank
+                                        </Text>
+                                    </VStack>
+
+                                    <VStack alignItems='center'>
+                                        <IconButton
+                                            icon={<MaterialCommunityIcons name="account-cash-outline"
+                                                                          size={36}
+                                                                          color={cashPressed ? Colors.Blue : Colors.IconColor}
+                                            />}
+                                            onPress={()=>{handleCashPress()}}
+                                            bgColor="transparent"
+                                        />
+                                        <Text fontSize={14} color={cashPressed ? Colors.Blue : Colors.IconColor} fontWeight='normal'>
+                                            Cash
+                                        </Text>
+                                    </VStack>
+
                                 </HStack>
                             </VStack>
                             <VStack>
@@ -151,11 +198,12 @@ const RecordForm = () => {
                             </VStack>
                         </VStack>
                     </Box>
-                    <Button bg={Colors.Blue} borderRadius={"full"} w={320} size="md" alignSelf="center">
+                    <Button bg={Colors.DBlue} borderRadius={"full"} w={320} size="md" alignSelf="center">
                         Save
                     </Button>
                 </VStack>
             </View>
+            </TouchableWithoutFeedback>
         </NativeBaseProvider>
     );
 };
@@ -166,7 +214,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.BGColor,
         alignItems: 'center',
         flex: 1,
-
     }
 })
 export default RecordForm;

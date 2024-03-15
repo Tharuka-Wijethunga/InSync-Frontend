@@ -99,7 +99,6 @@ const CategoryModal = ({modalVisible, setModalVisible,setSelectedCategory,setAva
                                 />
                             </HStack>
                         </VStack>
-
                     </ScrollView>
                 </VStack>
 
