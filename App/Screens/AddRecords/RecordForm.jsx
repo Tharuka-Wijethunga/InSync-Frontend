@@ -1,4 +1,4 @@
-import React ,{useState, useRef, useEffect} from 'react';
+import React ,{useState, useRef} from 'react';
 import {
     Box,
     Button,
@@ -10,8 +10,8 @@ import {
     View,
     VStack,
     Avatar,
-    Spacer,
-    Pressable
+    Pressable,
+    Spacer
 } from "native-base";
 import Colors from "../../Config/Colors";
 import {MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
@@ -19,6 +19,7 @@ import {Keyboard, StyleSheet, TouchableWithoutFeedback} from "react-native";
 import Date from "./DateTime/Date";
 import Time from "./DateTime/Time"
 import Category from "./Category";
+import {useFocusEffect} from "@react-navigation/native";
 
 const RecordForm = () => {
     const [incomePressed, setIncomePressed] = useState(false);
@@ -29,7 +30,7 @@ const RecordForm = () => {
 
     const [selectedCategory,setSelectedCategory]=useState("tag-plus" );
     const [avatarColor,setAvatarColor]=useState(Colors.IconColor);
-    const [categorydName,setCategorydName]=useState("Select a Category");
+    const [categoryName,setCategoryName]=useState("Select a Category");
 
 
     const handleIncomePress = () => {
@@ -51,24 +52,28 @@ const RecordForm = () => {
         setBankPressed(false);
     };
 
-    const [placeholder, setPlaceholder] = useState('-0');
+    const [element, setElement] = useState('-');
     const [placeholderColor, setPlaceholderColor] = useState(Colors.Red);
 
+    // Keyboard popup each time the AddRecord tab is opened
     const inputRef = useRef();
 
-    useEffect(()=> {
-        if (inputRef.current){
-            inputRef.current.focus();
-        }
-    }, [])
+    useFocusEffect(
+        React.useCallback(()=>{
+            if (inputRef.current) {
+                inputRef.current.focus();
+            }
+        },[])
+    );
 
     return (
-        <NativeBaseProvider theme={theme}>
+        <NativeBaseProvider>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
                 <VStack space={4} w="94%">
                     <Box w="100%" rounded="2xl" shadow={3} bg="white">
                         <VStack paddingX={4} paddingY={3} space={4}>
+                            {/* Expense/Income selection */}
                             <Box h="50px" bg={Colors.BGColor} rounded="2xl" alignItems={"center"} justifyContent={"center"}>
                                 <HStack space={1}>
                                     <Pressable w='48%'
@@ -77,7 +82,7 @@ const RecordForm = () => {
                                                justifyContent='center'
                                                onPress={()=>{
                                                    handleExpensePress();
-                                                   setPlaceholder('-0');
+                                                   setElement('-');
                                                    setPlaceholderColor(Colors.Red);
                                                }}
                                                style={{backgroundColor: expensePressed ? '#EF4444' : 'white'}}
@@ -95,7 +100,7 @@ const RecordForm = () => {
                                                justifyContent='center'
                                                onPress={()=>{
                                                    handleIncomePress();
-                                                   setPlaceholder('+0');
+                                                   setElement('+');
                                                    setPlaceholderColor(Colors.Green);
                                                }}
                                                style={{backgroundColor: incomePressed ? '#16A34A' : 'white'}}
@@ -109,16 +114,22 @@ const RecordForm = () => {
                                     </Pressable>
                                 </HStack>
                             </Box>
+                            {/* Input Field */}
                             <VStack space={2}>
                                 <Text fontSize={20} fontWeight="medium">Amount</Text>
                                 <Input
                                     ref={inputRef}
                                     variant="filled"
-                                    placeholder={placeholder}
+                                    placeholder={'0'}
                                     InputLeftElement={
-                                        <Text fontWeight="bold" paddingLeft={4}>
-                                            LKR
-                                        </Text>
+                                        <HStack space={4} alignItems='center' >
+                                            <Text fontWeight="semibold" paddingLeft={4} marginTop={30} fontSize={14}>
+                                                LKR
+                                            </Text>
+                                            <Text fontSize={42} color={placeholderColor}>
+                                                {element}
+                                            </Text>
+                                        </HStack>
                                     }
                                     placeholderTextColor={placeholderColor}
                                     bg={Colors.BGColor}
@@ -132,20 +143,10 @@ const RecordForm = () => {
                                     color={placeholderColor}
                                 />
                             </VStack>
+                            {/* Account type Selection */}
                             <VStack>
                                 <Text fontSize={16} fontWeight="medium">Account type</Text>
                                 <HStack space={20}>
-                                    <VStack alignItems='center'>
-                                        <IconButton
-                                            icon={<MaterialCommunityIcons name="piggy-bank-outline" size={36}  color={bankPressed ? Colors.Blue : Colors.IconColor} />}
-                                            onPress={()=>{handleBankPress()}}
-                                            bgColor="transparent"
-                                        />
-                                        <Text fontSize={14} color={bankPressed ? Colors.Blue : Colors.IconColor} fontWeight='normal'>
-                                            Bank
-                                        </Text>
-                                    </VStack>
-
                                     <VStack alignItems='center'>
                                         <IconButton
                                             icon={<MaterialCommunityIcons name="account-cash-outline"
@@ -159,12 +160,21 @@ const RecordForm = () => {
                                             Cash
                                         </Text>
                                     </VStack>
-
+                                    <VStack alignItems='center'>
+                                        <IconButton
+                                            icon={<MaterialCommunityIcons name="piggy-bank-outline" size={36}  color={bankPressed ? Colors.Blue : Colors.IconColor} />}
+                                            onPress={()=>{handleBankPress()}}
+                                            bgColor="transparent"
+                                        />
+                                        <Text fontSize={14} color={bankPressed ? Colors.Blue : Colors.IconColor} fontWeight='normal'>
+                                            Bank
+                                        </Text>
+                                    </VStack>
                                 </HStack>
                             </VStack>
+                            {/* Category selection */}
                             <VStack>
                                 <Text fontSize={16} fontWeight="medium" paddingBottom={1}>Category</Text>
-
                                 <Pressable
                                     onPress={() => setModalVisible(!modalVisible)}
                                     borderRadius="full"
@@ -177,17 +187,19 @@ const RecordForm = () => {
                                             <MaterialCommunityIcons name={selectedCategory} size={25} color={"white"}/>
                                         </Avatar>
 
-                                            <Text fontWeight={"medium"}>{categorydName}</Text>
+                                            <Text fontWeight={"medium"}>{categoryName}</Text>
                                         <Spacer/>
                                             <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
                                             <Category setSelectedCategory={setSelectedCategory}
                                                       setAvatarColor={setAvatarColor}
-                                                      setCategorydName={setCategorydName}
+                                                      setCategorydName={setCategoryName}
                                                       modalVisible={modalVisible}
-                                                      setModalVisible={setModalVisible}/>
+                                                      setModalVisible={setModalVisible}
+                                            />
                                     </HStack>
                                 </Pressable>
                             </VStack>
+                            {/* Date & Time picker */}
                             <VStack space={3}>
                                 <Text fontSize={16} fontWeight="medium">Date & Time</Text>
                                 <HStack paddingLeft={2} space={2} alignItems={"center"}>
@@ -198,6 +210,7 @@ const RecordForm = () => {
                             </VStack>
                         </VStack>
                     </Box>
+                    {/* Save button */}
                     <Button bg={Colors.DBlue} borderRadius={"full"} w={320} size="md" alignSelf="center">
                         Save
                     </Button>
