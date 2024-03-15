@@ -43,7 +43,6 @@ const CategoryModal = ({modalVisible, setModalVisible}) => {
                                 <CatIcon icon={<MaterialCommunityIcons name="menu" size={30} color="white" />} color={"rose.400"} name="Other"/>
                             </HStack>
                         </VStack>
-
                     </ScrollView>
                 </VStack>
 
