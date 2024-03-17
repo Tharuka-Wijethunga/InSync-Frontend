@@ -18,7 +18,7 @@ import {MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {Keyboard, StyleSheet, TouchableWithoutFeedback} from "react-native";
 import Date from "./DateTime/Date";
 import Time from "./DateTime/Time"
-import Category from "./Category";
+import Category from "./Category/Category";
 import {useFocusEffect} from "@react-navigation/native";
 
 const RecordForm = () => {
@@ -72,9 +72,9 @@ const RecordForm = () => {
             <View style={styles.container}>
                 <VStack space={4} w="94%">
                     <Box w="100%" rounded="2xl" shadow={3} bg="white">
-                        <VStack paddingX={4} paddingY={3} space={4}>
+                        <VStack paddingX={4} h="84%" space={4}>
                             {/* Expense/Income selection */}
-                            <Box h="50px" bg={Colors.BGColor} rounded="2xl" alignItems={"center"} justifyContent={"center"}>
+                            <Box h="50px" bg={Colors.BGColor} rounded="2xl" alignItems={"center"} justifyContent={"center"} marginTop={3}>
                                 <HStack space={1}>
                                     <Pressable w='48%'
                                                borderRadius={20}
@@ -211,7 +211,7 @@ const RecordForm = () => {
                         </VStack>
                     </Box>
                     {/* Save button */}
-                    <Button bg={Colors.DBlue} borderRadius={"full"} w={320} size="md" alignSelf="center">
+                    <Button bg={Colors.DBlue} borderRadius={"full"} w={320} size="md" alignSelf="center" marginTop={4}>
                         Save
                     </Button>
                 </VStack>
