@@ -2,8 +2,7 @@ import React from 'react';
 import {StyleSheet, Platform} from "react-native";
 import {HStack, IconButton, Modal, Text, View} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
-import Records from "./Records";
-
+import Records from "../Records";
 const RecentActivities = ({modalVisible, setModalVisible}) => {
     return (
         <Modal isOpen={modalVisible} animationPreset="slide">
