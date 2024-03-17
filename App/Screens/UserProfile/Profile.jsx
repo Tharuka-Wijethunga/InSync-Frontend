@@ -1,6 +1,6 @@
 import React from 'react';
 import Colors from "../../Config/Colors";
-import {Text, Box, HStack, VStack, Avatar, Spacer, IconButton, View} from "native-base";
+import {Text, Box, HStack, VStack, Avatar, Spacer, IconButton, View,Button} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
@@ -23,54 +23,59 @@ export default function Profile() {
                 </HStack>
             </Box>
 
-            <Box backgroundColor={"white"}  w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3} padding={3}>
-                <VStack space={2}>
+            <Box backgroundColor={"white"}  w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3} padding={1} >
+                <VStack>
+                    <Button
+                        variant="ghost"
+                        borderRadius={30}
+                        w={"100%"}
+                        _pressed={{
+                            bg: "blueGray.200:alpha.50",
+                        }}
+                        onPress={() => navigation.navigate("EditProfile")}
+                    >
                     <HStack  justifyContent="space-between"  alignItems={"center"}  w={"100%"} space={3} >
                         <Avatar size={42} bgColor={Colors.Blue}><FontAwesome6 name="edit" size={24} color="white" /></Avatar>
                         <Text  fontSize={16}>Edit Profile</Text>
                         <Spacer/>
-                        <View>
-                            <IconButton
-                                icon={<MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>}
-                                borderRadius={"full"}
-                                _pressed={{
-                                    bg: "blueGray.200:alpha.50"
-                                }}
-                                onPress={() => navigation.navigate("EditProfile")}
-                            />
-                        </View>
+                            <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
                     </HStack>
+                    </Button>
 
+                    <Button
+                        variant="ghost"
+                        borderRadius={30}
+                        w={"100%"}
+                        _pressed={{
+                            bg: "blueGray.200:alpha.50",
+                        }}
+                        onPress={() => navigation.navigate("Help")}
+                    >
                     <HStack  justifyContent="space-between"  alignItems={"center"}  w={"100%"} space={3} >
                         <Avatar size={42} bgColor={Colors.Blue}><MaterialCommunityIcons name="help" size={24} color="white" /></Avatar>
                         <Text  fontSize={16}>Help</Text>
                         <Spacer/>
-                        <View>
-                            <IconButton
-                                icon={<MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>}
-                                borderRadius={"full"}
-                                _pressed={{
-                                    bg: "blueGray.200:alpha.50"
-                                }}
-                                onPress={() => navigation.navigate("Help")}
-                            />
-                        </View>
+                            <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
                     </HStack>
-                    <HStack   alignItems={"center"}  w={"100%"} space={3} >
+                    </Button>
+
+
+                    <Button
+                        variant="ghost"
+                        borderRadius={30}
+                        w={"100%"}
+                        _pressed={{
+                            bg: "blueGray.200:alpha.50",
+                        }}
+                        onPress={() => navigation.reset({index: 0, routes: [{name: 'SignupNavigator'}]})}
+                    >
+                    <HStack  justifyContent="space-between" alignItems={"center"}  w={"100%"} space={3} >
                         <Avatar size={42} bgColor={Colors.Red}><MaterialIcons name="logout" size={24} color="white" /></Avatar>
                         <Text  fontSize={16} color={Colors.Red}>Log Out</Text>
                         <Spacer/>
-                        <View>
-                            <IconButton
-                                icon={<MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>}
-                                borderRadius={"full"}
-                                _pressed={{
-                                    bg: "blueGray.200:alpha.50"
-                                }}
-                                onPress={() => navigation.reset({index: 0, routes: [{name: 'SignupNavigator'}]})}
-                            />
-                        </View>
+                            <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
                     </HStack>
+                    </Button>
                 </VStack>
             </Box>
         </VStack>
