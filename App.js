@@ -1,20 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import {NativeBaseProvider, Text, View, VStack} from "native-base";
+import AppNavigation from "./App/Navigations/AppNavigation";
+import {useEffect, useState} from "react";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const SplashScreen = () => {
+    return (
+        <NativeBaseProvider>
+            <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <VStack space={1}>
+                    <Text fontSize={50} fontWeight="bold">InSync</Text>
+                    <Text fontWeight="medium" fontSize={18}>Financial Forecasting</Text>
+                </VStack>
+            </View>
+        </NativeBaseProvider>
+        )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+    const [isLoading, setIsLoading] = useState(true)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isFirstTime, setIsFirstTime] = useState(false)
+
+    // Fake fetching user, that takes 2 seconds, and just set the
+    // isLoading to false. The idea is to show the SplashScreen, and then,
+    // go home, OnBoarding, or Login.
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setIsLoading(false)
+        }, 2000)
+
+        return () => { clearTimeout(timeout) }
+    }, [])
+
+    // Calculate what the initial route is going to be, depending
+    // on the user state, and first time usage. This can be read
+    // from anywhere, db, shared preferences, user defaults, storage, etc.
+    const initialRoute = () => {
+        if (isLoggedIn) return 'TabNavigation';
+        if (isFirstTime) return 'Signup';
+
+        return 'Login'
+    }
+
+    if (isLoading) return <SplashScreen />
+
+    return (
+        <NativeBaseProvider>
+            <AppNavigation initialRoute={initialRoute} />
+        </NativeBaseProvider>
+    )
+}
+
