@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { HStack, IconButton, Modal, ScrollView, Text, View, VStack} from "native-base";
 import { MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
-import CatButton from "./CatButton";
+import CatButton from "../CatButton";
 
 const CategoryModal = ({modalVisible, setModalVisible,setSelectedCategory,setAvatarColor,setCategorydName}) => {
     const handelSelectedCategory=(icon,avatarColor,catName)=>{
