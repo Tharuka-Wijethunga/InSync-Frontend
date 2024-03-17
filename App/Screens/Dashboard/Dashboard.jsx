@@ -15,7 +15,7 @@ import {
 import BalanceCard from "./BalanceCard";
 import {MaterialIcons} from '@expo/vector-icons';
 import Records from "./Records";
-import RecentActivities from "./RecentActivities";
+import RecentActivities from "./RecentActivities/RecentActivities";
 import UpcomingCard from "./UpcomingCard";
 import DailyExpense from "./DailyExpense";
 

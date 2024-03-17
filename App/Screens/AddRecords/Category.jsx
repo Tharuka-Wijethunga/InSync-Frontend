@@ -11,8 +11,8 @@ const CategoryModal = ({modalVisible, setModalVisible,setSelectedCategory,setAva
         setModalVisible(false);
     }
     return (
-        <Modal isOpen={modalVisible} animationPreset="slide" safeAreaTop={12} backdropVisible={true} >
-            <View backgroundColor={"white"} h="83%" w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3}>
+        <Modal isOpen={modalVisible} animationPreset="slide"  backdropVisible={true} >
+            <View backgroundColor={"white"}  marginTop={"30%"} marginBottom={"15%"}  w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3}>
                 <VStack h="100%" alignSelf="center" paddingTop={2} >
                     <HStack justifyContent="space-between" alignItems="center" paddingLeft={4} >
                         <IconButton
