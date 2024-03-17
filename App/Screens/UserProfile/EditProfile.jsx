@@ -65,7 +65,7 @@ const EditProfile = ({ navigation }) => {
                         Edit Profile
                     </Text>
                 </HStack>
-                <View h={0.5} w={"100%"} bg="gray.400" />
+                <View h={0.480} bg="black"/>
 
                 <VStack space={3} padding={5}>
                     <FormControl isInvalid={'firstName' in errors}>

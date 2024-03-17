@@ -19,7 +19,7 @@ export default function Help(){
                 <Text fontSize={18} fontWeight={"medium"} paddingRight={6} >Help</Text>
             </HStack>
 
-            <View h={0.5} w={"100%"} bg="gray.400"/>
+            <View h={0.480} bg="black"/>
             <VStack space={5} padding={5} >
                 <Text fontWeight={"medium"} fontSize={24} paddingBottom={5} >How To Use:</Text>
                 <Text fontSize={15}>- Dashboard Insights: Explore your dashboard for a quick overview of your financial status.</Text>
