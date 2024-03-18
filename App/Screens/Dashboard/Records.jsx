@@ -92,7 +92,7 @@ const Records = ({maxLines=null}) => {
     ];
     return (
         <FlatList data={maxLines ? data.slice(0, maxLines) : data} renderItem={({item}) =>
-            <HStack space={[2, 3]} justifyContent="space-between" paddingTop={4} flex={1}>
+            <HStack space={[2, 3]} justifyContent="space-between" paddingBottom={4} flex={1}>
                 <Avatar size="42px" bgColor={Colors.Blue}>
                     {item.icon}
                 </Avatar>

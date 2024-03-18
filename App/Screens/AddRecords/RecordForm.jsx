@@ -20,51 +20,17 @@ import Date from "./DateTime/Date";
 import Time from "./DateTime/Time"
 import Category from "./Category/Category";
 import {useFocusEffect} from "@react-navigation/native";
+import IncomeExpenseInput from "./IncomeExpenseInput";
+import AccountType from "./AccountType";
 
 const RecordForm = () => {
-    const [incomePressed, setIncomePressed] = useState(false);
-    const [expensePressed, setExpensePressed] = useState(true);
-    const [bankPressed, setBankPressed] = useState(false);
-    const [cashPressed, setCashPressed] = useState(true);
+
+
     const [modalVisible, setModalVisible] = React.useState(false);
 
     const [selectedCategory,setSelectedCategory]=useState("tag-plus" );
     const [avatarColor,setAvatarColor]=useState(Colors.IconColor);
     const [categoryName,setCategoryName]=useState("Select a Category");
-
-
-    const handleIncomePress = () => {
-        setIncomePressed(true);
-        setExpensePressed(false);
-    };
-
-    const handleExpensePress = () => {
-        setExpensePressed(true);
-        setIncomePressed(false);
-    };
-    const handleBankPress = () => {
-        setBankPressed(true);
-        setCashPressed(false);
-    };
-
-    const handleCashPress = () => {
-        setCashPressed(true);
-        setBankPressed(false);
-    };
-
-    const [element, setElement] = useState('-');
-    const [placeholderColor, setPlaceholderColor] = useState(Colors.Red);
-
-    // Keyboard popup each time the AddRecord tab is opened
-    const inputRef = useRef();
-
-    useFocusEffect(
-        React.useCallback(()=>{
-            if (inputRef.current) {
-                inputRef.current.focus();
-            }
-        },[])
-    );
 
     return (
         <NativeBaseProvider>
@@ -73,105 +39,8 @@ const RecordForm = () => {
                 <VStack space={4} w="94%">
                     <Box w="100%" rounded="2xl" shadow={3} bg="white">
                         <VStack paddingX={4} h="84%" space={4}>
-                            {/* Expense/Income selection */}
-                            <Box h="50px" bg={Colors.BGColor} rounded="2xl" alignItems={"center"} justifyContent={"center"} marginTop={3}>
-                                <HStack space={1}>
-                                    <Pressable w='48%'
-                                               borderRadius={20}
-                                               height={34}
-                                               justifyContent='center'
-                                               onPress={()=>{
-                                                   handleExpensePress();
-                                                   setElement('-');
-                                                   setPlaceholderColor(Colors.Red);
-                                               }}
-                                               style={{backgroundColor: expensePressed ? '#EF4444' : 'white'}}
-                                    >
-                                        <Text fontSize={14}
-                                              color={(expensePressed ? 'white':'black')}
-                                              alignSelf='center'
-                                        >
-                                            Expense
-                                        </Text>
-                                    </Pressable>
-                                    <Pressable w='48%'
-                                               borderRadius={20}
-                                               height={34}
-                                               justifyContent='center'
-                                               onPress={()=>{
-                                                   handleIncomePress();
-                                                   setElement('+');
-                                                   setPlaceholderColor(Colors.Green);
-                                               }}
-                                               style={{backgroundColor: incomePressed ? '#16A34A' : 'white'}}
-                                    >
-                                        <Text fontSize={14}
-                                              color={(incomePressed ? 'white':'black')}
-                                              alignSelf='center'
-                                        >
-                                            Income
-                                        </Text>
-                                    </Pressable>
-                                </HStack>
-                            </Box>
-                            {/* Input Field */}
-                            <VStack space={2}>
-                                <Text fontSize={20} fontWeight="medium">Amount</Text>
-                                <Input
-                                    ref={inputRef}
-                                    variant="filled"
-                                    placeholder={'0'}
-                                    InputLeftElement={
-                                        <HStack space={4} alignItems='center' >
-                                            <Text fontWeight="semibold" paddingLeft={4} marginTop={30} fontSize={14}>
-                                                LKR
-                                            </Text>
-                                            <Text fontSize={42} color={placeholderColor}>
-                                                {element}
-                                            </Text>
-                                        </HStack>
-                                    }
-                                    placeholderTextColor={placeholderColor}
-                                    bg={Colors.BGColor}
-                                    rounded="20"
-                                    h="80px"
-                                    fontSize={48}
-                                    textAlign="right"
-                                    caretHidden={true}
-                                    borderWidth={0}
-                                    keyboardType="numeric"
-                                    color={placeholderColor}
-                                />
-                            </VStack>
-                            {/* Account type Selection */}
-                            <VStack>
-                                <Text fontSize={16} fontWeight="medium">Account type</Text>
-                                <HStack space={20}>
-                                    <VStack alignItems='center'>
-                                        <IconButton
-                                            icon={<MaterialCommunityIcons name="account-cash-outline"
-                                                                          size={36}
-                                                                          color={cashPressed ? Colors.Blue : Colors.IconColor}
-                                            />}
-                                            onPress={()=>{handleCashPress()}}
-                                            bgColor="transparent"
-                                        />
-                                        <Text fontSize={14} color={cashPressed ? Colors.Blue : Colors.IconColor} fontWeight='normal'>
-                                            Cash
-                                        </Text>
-                                    </VStack>
-                                    <VStack alignItems='center'>
-                                        <IconButton
-                                            icon={<MaterialCommunityIcons name="piggy-bank-outline" size={36}  color={bankPressed ? Colors.Blue : Colors.IconColor} />}
-                                            onPress={()=>{handleBankPress()}}
-                                            bgColor="transparent"
-                                        />
-                                        <Text fontSize={14} color={bankPressed ? Colors.Blue : Colors.IconColor} fontWeight='normal'>
-                                            Bank
-                                        </Text>
-                                    </VStack>
-                                </HStack>
-                            </VStack>
+                            <IncomeExpenseInput/>
+                            <AccountType/>
                             {/* Category selection */}
                             <VStack>
                                 <Text fontSize={16} fontWeight="medium" paddingBottom={1}>Category</Text>
@@ -227,6 +96,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.BGColor,
         alignItems: 'center',
         flex: 1,
+        paddingTop: 15
     }
 })
 export default RecordForm;
