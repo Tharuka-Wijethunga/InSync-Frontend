@@ -123,19 +123,14 @@ const EditProfile = ({ navigation }) => {
                     </FormControl>
                 </VStack>
             </Box>
-            <Button
-                marginTop={4}
-                w="94%"
-                overflow={"hidden"}
-                rounded="full"
-                alignSelf="center"
-                shadow={3}
-                backgroundColor={Colors.Blue}
-                onPress={handleSubmit}
-            >
-                <Text fontSize={16} fontWeight={"medium"} color={"white"}>
-                    Save
-                </Text>
+            <Button bg={Colors.DBlue}
+                    borderRadius={"full"}
+                    w="94%"
+                    size="md"
+                    alignSelf="center"
+                    marginTop={4}
+                    onPress={handleSubmit}>
+                Save
             </Button>
         </View>
     );
