@@ -25,7 +25,7 @@ export default function Dashboard() {
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 30}}>
                     <Center>
                         <VStack space={3} w={"97%"} h={"96%"}>
                             <HStack>
@@ -40,8 +40,8 @@ export default function Dashboard() {
                             </HStack>
                             <HStack flexGrow={1} flex={1}>
                                 <Box w="100%" bg="white" borderRadius="2xl" shadow={3}>
-                                    <VStack padding={4}>
-                                        <View mb={2}>
+                                    <VStack paddingTop={4} paddingX={4} paddingBottom={2}>
+                                        <View mb={2} paddingBottom={4}>
                                             <Text fontWeight="medium" fontSize="20">
                                                 Recent Activities
                                             </Text>
