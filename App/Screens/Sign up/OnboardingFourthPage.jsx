@@ -6,13 +6,36 @@ import Colors from '../../Config/Colors';
 import {useNavigation} from "@react-navigation/native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
-const OnboardingFourthPage = () => {
+const OnboardingFourthPage = ({ route }) => {
     const navigation = useNavigation();
+
+    //getting all the data from the previous onboarding pages
+    const { incomeRange,carVanChecked, bikeChecked, threeWheelerChecked, noneChecked,loanAmount } = route.params;
     const handleBack = () => {
         navigation.goBack();
     };
     const handleNext = () => {
         navigation.reset({index: 0, routes: [{name: 'TabNavigation'}]});
+
+        //post request to pass this data to the backend
+        fetch('http://192.168.107.230:8000/onBoarding/data/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                incomeRange:incomeRange,
+                car:carVanChecked,
+                bike:bikeChecked,
+                threeWheeler:threeWheelerChecked,
+                none:noneChecked,
+                loanAmount:loanAmount,
+            })
+        })
+            .then(response => {
+                console.log("successfully added");
+            })
+            .catch(error => console.error(error));
     };
 
     const windowHeight = Dimensions.get('window').height;
