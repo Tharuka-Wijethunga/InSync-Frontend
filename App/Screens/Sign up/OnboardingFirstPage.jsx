@@ -9,7 +9,6 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const OnboardingFirstPage = () => {
     const navigation = useNavigation();
-
     const [incomeRange, setIncomeRange] = useState('');
 
     const handleBack = () => {
@@ -18,7 +17,8 @@ const OnboardingFirstPage = () => {
 
     const handleNext = () => {
         if (incomeRange !== '') {
-            navigation.navigate({name: 'OnboardingSecondPage'});
+            //navigate to second page and pass incomeRage data
+            navigation.navigate('OnboardingSecondPage', { incomeRange: incomeRange });
         } else {
             alert('Please give an income range.');
         }

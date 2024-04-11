@@ -6,8 +6,11 @@ import Colors from '../../Config/Colors';
 import {useNavigation} from "@react-navigation/native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
-const OnboardingSecondPage = () => {
+const OnboardingSecondPage = ({ route }) => {
     const navigation = useNavigation();
+
+    //get incomeRange data
+    const { incomeRange } = route.params;
 
     const [carVanChecked, setCarVanChecked] = useState(false);
     const [bikeChecked, setBikeChecked] = useState(false);
@@ -19,7 +22,15 @@ const OnboardingSecondPage = () => {
 
     const handleNext = () => {
         if (carVanChecked || bikeChecked || threeWheelerChecked || noneChecked) {
-            navigation.navigate({name: 'OnboardingThirdPage'});
+
+            //navigate to next page and pass incomeRage data also with the carVanChecked etc... data.
+            navigation.navigate('OnboardingThirdPage', {
+                incomeRange: incomeRange,
+                carVanChecked: carVanChecked,
+                bikeChecked: bikeChecked,
+                threeWheelerChecked: threeWheelerChecked,
+                noneChecked: noneChecked,
+            });
         } else {
             alert('Please select at least one asset option.');
         }

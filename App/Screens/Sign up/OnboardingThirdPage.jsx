@@ -13,8 +13,10 @@ import {useNavigation} from "@react-navigation/native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
-const OnboardingThirdPage = () => {
+const OnboardingThirdPage = ({ route }) => {
     const navigation = useNavigation();
+
+    const { incomeRange,carVanChecked, bikeChecked, threeWheelerChecked, noneChecked } = route.params;
 
     const [loanAmount, setLoanAmount] = useState('');
 
@@ -22,7 +24,14 @@ const OnboardingThirdPage = () => {
         navigation.goBack();
     };
     const handleNext = () => {
-        navigation.navigate({name: 'OnboardingFourthPage'});
+        navigation.navigate('OnboardingFourthPage',{
+            incomeRange: incomeRange,
+            carVanChecked: carVanChecked,
+            bikeChecked: bikeChecked,
+            threeWheelerChecked: threeWheelerChecked,
+            noneChecked: noneChecked,
+            loanAmount:loanAmount,
+        });
     };
     const windowHeight = Dimensions.get('window').height;
     return (
