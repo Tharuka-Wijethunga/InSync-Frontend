@@ -18,7 +18,7 @@ const OnboardingFourthPage = ({ route }) => {
         navigation.reset({index: 0, routes: [{name: 'TabNavigation'}]});
 
         //post request to pass this data to the backend
-        fetch('http://192.168.107.230:8000/onBoarding/data/', {
+        fetch('http://172.20.10.8:8000/onBoarding/data/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
