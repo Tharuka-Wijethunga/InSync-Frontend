@@ -1,5 +1,5 @@
 import {StyleSheet} from "react-native";
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import Colors from "../../Config/Colors";
 import {
     Box,
@@ -18,10 +18,33 @@ import Records from "./Records";
 import RecentActivities from "./RecentActivities/RecentActivities";
 import UpcomingCard from "./UpcomingCard";
 import DailyExpense from "./DailyExpense";
+import axios from "axios";
 
 
 export default function Dashboard() {
-    const [modalVisible, setModalVisible] = React.useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [cashBalance, setCashBalance] = useState(0);
+    const [bankBalance, setBankBalance] = useState(0);
+
+    //Read cash balance
+    useEffect(() => {
+        axios.get('http://172.20.10.8:8002/api/dashboard/account?type=cash')
+            .then(response => {
+                setCashBalance(response.data)
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        axios.get('http://172.20.10.8:8002/api/dashboard/account?type=bank')
+            .then(response => {
+                setBankBalance(response.data)
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    },[]);
+
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
@@ -32,8 +55,8 @@ export default function Dashboard() {
                                 <DailyExpense/>
                             </HStack>
                             <HStack space={3} alignSelf="center">
-                                <BalanceCard account="Bank" balance="36000"/>
-                                <BalanceCard account="Cash" balance="23500"/>
+                                <BalanceCard account="Bank" balance={bankBalance}/>
+                                <BalanceCard account="Cash" balance={cashBalance}/>
                             </HStack>
                             <HStack>
                                 <UpcomingCard/>
