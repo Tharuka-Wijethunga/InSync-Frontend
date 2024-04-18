@@ -3,18 +3,20 @@ import {HStack, IconButton, Text, VStack} from "native-base";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import Colors from "../../Config/Colors";
 
-const AccountType = () => {
+const AccountType = ({setAccount}) => {
     const [bankPressed, setBankPressed] = useState(false);
     const [cashPressed, setCashPressed] = useState(true);
 
     const handleBankPress = () => {
         setBankPressed(true);
         setCashPressed(false);
+        setAccount("bank");
     };
 
     const handleCashPress = () => {
         setCashPressed(true);
         setBankPressed(false);
+        setAccount("cash");
     };
 
     return (

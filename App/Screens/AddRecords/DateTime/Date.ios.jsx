@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {HStack, IconButton, Input, View} from "native-base";
+import {View} from "native-base";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 

@@ -3,18 +3,20 @@ import {Box, HStack, Input, Pressable, Text, VStack} from "native-base";
 import Colors from "../../Config/Colors";
 import {useFocusEffect} from "@react-navigation/native";
 
-const IncomeExpenseInput = () => {
+const IncomeExpenseInput = ({setType,setAmount}) => {
     const [incomePressed, setIncomePressed] = useState(false);
     const [expensePressed, setExpensePressed] = useState(true);
 
     const handleIncomePress = () => {
         setIncomePressed(true);
         setExpensePressed(false);
+        setType("income");
     };
 
     const handleExpensePress = () => {
         setExpensePressed(true);
         setIncomePressed(false);
+        setType("expense")
     };
 
     const [element, setElement] = useState('-');
@@ -79,6 +81,7 @@ const IncomeExpenseInput = () => {
                 ref={inputRef}
                 variant="filled"
                 placeholder={'0'}
+                onChangeText={setAmount}
                 InputLeftElement={
                     <HStack space={4} alignItems='center' >
                         <Text fontWeight="semibold" paddingLeft={4} marginTop={30} fontSize={14}>
