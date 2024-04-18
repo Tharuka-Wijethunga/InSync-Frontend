@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {View} from "native-base";
-const TimeIos = () => {
-    const [mydate, setDate] = useState(new Date());
+const TimeInputIos = ({myTime, setTime}) => {
+
     const [displaymode, setMode] = useState('time');
     const [isDisplayDate, setShow] = useState(true);
     const changeSelectedDate = (event, selectedDate) => {
-        const currentDate = selectedDate || mydate;
-        setDate(currentDate);
+        const currentDate = selectedDate || myTime;
+        setTime(currentDate);
     };
     const showMode = (currentMode) => {
         setShow(true);
@@ -20,7 +20,7 @@ const TimeIos = () => {
         <View>
             {isDisplayDate && (
                 <DateTimePicker
-                    value={mydate}
+                    value={myTime}
                     mode={displaymode}
                     is24Hour={false}
                     display="default"
@@ -31,4 +31,4 @@ const TimeIos = () => {
     );
 };
 
-export default TimeIos;
+export default TimeInputIos;

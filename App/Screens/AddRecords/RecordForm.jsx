@@ -14,16 +14,16 @@ import {
 import Colors from "../../Config/Colors";
 import {MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {Keyboard, StyleSheet, TouchableWithoutFeedback} from "react-native";
-import Date from "./DateTime/Date";
-import Time from "./DateTime/Time"
+import DateInput from "./DateTime/DateInput";
+import TimeInput from "./DateTime/TimeInput"
 import Category from "./Category/Category";
 import IncomeExpenseInput from "./IncomeExpenseInput";
 import AccountType from "./AccountType";
 import axios from "axios";
+import moment from 'moment-timezone';
 
 const RecordForm = () => {
     const [modalVisible, setModalVisible] = React.useState(false);
-
     const [selectedCategory,setSelectedCategory]=useState("tag-plus" );
     const [avatarColor,setAvatarColor]=useState(Colors.IconColor);
     const [categoryName,setCategoryName]=useState("Select a Category");
@@ -31,9 +31,13 @@ const RecordForm = () => {
     const [type, setType] = useState("");
     const [amount, setAmount] = useState(0);
     const [account, setAccount] = useState("");
+    const [myDate, setDate] = useState(new Date());
+    const [myTime, setTime] = useState(new Date());
 
     const handleSubmit = () =>{
-        const record = {'type':type, 'amount':amount, 'account':account, 'category':categoryName};
+        const frmtdate = myDate.toISOString().split('T')[0];
+        const sltime = moment.utc(myTime).tz('Asia/Colombo').format('HH:mm:ss');
+        const record = {'type':type, 'amount':amount, 'account':account, 'category':categoryName,'date':frmtdate, 'time':sltime};
         axios.post('http://1379-2a09-bac5-4862-1d05-00-2e4-aa.ngrok-free.app/api/addrecord', record)
             .then(response=>{
                 console.log(response);
@@ -87,8 +91,14 @@ const RecordForm = () => {
                                 <Text fontSize={16} fontWeight="medium">Date & Time</Text>
                                 <HStack paddingLeft={2} space={2} alignItems={"center"}>
                                     <MaterialCommunityIcons  name="calendar-clock" size={34} color={Colors.Blue}/>
-                                    <Date/>
-                                    <Time/>
+                                    <DateInput
+                                        myDate = {myDate}
+                                        setDate = {setDate}
+                                    />
+                                    <TimeInput
+                                        myTime = {myTime}
+                                        setTime = {setTime}
+                                    />
                                 </HStack>
                             </VStack>
                         </VStack>
