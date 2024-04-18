@@ -1,10 +1,8 @@
-import React ,{useState, useRef} from 'react';
+import React ,{useState} from 'react';
 import {
     Box,
     Button,
     HStack,
-    IconButton,
-    Input,
     NativeBaseProvider,
     Text,
     View,
@@ -19,18 +17,31 @@ import {Keyboard, StyleSheet, TouchableWithoutFeedback} from "react-native";
 import Date from "./DateTime/Date";
 import Time from "./DateTime/Time"
 import Category from "./Category/Category";
-import {useFocusEffect} from "@react-navigation/native";
 import IncomeExpenseInput from "./IncomeExpenseInput";
 import AccountType from "./AccountType";
+import axios from "axios";
 
 const RecordForm = () => {
-
-
     const [modalVisible, setModalVisible] = React.useState(false);
 
     const [selectedCategory,setSelectedCategory]=useState("tag-plus" );
     const [avatarColor,setAvatarColor]=useState(Colors.IconColor);
     const [categoryName,setCategoryName]=useState("Select a Category");
+
+    const [type, setType] = useState("");
+    const [amount, setAmount] = useState(0);
+    const [account, setAccount] = useState("");
+
+    const handleSubmit = () =>{
+        const record = {'type':type, 'amount':amount, 'account':account, 'category':categoryName};
+        axios.post('http://1379-2a09-bac5-4862-1d05-00-2e4-aa.ngrok-free.app/api/addrecord', record)
+            .then(response=>{
+                console.log(response);
+            })
+            .catch(error=>{
+                console.error(error);
+            })
+    }
 
     return (
         <NativeBaseProvider>
@@ -39,8 +50,11 @@ const RecordForm = () => {
                 <VStack space={4} w="94%">
                     <Box w="100%" rounded="2xl" shadow={3} bg="white">
                         <VStack paddingX={4} h="84%" space={4}>
-                            <IncomeExpenseInput/>
-                            <AccountType/>
+                            <IncomeExpenseInput
+                                setType={setType}
+                                setAmount={setAmount}
+                            />
+                            <AccountType setAccount={setAccount}/>
                             {/* Category selection */}
                             <VStack>
                                 <Text fontSize={16} fontWeight="medium" paddingBottom={1}>Category</Text>
@@ -61,7 +75,7 @@ const RecordForm = () => {
                                             <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
                                             <Category setSelectedCategory={setSelectedCategory}
                                                       setAvatarColor={setAvatarColor}
-                                                      setCategorydName={setCategoryName}
+                                                      setCategoryName={setCategoryName}
                                                       modalVisible={modalVisible}
                                                       setModalVisible={setModalVisible}
                                             />
@@ -80,7 +94,14 @@ const RecordForm = () => {
                         </VStack>
                     </Box>
                     {/* Save button */}
-                    <Button bg={Colors.DBlue} borderRadius={"full"} w={320} size="md" alignSelf="center" marginTop={4}>
+                    <Button
+                        bg={Colors.DBlue}
+                        borderRadius={"full"}
+                        w={320} size="md"
+                        alignSelf="center"
+                        marginTop={4}
+                        onPress={handleSubmit}
+                    >
                         Save
                     </Button>
                 </VStack>
