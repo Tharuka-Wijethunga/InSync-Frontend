@@ -3,22 +3,27 @@ import React, { useState } from 'react';
 import Colors from "../../../Config/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default function TimeAndroid() {
+export default function DateInputAndroid() {
     const today = new Date();
-    const [time, setTime] = useState(today);
+    const [date, setDate] = useState(today);
     const [showPicker, setShowPicker] = useState(false);
-    const [displaymode, setMode] = useState('time');
+    const [displaymode, setMode] = useState('date');
+
     const toggleDatepicker = () => {
         setShowPicker(!showPicker);
     };
 
-    const changeSelectedTime = (event, selectedTime) => {
-        const currentTime = selectedTime || today;
+    const changeSelectedDate = (event, selectedDate) => {
+        const currentDate = selectedDate || today;
         toggleDatepicker();
-        setTime(currentTime);
+        setDate(currentDate);
     };
 
-    const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const formattedDate = date.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'long',
+        day: 'numeric'
+    });
 
     return (
         <View flex={1}>
@@ -26,9 +31,8 @@ export default function TimeAndroid() {
                 <DateTimePicker
                     mode={displaymode}
                     display={"default"}
-                    value={time}
-                    is24Hour={false}
-                    onChange={changeSelectedTime}
+                    value={date}
+                    onChange={changeSelectedDate}
                 />
             )}
 
@@ -36,12 +40,12 @@ export default function TimeAndroid() {
                 <Input
                     textAlign={"center"}
                     variant={"filled"}
-                    placeholder={"Select Time"}
+                    placeholder={"Select Date"}
                     dat
                     rounded={"full"}
                     borderWidth={0}
                     backgroundColor={Colors.BGColor}
-                    value={formattedTime}
+                    value={formattedDate}
                     editable={false}
                     fontWeight={"normal"}
                     fontSize={16}

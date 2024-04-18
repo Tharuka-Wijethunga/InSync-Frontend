@@ -4,12 +4,11 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 
-const DateIos = () => {
-    const [mydate, setDate] = useState(new Date());
+const DateInputIos = ({myDate,setDate}) => {
     const [displaymode, setMode] = useState('date');
     const [isDisplayDate, setShow] = useState(true);
     const changeSelectedDate = (event, selectedDate) => {
-        const currentDate = selectedDate || mydate;
+        const currentDate = selectedDate || myDate;
         setDate(currentDate);
     };
     const showMode = (currentMode) => {
@@ -21,7 +20,7 @@ const DateIos = () => {
         <View>
             {isDisplayDate && (
                 <DateTimePicker
-                    value={mydate}
+                    value={myDate}
                     mode={displaymode}
                     display="default"
                     onChange={changeSelectedDate}
@@ -32,4 +31,4 @@ const DateIos = () => {
     );
 };
 
-export default DateIos;
+export default DateInputIos;
