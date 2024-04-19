@@ -64,8 +64,8 @@ export default function Dashboard() {
                             </HStack>
                             <HStack flexGrow={1} flex={1}>
                                 <Box w="100%" bg="white" borderRadius="2xl" shadow={3}>
-                                    <VStack paddingTop={4} paddingX={4} paddingBottom={2}>
-                                        <View mb={2} paddingBottom={4}>
+                                    <VStack paddingTop={4} paddingX={3} paddingBottom={2}>
+                                        <View mb={2} paddingBottom={2} paddingLeft={1}>
                                             <Text fontWeight="medium" fontSize="20">
                                                 Recent Activities
                                             </Text>
