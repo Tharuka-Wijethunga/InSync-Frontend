@@ -47,8 +47,26 @@ const SignupForm = () => {
         }
         if (validateForm()) {
             console.log('Logging in with:', {fullName, email, gender, password});
-            navigation.navigate({name: 'OnboardingFirstPage'});
+            navigation.navigate({name: 'Login'});
         }
+
+        //post request to pass this data to the backend
+        fetch('http://192.168.72.230:8005/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username:fullName,
+                email:email,
+                gender:gender,
+                password:password,
+            })
+        })
+            .then(response => {
+                console.log("successfully added");
+            })
+            .catch(error => console.error(error));
     };
 
     const validateForm = () => {

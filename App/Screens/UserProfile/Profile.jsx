@@ -5,9 +5,19 @@ import {MaterialIcons} from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Profile() {
     const navigation = useNavigation();
+
+    //Deleting access token with the  logout.
+    const handelLogout=async ()=>{
+        console.log();
+        await AsyncStorage.removeItem('accessToken');
+        await AsyncStorage.removeItem('refreshToken');
+        console.log('accesstoken and refreshToken is deleted');
+        navigation.reset({index: 0, routes: [{name: 'SignupNavigator'}]});
+    };
     return (
         <VStack space={3} paddingY={3}>
             <Box backgroundColor={"white"}  w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3} padding={3}>
@@ -67,7 +77,7 @@ export default function Profile() {
                         _pressed={{
                             bg: "blueGray.200:alpha.50",
                         }}
-                        onPress={() => navigation.reset({index: 0, routes: [{name: 'SignupNavigator'}]})}
+                        onPress={handelLogout}
                     >
                     <HStack  justifyContent="space-between" alignItems={"center"}  w={"100%"} space={3} >
                         <Avatar size={42} bgColor={Colors.Red}><MaterialIcons name="logout" size={24} color="white" /></Avatar>

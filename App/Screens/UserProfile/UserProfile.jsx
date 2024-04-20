@@ -4,12 +4,18 @@ import Colors from "../../Config/Colors";
 import {NativeBaseProvider, Button, View} from "native-base";
 import Profile from "./Profile";
 import ProfileNavigation from "./ProfileNavigation";
+import TestAPI from "./TestAPI";
+import Help from "./Help";
+import Helptoken from "./Helptoken";
+
 
 export default function UserProfile() {
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
-                <ProfileNavigation><Profile/></ProfileNavigation>
+                <Helptoken/>
+                {/*<TestAPI/>*/}
+                {/*<ProfileNavigation><Profile/></ProfileNavigation>*/}
             </View>
         </NativeBaseProvider>
     )

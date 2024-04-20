@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
-import {Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, Link, HStack} from 'native-base';
+import { Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, Link, HStack } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
 import logo from './../../../assets/bank.png';
-import {useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import axios from 'axios';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import qs from 'qs';
+
 
 const Login = () => {
     const navigation = useNavigation();
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
@@ -16,38 +20,58 @@ const Login = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleLogin = () => {
-        if (!email || !password) {
+    const handleLogin = async () => {
+        if (!username || !password) {
             Alert.alert('Error', 'Please fill in all fields');
             return;
         }
+
         if (validateForm()) {
-            console.log('Logging in with:', { email, password });
-            navigation.reset({index: 0, routes: [{name: 'TabNavigation'}]});
-        }
+            try {
+                // Use `qs` to format the data in the application/x-www-form-urlencoded format
+                const requestData = qs.stringify({ username, password });
 
+                // Make a POST request using axios with the correct content type
+                const response = await axios.post('http://192.168.72.230:8005/token', requestData, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                });
+
+                const data = response.data;
+
+                // Check if the response contains an access token and a refresh token
+                if (data.access_token && data.refresh_token) {
+                    // Print the tokens in the console
+                    console.log('Access Token:', data.access_token);
+                    console.log('Refresh Token:', data.refresh_token);
+
+                    // Store the tokens securely using AsyncStorage
+                    await AsyncStorage.setItem('accessToken', data.access_token);
+                    await AsyncStorage.setItem('refreshToken', data.refresh_token);
+
+                    // Navigate to the next screen
+                    navigation.reset({ index: 0, routes: [{ name: 'TabNavigation' }] });
+                } else {
+                    throw new Error('Tokens not found');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                Alert.alert('Error', 'Failed to log in. Please check your username and password and try again.');
+            }
+        }
     };
+
+
+
     const validateForm = () => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!email || !emailRegex.test(email)) {
-            Alert.alert('Validation Error', 'Please enter a valid email addressss');
-            return false;
-        }
-
-        if (password.length < 8 ||
-            !/[A-Z]/.test(password) ||
-            !/[a-z]/.test(password) ||
-            !/[0-9]/.test(password) ||
-            !/[!@#$%^&*()\-_=+{};:,<.>]/.test(password)) {
-            Alert.alert('Validation Error', 'Invalid password');
-            return false;
-        }
-
+        // Add your form validation logic here
+        // For example, checking the length of the password, ensuring the username and password are not empty, etc.
         return true;
     };
+
     const handleSignup = () => {
-        navigation.navigate({name: 'Signup'});
+        navigation.navigate({ name: 'Signup' });
     };
 
     return (
@@ -62,9 +86,9 @@ const Login = () => {
                         <Input mt={10}
                                variant="rounded"
                                borderColor={Colors.Blue}
-                               placeholder="Email"
-                               value={email}
-                               onChangeText={setEmail}
+                               placeholder="Username"
+                               value={username}
+                               onChangeText={setUsername}
                                style={styles.input}
                         />
                         <Input mt={2}
