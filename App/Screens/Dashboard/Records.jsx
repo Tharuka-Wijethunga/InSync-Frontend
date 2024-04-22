@@ -1,99 +1,31 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {HStack, Text, VStack, FlatList, Avatar, Spacer, View} from "native-base";
 import {FontAwesome5} from "@expo/vector-icons";
 import Colors from "../../Config/Colors";
 import {TouchableHighlight} from "react-native";
 import {useNavigation} from "@react-navigation/native";
+import axios from "axios";
 
 const Records = ({maxLines=null}) => {
     const navigation = useNavigation();
+    const [data, setData] = useState('');
 
-    const data = [
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Income",
-            date: "02 Dec 2023",
-            amount: "400",
-            type: "Income"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Food",
-            date: "28 Nov 2023",
-            amount: "550",
-            type: "Expense"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Income",
-            date: "24 Nov 2023",
-            amount: "2500",
-            type: "Income"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Fuel",
-            date: "15 Nov 2023",
-            amount: "1000",
-            type: "Expense"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Income",
-            date: "24 Nov 2023",
-            amount: "2500",
-            type: "Income"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Fuel",
-            date: "15 Nov 2023",
-            amount: "1000",
-            type: "Expense"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Income",
-            date: "24 Nov 2023",
-            amount: "2500",
-            type: "Income"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Fuel",
-            date: "15 Nov 2023",
-            amount: "1000",
-            type: "Expense"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Income",
-            date: "24 Nov 2023",
-            amount: "2500",
-            type: "Income"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Fuel",
-            date: "15 Nov 2023",
-            amount: "1000",
-            type: "Expense"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Income",
-            date: "24 Nov 2023",
-            amount: "2500",
-            type: "Income"
-        },
-        {
-            icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
-            category: "Fuel",
-            date: "15 Nov 2023",
-            amount: "1000",
-            type: "Expense"
-        }
-    ];
+
+    useEffect(() => {
+        axios.get('https://06b9-2a09-bac5-4865-18c8-00-278-c7.ngrok-free.app/api/addrecord')
+            .then(response => {
+                const reversedData = response.data.reverse();
+                setData(reversedData.map(item => ({
+                    icon: <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>,
+                    category: item.category,
+                    date: item.date,
+                    amount: item.amount,
+                    type: item.type
+                })));
+            })
+    }, []);
+
+
     return (
         <FlatList data={maxLines ? data.slice(0, maxLines) : data} renderItem={({item}) =>
             <View style={{borderRadius: 10, overflow: 'hidden'}}>
@@ -114,8 +46,9 @@ const Records = ({maxLines=null}) => {
                                 </Text>
                             </VStack>
                             <Spacer/>
-                            <Text fontSize="16" fontWeight={"semibold"} color={item.type === "Income" ? "green.500":"red.500"} alignSelf="flex-start">
-                                {item.type === "Expense" ? "-" : ""} LKR {item.amount}
+                            <Text fontSize="16" fontWeight={"semibold"} color={item.type === "income" ? "green.500":"red.500"} alignSelf="flex-start">
+                                {item.type === "expense" ? "-" : ""} LKR {item.amount}
+
                             </Text>
                         </HStack>
                     </View>

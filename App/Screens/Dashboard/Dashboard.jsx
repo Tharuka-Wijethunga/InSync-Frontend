@@ -28,7 +28,7 @@ export default function Dashboard() {
 
     //Read cash balance
     useEffect(() => {
-        axios.get('https://1379-2a09-bac5-4862-1d05-00-2e4-aa.ngrok-free.app/api/dashboard/account?type=cash')
+        axios.get('https://06b9-2a09-bac5-4865-18c8-00-278-c7.ngrok-free.app/api/dashboard/account?type=cash')
             .then(response => {
                 setCashBalance(response.data)
             })
@@ -36,7 +36,7 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('https://1379-2a09-bac5-4862-1d05-00-2e4-aa.ngrok-free.app/api/dashboard/account?type=bank')
+        axios.get('https://06b9-2a09-bac5-4865-18c8-00-278-c7.ngrok-free.app/api/dashboard/account?type=bank')
             .then(response => {
                 setBankBalance(response.data)
             })

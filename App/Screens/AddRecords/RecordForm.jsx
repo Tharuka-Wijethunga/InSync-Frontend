@@ -38,7 +38,7 @@ const RecordForm = () => {
         const frmtdate = myDate.toISOString().split('T')[0];
         const sltime = moment.utc(myTime).tz('Asia/Colombo').format('HH:mm:ss');
         const record = {'type':type, 'amount':amount, 'account':account, 'category':categoryName,'date':frmtdate, 'time':sltime};
-        axios.post('http://1379-2a09-bac5-4862-1d05-00-2e4-aa.ngrok-free.app/api/addrecord', record)
+        axios.post('https://06b9-2a09-bac5-4865-18c8-00-278-c7.ngrok-free.app/api/addrecord', record)
             .then(response=>{
                 console.log(response);
             })
