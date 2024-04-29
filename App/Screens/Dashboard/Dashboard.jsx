@@ -38,7 +38,7 @@ export default function Dashboard() {
 
     //Read cash balance
     useEffect(() => {
-        axios.get('https://3085-2a09-bac1-4300-00-279-30.ngrok-free.app/api/dashboard/account?type=cash')
+        axios.get('https://1fb2-2a09-bac5-4865-18c8-00-278-33.ngrok-free.app/api/dashboard/account?type=cash')
             .then(response => {
                 setCashBalance(response.data)
             })
@@ -46,7 +46,7 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('https://3085-2a09-bac1-4300-00-279-30.ngrok-free.app/api/dashboard/account?type=bank')
+        axios.get('https://1fb2-2a09-bac5-4865-18c8-00-278-33.ngrok-free.app/api/dashboard/account?type=bank')
             .then(response => {
                 setBankBalance(response.data)
             })
@@ -54,7 +54,7 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('https://3085-2a09-bac1-4300-00-279-30.ngrok-free.app/api/dashboard/today_spending')
+        axios.get('https://1fb2-2a09-bac5-4865-18c8-00-278-33.ngrok-free.app/api/dashboard/today_spending')
             .then(response=> {
                 setTodaySpending(response.data)
             })
