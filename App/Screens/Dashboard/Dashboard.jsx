@@ -1,5 +1,5 @@
 import {StyleSheet} from "react-native";
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect,useRef} from 'react';
 import Colors from "../../Config/Colors";
 import {
     Box,
@@ -19,16 +19,26 @@ import RecentActivities from "./RecentActivities/RecentActivities";
 import UpcomingCard from "./UpcomingCard";
 import DailyExpense from "./DailyExpense";
 import axios from "axios";
+import {useIsFocused} from "@react-navigation/native";
 
 
 export default function Dashboard() {
+    const isFocused = useIsFocused();
+    const recordRef = useRef();
     const [modalVisible, setModalVisible] = useState(false);
     const [cashBalance, setCashBalance] = useState(0);
     const [bankBalance, setBankBalance] = useState(0);
+    const [todaySpending, setTodaySpending] = useState(0)
+
+    useEffect(()=> {
+        if(isFocused){
+            recordRef.current.fetchRecords();
+        }
+    }, [isFocused]);
 
     //Read cash balance
     useEffect(() => {
-        axios.get('https://06b9-2a09-bac5-4865-18c8-00-278-c7.ngrok-free.app/api/dashboard/account?type=cash')
+        axios.get('https://3085-2a09-bac1-4300-00-279-30.ngrok-free.app/api/dashboard/account?type=cash')
             .then(response => {
                 setCashBalance(response.data)
             })
@@ -36,13 +46,21 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('https://06b9-2a09-bac5-4865-18c8-00-278-c7.ngrok-free.app/api/dashboard/account?type=bank')
+        axios.get('https://3085-2a09-bac1-4300-00-279-30.ngrok-free.app/api/dashboard/account?type=bank')
             .then(response => {
                 setBankBalance(response.data)
             })
             .catch(error => {
                 console.error(error);
             });
+
+        axios.get('https://3085-2a09-bac1-4300-00-279-30.ngrok-free.app/api/dashboard/today_spending')
+            .then(response=> {
+                setTodaySpending(response.data)
+            })
+            .catch(error => {
+                console.error(error);
+            })
     }, []);
 
 
@@ -53,7 +71,9 @@ export default function Dashboard() {
                     <Center>
                         <VStack space={3} w={"97%"} h={"96%"}>
                             <HStack>
-                                <DailyExpense/>
+                                <DailyExpense
+                                    todaySpending={todaySpending}
+                                />
                             </HStack>
                             <HStack space={3} alignSelf="center">
                                 <BalanceCard account="Bank" balance={bankBalance}/>
@@ -70,7 +90,7 @@ export default function Dashboard() {
                                                 Recent Activities
                                             </Text>
                                         </View>
-                                        <Records maxLines={4}/>
+                                        <Records ref={recordRef} maxlines={4}/>
                                         <View alignSelf="flex-end">
                                             <IconButton
                                                 icon={<MaterialIcons name="keyboard-arrow-right" size={36}
@@ -82,7 +102,10 @@ export default function Dashboard() {
                                                 }}
                                             />
                                             <RecentActivities modalVisible={modalVisible}
-                                                              setModalVisible={setModalVisible}/>
+                                                              setModalVisible={setModalVisible}
+                                                              recordRef={recordRef}
+                                                              isFocused={isFocused}
+                                            />
                                         </View>
                                     </VStack>
                                 </Box>

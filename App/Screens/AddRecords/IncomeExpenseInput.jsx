@@ -12,11 +12,10 @@ const IncomeExpenseInput = ({setType,setAmount}) => {
         setExpensePressed(false);
         setType("income");
     };
-
     const handleExpensePress = () => {
         setExpensePressed(true);
         setIncomePressed(false);
-        setType("expense")
+        setType("expense");
     };
 
     const [element, setElement] = useState('-');
