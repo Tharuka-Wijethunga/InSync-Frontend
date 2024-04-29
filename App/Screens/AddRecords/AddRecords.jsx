@@ -8,7 +8,6 @@ import {SafeAreaView} from "react-native-safe-area-context";
 
 
 export default function AddRecords() {
-    const navigation = useNavigation();
     return (
         <NativeBaseProvider>
             <SafeAreaView style={styles.container}>
