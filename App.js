@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';
 import {NativeBaseProvider, Text, View, VStack} from "native-base";
 import AppNavigation from "./App/Navigations/AppNavigation";
 import {useEffect, useState} from "react";
+import {AuthProvider} from "./App/Context/AuthContext";
 
 const SplashScreen = () => {
     return (
@@ -46,7 +47,9 @@ export default function App() {
 
     return (
         <NativeBaseProvider>
+            <AuthProvider>
             <AppNavigation initialRoute={initialRoute} />
+            </AuthProvider>
         </NativeBaseProvider>
     )
 }

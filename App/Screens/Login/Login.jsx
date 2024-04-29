@@ -1,6 +1,14 @@
-import React, { useState } from 'react';
-import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
-import { Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, Link, HStack } from 'native-base';
+import React, { useState,useContext } from 'react';
+import {
+    StyleSheet,
+    Alert,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    Keyboard,
+    Image,
+    ActivityIndicator
+} from 'react-native';
+import {Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, Link, HStack, View} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
 import logo from './../../../assets/bank.png';
@@ -8,6 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import qs from 'qs';
+import {AuthContext} from "../../Context/AuthContext";
+
 
 
 const Login = () => {
@@ -15,6 +25,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const {login}=useContext(AuthContext)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -27,38 +38,7 @@ const Login = () => {
         }
 
         if (validateForm()) {
-            try {
-                // Use `qs` to format the data in the application/x-www-form-urlencoded format
-                const requestData = qs.stringify({ username, password });
-
-                // Make a POST request using axios with the correct content type
-                const response = await axios.post('http://192.168.72.230:8005/token', requestData, {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                });
-
-                const data = response.data;
-
-                // Check if the response contains an access token and a refresh token
-                if (data.access_token && data.refresh_token) {
-                    // Print the tokens in the console
-                    console.log('Access Token:', data.access_token);
-                    console.log('Refresh Token:', data.refresh_token);
-
-                    // Store the tokens securely using AsyncStorage
-                    await AsyncStorage.setItem('accessToken', data.access_token);
-                    await AsyncStorage.setItem('refreshToken', data.refresh_token);
-
-                    // Navigate to the next screen
-                    navigation.reset({ index: 0, routes: [{ name: 'TabNavigation' }] });
-                } else {
-                    throw new Error('Tokens not found');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                Alert.alert('Error', 'Failed to log in. Please check your username and password and try again.');
-            }
+            login(username,password);
         }
     };
 
@@ -82,6 +62,7 @@ const Login = () => {
                         <Text fontSize={40} fontWeight="bold" color="black">InSync</Text>
                         <Text fontSize={13} color="gray.500" mt={-4}>Login to continue.</Text>
                         <Image source={logo} style={styles.logo} />
+
 
                         <Input mt={10}
                                variant="rounded"

@@ -13,9 +13,9 @@ export default function UserProfile() {
     return (
         <NativeBaseProvider>
             <View style={styles.container}>
-                <Helptoken/>
+                {/*<Helptoken/>*/}
                 {/*<TestAPI/>*/}
-                {/*<ProfileNavigation><Profile/></ProfileNavigation>*/}
+                <ProfileNavigation><Profile/></ProfileNavigation>
             </View>
         </NativeBaseProvider>
     )

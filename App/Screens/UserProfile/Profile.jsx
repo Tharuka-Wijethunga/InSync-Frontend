@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Colors from "../../Config/Colors";
 import {Text, Box, HStack, VStack, Avatar, Spacer, IconButton, View,Button} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
@@ -6,17 +6,15 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AuthContext} from "../../Context/AuthContext";
 
 export default function Profile() {
     const navigation = useNavigation();
+    const {logout}=useContext(AuthContext)
 
     //Deleting access token with the  logout.
     const handelLogout=async ()=>{
-        console.log();
-        await AsyncStorage.removeItem('accessToken');
-        await AsyncStorage.removeItem('refreshToken');
-        console.log('accesstoken and refreshToken is deleted');
-        navigation.reset({index: 0, routes: [{name: 'SignupNavigator'}]});
+        logout();
     };
     return (
         <VStack space={3} paddingY={3}>

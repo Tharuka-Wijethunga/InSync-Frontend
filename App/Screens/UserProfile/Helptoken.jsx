@@ -80,14 +80,23 @@ export default function Helptoken(){
     const getUserData = async () => {
         try {
             // Get the access token from AsyncStorage
-            const accessToken = await AsyncStorage.getItem('accessToken');
+            let accessToken = await AsyncStorage.getItem('accessToken');
 
             // Make a GET request to the /me endpoint
-            const response = await axios.get('http://192.168.72.230:8005/me', {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
+            let response = await axios.get('http://192.168.72.230:8005/me', {
+
             });
+
+            // If the request fails because the token is expired, refresh the token
+            if (response.status === 401) {
+                await refreshAccessToken();
+                accessToken = await AsyncStorage.getItem('accessToken');
+                response = await axios.get('http://192.168.72.230:8005/me', {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                });
+            }
 
             // Print the returned data in the console
             console.log('User Data:', response.data);
