@@ -85,10 +85,10 @@ export const AuthProvider=({children})=>{
     useEffect(()=>{
         isLoggedIn();
 
-        // Set up the interval to refresh the access token every 5 minutes
+        // Set up the interval to refresh the access token every 9 minutes
         const intervalId = setInterval(() => {
             refreshAccessToken();
-        }, 4.97 * 60 * 1000); // 4.97 minutes in milliseconds
+        }, 9 * 60 * 1000); // 9 minutes in milliseconds
 
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);

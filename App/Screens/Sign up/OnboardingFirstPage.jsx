@@ -7,9 +7,11 @@ import {useNavigation} from "@react-navigation/native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-const OnboardingFirstPage = () => {
+const OnboardingFirstPage = ({ route }) => {
     const navigation = useNavigation();
     const [incomeRange, setIncomeRange] = useState('');
+
+    const { fullName,email,gender,password } = route.params;
 
     const handleBack = () => {
         navigation.goBack();
@@ -18,7 +20,13 @@ const OnboardingFirstPage = () => {
     const handleNext = () => {
         if (incomeRange !== '') {
             //navigate to second page and pass incomeRage data
-            navigation.navigate('OnboardingSecondPage', { incomeRange: incomeRange });
+            navigation.navigate('OnboardingSecondPage', {
+                fullName:fullName,
+                email:email,
+                gender:gender,
+                password:password,
+                incomeRange: incomeRange,
+            });
         } else {
             alert('Please give an income range.');
         }
