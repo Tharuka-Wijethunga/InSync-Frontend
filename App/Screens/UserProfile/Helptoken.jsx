@@ -83,7 +83,7 @@ export default function Helptoken(){
             let accessToken = await AsyncStorage.getItem('accessToken');
 
             // Make a GET request to the /me endpoint
-            let response = await axios.get('http://192.168.72.230:8005/me', {
+            let response = await axios.get('http://192.168.147.230:8005/me', {
 
             });
 

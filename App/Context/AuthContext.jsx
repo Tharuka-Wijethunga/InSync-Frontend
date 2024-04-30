@@ -14,7 +14,7 @@ export const AuthProvider=({children})=>{
         setIsLoading(true);
         try {
             const requestData = qs.stringify({username, password});
-            const response = await axios.post('http://192.168.72.230:8005/token', requestData, {
+            const response = await axios.post('http://192.168.147.230:8005/token', requestData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -44,6 +44,7 @@ export const AuthProvider=({children})=>{
             setIsLoading(true);
             let accessToken = await AsyncStorage.getItem('accessToken');
             await refreshAccessToken();
+            //if there is an access token already in the AsyncStorage use that for login
             if (accessToken) {
                 setAccessToken(accessToken);
                 axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
@@ -57,7 +58,7 @@ export const AuthProvider=({children})=>{
     const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            const response = await axios.post('http://192.168.72.230:8005/refresh-token', {}, {
+            const response = await axios.post('http://192.168.147.230:8005/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }
@@ -84,10 +85,10 @@ export const AuthProvider=({children})=>{
     useEffect(()=>{
         isLoggedIn();
 
-        // Set up the interval to refresh the access token every 1.58 minutes
+        // Set up the interval to refresh the access token every 5 minutes
         const intervalId = setInterval(() => {
             refreshAccessToken();
-        }, 0.58 * 60 * 1000); // 1.58 minutes in milliseconds
+        }, 4.97 * 60 * 1000); // 4.97 minutes in milliseconds
 
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);

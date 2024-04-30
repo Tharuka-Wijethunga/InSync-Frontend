@@ -25,7 +25,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const {login}=useContext(AuthContext)
+    const {login}=useContext(AuthContext)//getting login method from the AuthContext
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -45,10 +45,15 @@ const Login = () => {
 
 
     const validateForm = () => {
-        // Add your form validation logic here
-        // For example, checking the length of the password, ensuring the username and password are not empty, etc.
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(username)) {
+            Alert.alert('Error', 'Please enter a valid email');
+            return false;
+        }
         return true;
     };
+
 
     const handleSignup = () => {
         navigation.navigate({ name: 'Signup' });

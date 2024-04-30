@@ -51,13 +51,13 @@ const SignupForm = () => {
         }
 
         //post request to pass this data to the backend
-        fetch('http://192.168.72.230:8005/signup', {
+        fetch('http://192.168.147.230:8005/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                username:fullName,
+                fullname:fullName,
                 email:email,
                 gender:gender,
                 password:password,
