@@ -40,10 +40,17 @@ const RecordForm = () => {
         const today = moment(myDate).format('YYYY-MM-DD');
         const sltime = moment.utc(myTime).tz('Asia/Colombo').format('HH:mm:ss');
         const record = {'type':type, 'amount':amount, 'account':account, 'category':categoryName,'date':today, 'time':sltime};
-        axios.post('https://1fb2-2a09-bac5-4865-18c8-00-278-33.ngrok-free.app/api/addrecord', record)
+        axios.post('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/addrecord', record)
             .then(response=>{
                 console.log(response);
-                navigation.navigate('Dashboard');
+                axios.put(`https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
+                    .then(response => {
+                        console.log(response);
+                        navigation.navigate('Dashboard');
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
             })
             .catch(error=>{
                 console.error(error);

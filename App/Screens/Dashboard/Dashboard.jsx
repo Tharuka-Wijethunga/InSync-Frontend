@@ -30,31 +30,33 @@ export default function Dashboard() {
     const [bankBalance, setBankBalance] = useState(0);
     const [todaySpending, setTodaySpending] = useState(0)
 
+    const fetch_Records = () => {
+        recordRef.current.fetchRecords().then();
+    }
+
     useEffect(()=> {
         if(isFocused){
-            recordRef.current.fetchRecords();
+            fetch_Records();
+            axios.get('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/account?type=cash')
+                .then(response => {
+                    setCashBalance(response.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            axios.get('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/account?type=bank')
+                .then(response => {
+                    setBankBalance(response.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
     }, [isFocused]);
 
-    //Read cash balance
     useEffect(() => {
-        axios.get('https://1fb2-2a09-bac5-4865-18c8-00-278-33.ngrok-free.app/api/dashboard/account?type=cash')
-            .then(response => {
-                setCashBalance(response.data)
-            })
-            .catch(error => {
-                console.error(error);
-            });
 
-        axios.get('https://1fb2-2a09-bac5-4865-18c8-00-278-33.ngrok-free.app/api/dashboard/account?type=bank')
-            .then(response => {
-                setBankBalance(response.data)
-            })
-            .catch(error => {
-                console.error(error);
-            });
-
-        axios.get('https://1fb2-2a09-bac5-4865-18c8-00-278-33.ngrok-free.app/api/dashboard/today_spending')
+        axios.get('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/today_spending')
             .then(response=> {
                 setTodaySpending(response.data)
             })
