@@ -3,7 +3,7 @@ import {Box, HStack,NativeBaseProvider, Text, View, VStack} from "native-base";
 import Colors from "../../Config/Colors";
 
 
-const DailyExpense = () => {
+const DailyExpense = ({todaySpending}) => {
     return (
         <NativeBaseProvider>
             <HStack>
@@ -24,7 +24,7 @@ const DailyExpense = () => {
                                 LKR
                             </Text>
                             <Text fontSize="36" fontWeight={"bold"} lineHeight={37} color={Colors.Red}>
-                                15000
+                                {todaySpending}
                             </Text>
                         </VStack>
                     </HStack>

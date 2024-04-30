@@ -21,26 +21,36 @@ import IncomeExpenseInput from "./IncomeExpenseInput";
 import AccountType from "./AccountType";
 import axios from "axios";
 import moment from 'moment-timezone';
+import {useNavigation} from "@react-navigation/native";
 
 const RecordForm = () => {
+    const navigation = useNavigation();
     const [modalVisible, setModalVisible] = React.useState(false);
     const [selectedCategory,setSelectedCategory]=useState("tag-plus" );
     const [avatarColor,setAvatarColor]=useState(Colors.IconColor);
     const [categoryName,setCategoryName]=useState("Select a Category");
 
-    const [type, setType] = useState("");
-    const [amount, setAmount] = useState(0);
-    const [account, setAccount] = useState("");
+    const [type, setType] = useState( "expense");
+    const [amount, setAmount] = useState(0 );
+    const [account, setAccount] = useState("cash");
     const [myDate, setDate] = useState(new Date());
     const [myTime, setTime] = useState(new Date());
 
     const handleSubmit = () =>{
-        const frmtdate = myDate.toISOString().split('T')[0];
+        const today = moment(myDate).format('YYYY-MM-DD');
         const sltime = moment.utc(myTime).tz('Asia/Colombo').format('HH:mm:ss');
-        const record = {'type':type, 'amount':amount, 'account':account, 'category':categoryName,'date':frmtdate, 'time':sltime};
-        axios.post('http://1379-2a09-bac5-4862-1d05-00-2e4-aa.ngrok-free.app/api/addrecord', record)
+        const record = {'type':type, 'amount':amount, 'account':account, 'category':categoryName,'date':today, 'time':sltime};
+        axios.post('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/addrecord', record)
             .then(response=>{
                 console.log(response);
+                axios.put(`https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
+                    .then(response => {
+                        console.log(response);
+                        navigation.navigate('Dashboard');
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
             })
             .catch(error=>{
                 console.error(error);
@@ -58,7 +68,7 @@ const RecordForm = () => {
                                 setType={setType}
                                 setAmount={setAmount}
                             />
-                            <AccountType setAccount={setAccount}/>
+                            <AccountType setAccount={setAccount}  />
                             {/* Category selection */}
                             <VStack>
                                 <Text fontSize={16} fontWeight="medium" paddingBottom={1}>Category</Text>
@@ -102,6 +112,7 @@ const RecordForm = () => {
                                 </HStack>
                             </VStack>
                         </VStack>
+
                     </Box>
                     {/* Save button */}
                     <Button

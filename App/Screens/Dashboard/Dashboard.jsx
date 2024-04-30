@@ -1,5 +1,5 @@
 import {StyleSheet} from "react-native";
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect,useRef} from 'react';
 import Colors from "../../Config/Colors";
 import {
     Box,
@@ -19,30 +19,50 @@ import RecentActivities from "./RecentActivities/RecentActivities";
 import UpcomingCard from "./UpcomingCard";
 import DailyExpense from "./DailyExpense";
 import axios from "axios";
+import {useIsFocused} from "@react-navigation/native";
 
 
 export default function Dashboard() {
+    const isFocused = useIsFocused();
+    const recordRef = useRef();
     const [modalVisible, setModalVisible] = useState(false);
     const [cashBalance, setCashBalance] = useState(0);
     const [bankBalance, setBankBalance] = useState(0);
+    const [todaySpending, setTodaySpending] = useState(0)
 
-    //Read cash balance
+    const fetch_Records = () => {
+        recordRef.current.fetchRecords().then();
+    }
+
+    useEffect(()=> {
+        if(isFocused){
+            fetch_Records();
+            axios.get('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/account?type=cash')
+                .then(response => {
+                    setCashBalance(response.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            axios.get('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/account?type=bank')
+                .then(response => {
+                    setBankBalance(response.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }, [isFocused]);
+
     useEffect(() => {
-        axios.get('https://1379-2a09-bac5-4862-1d05-00-2e4-aa.ngrok-free.app/api/dashboard/account?type=cash')
-            .then(response => {
-                setCashBalance(response.data)
-            })
-            .catch(error => {
-                console.error(error);
-            });
 
-        axios.get('https://1379-2a09-bac5-4862-1d05-00-2e4-aa.ngrok-free.app/api/dashboard/account?type=bank')
-            .then(response => {
-                setBankBalance(response.data)
+        axios.get('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/today_spending')
+            .then(response=> {
+                setTodaySpending(response.data)
             })
             .catch(error => {
                 console.error(error);
-            });
+            })
     }, []);
 
 
@@ -53,7 +73,9 @@ export default function Dashboard() {
                     <Center>
                         <VStack space={3} w={"97%"} h={"96%"}>
                             <HStack>
-                                <DailyExpense/>
+                                <DailyExpense
+                                    todaySpending={todaySpending}
+                                />
                             </HStack>
                             <HStack space={3} alignSelf="center">
                                 <BalanceCard account="Bank" balance={bankBalance}/>
@@ -64,13 +86,13 @@ export default function Dashboard() {
                             </HStack>
                             <HStack flexGrow={1} flex={1}>
                                 <Box w="100%" bg="white" borderRadius="2xl" shadow={3}>
-                                    <VStack paddingTop={4} paddingX={4} paddingBottom={2}>
-                                        <View mb={2} paddingBottom={4}>
+                                    <VStack paddingTop={4} paddingX={3} paddingBottom={2}>
+                                        <View mb={2} paddingBottom={2} paddingLeft={1}>
                                             <Text fontWeight="medium" fontSize="20">
                                                 Recent Activities
                                             </Text>
                                         </View>
-                                        <Records maxLines={4}/>
+                                        <Records ref={recordRef} maxlines={4}/>
                                         <View alignSelf="flex-end">
                                             <IconButton
                                                 icon={<MaterialIcons name="keyboard-arrow-right" size={36}
@@ -82,7 +104,10 @@ export default function Dashboard() {
                                                 }}
                                             />
                                             <RecentActivities modalVisible={modalVisible}
-                                                              setModalVisible={setModalVisible}/>
+                                                              setModalVisible={setModalVisible}
+                                                              recordRef={recordRef}
+                                                              isFocused={isFocused}
+                                            />
                                         </View>
                                     </VStack>
                                 </Box>

@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Platform} from "react-native";
 import {HStack, IconButton, Modal, Text, View} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
 import Records from "../Records";
-const RecentActivities = ({modalVisible, setModalVisible}) => {
+
+const RecentActivities = ({modalVisible, setModalVisible,isFocused,recordRef}) => {
+
+    useEffect(()=> {
+        if(isFocused){
+            recordRef.current.fetchRecords().then();
+        }
+    }, [isFocused]);
+
     return (
         <Modal isOpen={modalVisible} animationPreset="slide">
             <View style={styles.container}>
@@ -22,7 +30,7 @@ const RecentActivities = ({modalVisible, setModalVisible}) => {
                         </HStack>
                     </Modal.Header>
                     <Modal.Body>
-                        <Records/>
+                        <Records ref={recordRef}/>
                     </Modal.Body>
                 </Modal.Content>
             </View>
