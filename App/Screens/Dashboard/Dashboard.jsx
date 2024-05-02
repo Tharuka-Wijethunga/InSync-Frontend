@@ -19,7 +19,7 @@ import RecentActivities from "./RecentActivities/RecentActivities";
 import UpcomingCard from "./UpcomingCard";
 import DailyExpense from "./DailyExpense";
 import axios from "axios";
-import {useIsFocused} from "@react-navigation/native";
+import {useFocusEffect, useIsFocused} from "@react-navigation/native";
 
 
 export default function Dashboard() {
@@ -31,20 +31,22 @@ export default function Dashboard() {
     const [todaySpending, setTodaySpending] = useState(0)
 
     const fetch_Records = () => {
-        recordRef.current.fetchRecords().then();
+        if(recordRef.current){
+            recordRef.current.fetchRecords();
+        }
     }
 
     useEffect(()=> {
         if(isFocused){
             fetch_Records();
-            axios.get('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/account?type=cash')
+            axios.get('https://de21-2a09-bac5-4863-15f-00-23-1cf.ngrok-free.app/api/dashboard/account?type=cash')
                 .then(response => {
                     setCashBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/account?type=bank')
+            axios.get('https://de21-2a09-bac5-4863-15f-00-23-1cf.ngrok-free.app/api/dashboard/account?type=bank')
                 .then(response => {
                     setBankBalance(response.data)
                 })
@@ -52,11 +54,11 @@ export default function Dashboard() {
                     console.error(error);
                 });
         }
-    }, [isFocused]);
+    }, [isFocused,recordRef.current]);
+
 
     useEffect(() => {
-
-        axios.get('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/dashboard/today_spending')
+        axios.get('https://de21-2a09-bac5-4863-15f-00-23-1cf.ngrok-free.app/api/dashboard/today_spending')
             .then(response=> {
                 setTodaySpending(response.data)
             })

@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect, useImperativeHandle, useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useState} from 'react';
 import {HStack, Text, VStack, FlatList, Avatar, Spacer, View} from "native-base";
 import {FontAwesome5} from "@expo/vector-icons";
 import Colors from "../../Config/Colors";
@@ -8,13 +8,13 @@ import axios from "axios";
 
 const Records = forwardRef((props, ref) => {
     const navigation = useNavigation();
-    const [data, setData] = useState('');
+    const [data, setData] = useState([]);
     const icon = <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>;
 
     useImperativeHandle(ref, ()=>({
         fetchRecords : async () => {
             try {
-                const response = await axios.get('https://2ed4-2a09-bac1-4320-00-2e4-f8.ngrok-free.app/api/addrecord')
+                const response = await axios.get('https://de21-2a09-bac5-4863-15f-00-23-1cf.ngrok-free.app/api/addrecord')
                 const reversedData = response.data.reverse();
                 setData(reversedData.map(item => ({
                     category: item.category,
