@@ -8,7 +8,7 @@ const CategoryModal = ({modalVisible, setModalVisible,setSelectedCategory,setAva
     const handleSelectedCategory=(icon,avatarColor,catName)=>{
         setSelectedCategory(icon);
         setAvatarColor(avatarColor);
-        setCategoryName(catName)
+        setCategoryName(catName);
         setModalVisible(false);
     }
     return (

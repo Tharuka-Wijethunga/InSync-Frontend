@@ -7,10 +7,14 @@ import Records from "../Records";
 const RecentActivities = ({modalVisible, setModalVisible,isFocused,recordRef}) => {
 
     useEffect(()=> {
-        if(isFocused){
-            recordRef.current.fetchRecords().then();
-        }
+        const fetchRecords = async () => {
+            if(isFocused){
+                await recordRef.current.fetchRecords();
+            }
+        };
+        fetchRecords().then();
     }, [isFocused]);
+
 
     return (
         <Modal isOpen={modalVisible} animationPreset="slide">
@@ -30,6 +34,7 @@ const RecentActivities = ({modalVisible, setModalVisible,isFocused,recordRef}) =
                         </HStack>
                     </Modal.Header>
                     <Modal.Body>
+                        <Text>{isFocused ? 'Focused' : 'Not focused'}</Text>
                         <Records ref={recordRef}/>
                     </Modal.Body>
                 </Modal.Content>

@@ -31,7 +31,9 @@ export default function Dashboard() {
     const [todaySpending, setTodaySpending] = useState(0)
 
     const fetch_Records = () => {
-        recordRef.current.fetchRecords();
+        if(recordRef.current){
+            recordRef.current.fetchRecords();
+        }
     }
 
     useEffect(()=> {
@@ -52,7 +54,8 @@ export default function Dashboard() {
                     console.error(error);
                 });
         }
-    }, [isFocused]);
+    }, [isFocused,recordRef.current]);
+
 
     useEffect(() => {
 

@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect, useImperativeHandle, useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useState} from 'react';
 import {HStack, Text, VStack, FlatList, Avatar, Spacer, View} from "native-base";
 import {FontAwesome5} from "@expo/vector-icons";
 import Colors from "../../Config/Colors";
@@ -8,7 +8,7 @@ import axios from "axios";
 
 const Records = forwardRef((props, ref) => {
     const navigation = useNavigation();
-    const [data, setData] = useState('');
+    const [data, setData] = useState([]);
     const icon = <FontAwesome5 name="hand-holding-usd" size={20} color="white"/>;
 
     useImperativeHandle(ref, ()=>({
