@@ -31,7 +31,7 @@ export default function Dashboard() {
     const [todaySpending, setTodaySpending] = useState(0)
 
     const fetch_Records = () => {
-        recordRef.current.fetchRecords().then();
+        recordRef.current.fetchRecords();
     }
 
     useEffect(()=> {
