@@ -19,7 +19,7 @@ import RecentActivities from "./RecentActivities/RecentActivities";
 import UpcomingCard from "./UpcomingCard";
 import DailyExpense from "./DailyExpense";
 import axios from "axios";
-import {useFocusEffect, useIsFocused} from "@react-navigation/native";
+import {useIsFocused} from "@react-navigation/native";
 
 
 export default function Dashboard() {

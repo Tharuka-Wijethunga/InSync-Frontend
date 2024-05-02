@@ -1,19 +1,26 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useState,useRef} from 'react';
 import {StyleSheet, Platform} from "react-native";
 import {HStack, IconButton, Modal, Text, View} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
 import Records from "../Records";
+import {useIsFocused} from "@react-navigation/native";
 
-const RecentActivities = ({modalVisible, setModalVisible,isFocused,recordRef}) => {
+const RecentActivities = ({modalVisible, setModalVisible}) => {
+
+    const isFocused = useIsFocused();
+    const recordRef = useRef();
+
+    const fetch_Records = () => {
+        if (recordRef.current) {
+            recordRef.current.fetchRecords();
+        }
+    }
 
     useEffect(()=> {
-        const fetchRecords = async () => {
-            if(isFocused){
-                await recordRef.current.fetchRecords();
-            }
-        };
-        fetchRecords().then();
-    }, [isFocused]);
+        if(isFocused){
+            fetch_Records();
+        }
+    }, [isFocused,recordRef.current]);
 
 
     return (
@@ -34,8 +41,7 @@ const RecentActivities = ({modalVisible, setModalVisible,isFocused,recordRef}) =
                         </HStack>
                     </Modal.Header>
                     <Modal.Body>
-                        <Text>{isFocused ? 'Focused' : 'Not focused'}</Text>
-                        <Records ref={recordRef}/>
+                        <Records ref = {recordRef}/>
                     </Modal.Body>
                 </Modal.Content>
             </View>
