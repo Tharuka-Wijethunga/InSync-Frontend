@@ -53,20 +53,15 @@ export default function Dashboard() {
                 .catch(error => {
                     console.error(error);
                 });
+            axios.get('http://192.168.147.230:8005/api/dashboard/today_spending')
+                .then(response=> {
+                    setTodaySpending(response.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                })
         }
     }, [isFocused,recordRef.current]);
-
-
-    useEffect(() => {
-
-        axios.get('http://192.168.147.230:8005/api/dashboard/today_spending')
-            .then(response=> {
-                setTodaySpending(response.data)
-            })
-            .catch(error => {
-                console.error(error);
-            })
-    }, []);
 
 
     return (

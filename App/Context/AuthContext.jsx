@@ -29,6 +29,7 @@ export const AuthProvider=({children})=>{
                 await AsyncStorage.setItem('accessToken', data.access_token);
                 await AsyncStorage.setItem('refreshToken', data.refresh_token);
                 axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
+                getUserData();
             } else {
                 throw new Error('Tokens not found');
             }
@@ -37,6 +38,15 @@ export const AuthProvider=({children})=>{
             Alert.alert('Error', 'Failed to log in. Please check your username and password and try again.');
         }
         setIsLoading(false);
+    }
+
+    const getUserData = async () => {
+        try {
+            let response = await axios.get('http://192.168.147.230:8005/me');
+            await AsyncStorage.setItem('userID', response.data._id);
+        } catch (error) {
+            console.error('Error getting user ID:', error);
+        }
     }
 
     const isLoggedIn=async ()=> {
@@ -98,6 +108,7 @@ export const AuthProvider=({children})=>{
         setAccessToken(null);
         await AsyncStorage.removeItem('accessToken');
         await AsyncStorage.removeItem('refreshToken');
+        await AsyncStorage.removeItem('userID');
         delete axios.defaults.headers.common['Authorization'];
         setIsLoading(false);
     }
