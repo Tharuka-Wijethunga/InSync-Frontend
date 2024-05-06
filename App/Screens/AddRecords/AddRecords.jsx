@@ -1,11 +1,9 @@
 import { StyleSheet } from "react-native";
 import React from 'react';
 import Colors from "../../Config/Colors";
-import {NativeBaseProvider, View} from "native-base";
-import {useNavigation} from "@react-navigation/native";
+import {NativeBaseProvider} from "native-base";
 import RecordForm from "./RecordForm";
 import {SafeAreaView} from "react-native-safe-area-context";
-
 
 export default function AddRecords() {
     return (

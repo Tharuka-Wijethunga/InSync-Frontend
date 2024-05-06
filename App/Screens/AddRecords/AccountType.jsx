@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {HStack, IconButton, Text, VStack} from "native-base";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import Colors from "../../Config/Colors";
+import {Keyboard} from "react-native";
 
 const AccountType = ({setAccount}) => {
     const [bankPressed, setBankPressed] = useState(false);
@@ -11,12 +12,14 @@ const AccountType = ({setAccount}) => {
         setBankPressed(true);
         setCashPressed(false);
         setAccount("bank");
+        Keyboard.dismiss();
     };
 
     const handleCashPress = () => {
         setCashPressed(true);
         setBankPressed(false);
         setAccount("cash");
+        Keyboard.dismiss();
     };
 
     return (

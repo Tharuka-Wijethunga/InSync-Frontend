@@ -39,34 +39,29 @@ export default function Dashboard() {
     useEffect(()=> {
         if(isFocused){
             fetch_Records();
-            axios.get('https://de21-2a09-bac5-4863-15f-00-23-1cf.ngrok-free.app/api/dashboard/account?type=cash')
+            axios.get('https://323d-2a09-bac5-4862-18c8-00-278-33.ngrok-free.app/api/dashboard/account?type=cash')
                 .then(response => {
                     setCashBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('https://de21-2a09-bac5-4863-15f-00-23-1cf.ngrok-free.app/api/dashboard/account?type=bank')
+            axios.get('https://323d-2a09-bac5-4862-18c8-00-278-33.ngrok-free.app/api/dashboard/account?type=bank')
                 .then(response => {
                     setBankBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
+            axios.get('https://323d-2a09-bac5-4862-18c8-00-278-33.ngrok-free.app/api/dashboard/today_spending')
+                .then(response=> {
+                    setTodaySpending(response.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
     }, [isFocused,recordRef.current]);
-
-
-    useEffect(() => {
-        axios.get('https://de21-2a09-bac5-4863-15f-00-23-1cf.ngrok-free.app/api/dashboard/today_spending')
-            .then(response=> {
-                setTodaySpending(response.data)
-            })
-            .catch(error => {
-                console.error(error);
-            })
-    }, []);
-
 
     return (
         <NativeBaseProvider>

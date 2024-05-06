@@ -1,4 +1,4 @@
-import React, {useEffect,useState,useRef} from 'react';
+import React, {useEffect,useRef} from 'react';
 import {StyleSheet, Platform} from "react-native";
 import {HStack, IconButton, Modal, Text, View} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
