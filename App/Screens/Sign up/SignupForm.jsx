@@ -47,7 +47,12 @@ const SignupForm = () => {
         }
         if (validateForm()) {
             console.log('Logging in with:', {fullName, email, gender, password});
-            navigation.navigate({name: 'OnboardingFirstPage'});
+            navigation.navigate('OnboardingFirstPage',{
+                fullName:fullName,
+                email:email,
+                gender:gender,
+                password:password,
+            });
         }
     };
 

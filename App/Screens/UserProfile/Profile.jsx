@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Colors from "../../Config/Colors";
 import {Text, Box, HStack, VStack, Avatar, Spacer, IconButton, View,Button} from "native-base";
 import {MaterialIcons} from "@expo/vector-icons";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import {useNavigation} from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AuthContext} from "../../Context/AuthContext";
 
 export default function Profile() {
     const navigation = useNavigation();
+    const {logout}=useContext(AuthContext)
+
+    //Deleting access token with the  logout.
+    const handelLogout=async ()=>{
+        logout();
+    };
     return (
         <VStack space={3} paddingY={3}>
             <Box backgroundColor={"white"}  w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3} padding={3}>
@@ -67,7 +75,7 @@ export default function Profile() {
                         _pressed={{
                             bg: "blueGray.200:alpha.50",
                         }}
-                        onPress={() => navigation.reset({index: 0, routes: [{name: 'SignupNavigator'}]})}
+                        onPress={handelLogout}
                     >
                     <HStack  justifyContent="space-between" alignItems={"center"}  w={"100%"} space={3} >
                         <Avatar size={42} bgColor={Colors.Red}><MaterialIcons name="logout" size={24} color="white" /></Avatar>

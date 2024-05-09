@@ -10,7 +10,7 @@ const OnboardingSecondPage = ({ route }) => {
     const navigation = useNavigation();
 
     //get incomeRange data
-    const { incomeRange } = route.params;
+    const {  fullName,email,gender,password,incomeRange } = route.params;
 
     const [carVanChecked, setCarVanChecked] = useState(false);
     const [bikeChecked, setBikeChecked] = useState(false);
@@ -25,6 +25,10 @@ const OnboardingSecondPage = ({ route }) => {
 
             //navigate to next page and pass incomeRage data also with the carVanChecked etc... data.
             navigation.navigate('OnboardingThirdPage', {
+                fullName:fullName,
+                email:email,
+                gender:gender,
+                password:password,
                 incomeRange: incomeRange,
                 carVanChecked: carVanChecked,
                 bikeChecked: bikeChecked,

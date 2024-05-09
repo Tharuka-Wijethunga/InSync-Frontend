@@ -3,9 +3,8 @@ import React, { useState } from 'react';
 import Colors from "../../../Config/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default function TimeInputAndroid() {
+export default function TimeInputAndroid({myTime, setTime}) {
     const today = new Date();
-    const [time, setTime] = useState(today);
     const [showPicker, setShowPicker] = useState(false);
     const [displaymode, setMode] = useState('time');
     const toggleDatepicker = () => {
@@ -18,7 +17,7 @@ export default function TimeInputAndroid() {
         setTime(currentTime);
     };
 
-    const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const formattedTime = myTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     return (
         <View flex={1}>
@@ -26,7 +25,7 @@ export default function TimeInputAndroid() {
                 <DateTimePicker
                     mode={displaymode}
                     display={"default"}
-                    value={time}
+                    value={myTime}
                     is24Hour={false}
                     onChange={changeSelectedTime}
                 />

@@ -22,6 +22,7 @@ import AccountType from "./AccountType";
 import axios from "axios";
 import moment from 'moment-timezone';
 import {useNavigation} from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RecordForm = () => {
     const navigation = useNavigation();
@@ -36,14 +37,23 @@ const RecordForm = () => {
     const [myDate, setDate] = useState(new Date());
     const [myTime, setTime] = useState(new Date());
 
-    const handleSubmit = () =>{
+    const handleSubmit = async () => {
         const today = moment(myDate).format('YYYY-MM-DD');
         const sltime = moment.utc(myTime).tz('Asia/Colombo').format('HH:mm:ss');
-        const record = {'type':type, 'amount':amount, 'account':account, 'category':categoryName,'date':today, 'time':sltime};
-        axios.post('https://de21-2a09-bac5-4863-15f-00-23-1cf.ngrok-free.app/api/addrecord', record)
-            .then(response=>{
+        let userID = await AsyncStorage.getItem("userID");
+        const record = {
+            'userID':userID,
+            'type': type,
+            'amount': amount,
+            'account': account,
+            'category': categoryName,
+            'date': today,
+            'time': sltime
+        };
+        axios.post('http://192.168.147.230:8005/api/addrecord', record)
+            .then(response => {
                 console.log(response);
-                axios.put(`https://de21-2a09-bac5-4863-15f-00-23-1cf.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
+                axios.put(`http://192.168.147.230:8005/api/dashboard/account/${account}`, {amount: amount, type: type})
                     .then(response => {
                         console.log(response);
                         navigation.navigate('Dashboard');
@@ -52,7 +62,7 @@ const RecordForm = () => {
                         console.error(error);
                     })
             })
-            .catch(error=>{
+            .catch(error => {
                 console.error(error);
             })
     }
