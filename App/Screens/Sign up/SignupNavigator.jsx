@@ -19,7 +19,6 @@ const SignupNavigator = (initialRoute) => {
             <Stack.Screen name="OnboardingThirdPage" component={OnboardingThirdPage}/>
             <Stack.Screen name="OnboardingFourthPage" component={OnboardingFourthPage}/>
         </Stack.Navigator>
-
     );
 };
 

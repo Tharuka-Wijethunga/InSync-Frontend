@@ -16,7 +16,7 @@ import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 const OnboardingThirdPage = ({ route }) => {
     const navigation = useNavigation();
 
-    const { incomeRange,carVanChecked, bikeChecked, threeWheelerChecked, noneChecked } = route.params;
+    const { fullName,email,gender,password,incomeRange,carVanChecked, bikeChecked, threeWheelerChecked, noneChecked } = route.params;
 
     const [loanAmount, setLoanAmount] = useState('');
 
@@ -25,6 +25,10 @@ const OnboardingThirdPage = ({ route }) => {
     };
     const handleNext = () => {
         navigation.navigate('OnboardingFourthPage',{
+            fullName:fullName,
+            email:email,
+            gender:gender,
+            password:password,
             incomeRange: incomeRange,
             carVanChecked: carVanChecked,
             bikeChecked: bikeChecked,

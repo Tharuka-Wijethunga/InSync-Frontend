@@ -10,20 +10,24 @@ const OnboardingFourthPage = ({ route }) => {
     const navigation = useNavigation();
 
     //getting all the data from the previous onboarding pages
-    const { incomeRange,carVanChecked, bikeChecked, threeWheelerChecked, noneChecked,loanAmount } = route.params;
+    const { fullName,email,gender,password,incomeRange,carVanChecked, bikeChecked, threeWheelerChecked, noneChecked,loanAmount } = route.params;
     const handleBack = () => {
         navigation.goBack();
     };
     const handleNext = () => {
-        navigation.reset({index: 0, routes: [{name: 'TabNavigation'}]});
+
 
         //post request to pass this data to the backend
-        fetch('http://172.20.10.8:8000/onBoarding/data/', {
+        fetch('http://192.168.147.230:8005/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                fullname:fullName,
+                email:email,
+                gender:gender,
+                password:password,
                 incomeRange:incomeRange,
                 car:carVanChecked,
                 bike:bikeChecked,
@@ -33,9 +37,11 @@ const OnboardingFourthPage = ({ route }) => {
             })
         })
             .then(response => {
-                console.log("successfully added");
+                console.log("successfully added onborading data");
             })
             .catch(error => console.error(error));
+
+        navigation.navigate({name: 'Login'});
     };
 
     const windowHeight = Dimensions.get('window').height;

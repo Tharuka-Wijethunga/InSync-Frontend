@@ -3,13 +3,13 @@ import { HStack, IconButton, Modal, ScrollView, Text, View, VStack} from "native
 import { MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import CatButton from "../CatButton";
 
-const CategoryModal = ({modalVisible, setModalVisible,setSelectedCategory,setAvatarColor,setCategorydName,setCategory}) => {
+const CategoryModal = ({modalVisible, setModalVisible,setSelectedCategory,setAvatarColor,setCategoryName,setCategory}) => {
     const handelSelectedCategory=(icon,avatarColor,catName)=>{
         setSelectedCategory(icon);
         setAvatarColor(avatarColor);
-        setCategorydName(catName)
+        setCategoryName(catName);
         setModalVisible(false);
-        setCategory(catName);
+
     }
     return (
         <Modal isOpen={modalVisible} animationPreset="slide"  backdropVisible={true} >

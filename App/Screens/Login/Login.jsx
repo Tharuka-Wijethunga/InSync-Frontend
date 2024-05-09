@@ -1,53 +1,62 @@
-import React, { useState } from 'react';
-import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Image } from 'react-native';
-import {Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, Link, HStack} from 'native-base';
+import React, { useState,useContext } from 'react';
+import {
+    StyleSheet,
+    Alert,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    Keyboard,
+    Image,
+    ActivityIndicator
+} from 'react-native';
+import {Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, Link, HStack, View} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
 import logo from './../../../assets/bank.png';
-import {useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import axios from 'axios';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import qs from 'qs';
+import {AuthContext} from "../../Context/AuthContext";
+
+
 
 const Login = () => {
     const navigation = useNavigation();
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const {login}=useContext(AuthContext)//getting login method from the AuthContext
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleLogin = () => {
-        if (!email || !password) {
+    const handleLogin = async () => {
+        if (!username || !password) {
             Alert.alert('Error', 'Please fill in all fields');
             return;
         }
-        if (validateForm()) {
-            console.log('Logging in with:', { email, password });
-            navigation.reset({index: 0, routes: [{name: 'TabNavigation'}]});
-        }
 
+        if (validateForm()) {
+            login(username,password);
+        }
     };
+
+
+
     const validateForm = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!email || !emailRegex.test(email)) {
-            Alert.alert('Validation Error', 'Please enter a valid email addressss');
+        if (!emailRegex.test(username)) {
+            Alert.alert('Error', 'Please enter a valid email');
             return false;
         }
-
-        if (password.length < 8 ||
-            !/[A-Z]/.test(password) ||
-            !/[a-z]/.test(password) ||
-            !/[0-9]/.test(password) ||
-            !/[!@#$%^&*()\-_=+{};:,<.>]/.test(password)) {
-            Alert.alert('Validation Error', 'Invalid password');
-            return false;
-        }
-
         return true;
     };
+
+
     const handleSignup = () => {
-        navigation.navigate({name: 'Signup'});
+        navigation.navigate({ name: 'Signup' });
     };
 
     return (
@@ -59,12 +68,13 @@ const Login = () => {
                         <Text fontSize={13} color="gray.500" mt={-4}>Login to continue.</Text>
                         <Image source={logo} style={styles.logo} />
 
+
                         <Input mt={10}
                                variant="rounded"
                                borderColor={Colors.Blue}
-                               placeholder="Email"
-                               value={email}
-                               onChangeText={setEmail}
+                               placeholder="Username"
+                               value={username}
+                               onChangeText={setUsername}
                                style={styles.input}
                         />
                         <Input mt={2}
