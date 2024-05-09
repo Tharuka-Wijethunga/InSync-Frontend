@@ -1,4 +1,4 @@
-import React ,{useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Box,
     Button,
@@ -21,21 +21,33 @@ import IncomeExpenseInput from "./IncomeExpenseInput";
 import AccountType from "./AccountType";
 import axios from "axios";
 import moment from 'moment-timezone';
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation,useIsFocused} from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const RecordForm = () => {
     const navigation = useNavigation();
+
     const [modalVisible, setModalVisible] = React.useState(false);
     const [selectedCategory,setSelectedCategory]=useState("tag-plus" );
     const [avatarColor,setAvatarColor]=useState(Colors.IconColor);
     const [categoryName,setCategoryName]=useState("Select a Category");
-
     const [type, setType] = useState( "expense");
     const [amount, setAmount] = useState(0 );
     const [account, setAccount] = useState("cash");
     const [myDate, setDate] = useState(new Date());
     const [myTime, setTime] = useState(new Date());
+
+    const resetState = () => {
+        setType("expense");
+        setAmount(0);
+        setAccount("cash");
+        setCategoryName("Select a Category");
+        setAvatarColor(Colors.IconColor);
+        setSelectedCategory("tag-plus")
+        setDate(new Date());
+        setTime(new Date());
+    }
+
 
     const handleSubmit = async () => {
         const today = moment(myDate).format('YYYY-MM-DD');
@@ -53,10 +65,11 @@ const RecordForm = () => {
         axios.post('http://192.168.147.230:8005/api/addrecord', record)
             .then(response => {
                 console.log(response);
-                axios.put(`http://192.168.147.230:8005/api/dashboard/account/${account}`, {amount: amount, type: type})
+                axios.put(`https://323d-2a09-bac5-4862-18c8-00-278-33.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
                     .then(response => {
                         console.log(response);
                         navigation.navigate('Dashboard');
+                        resetState();
                     })
                     .catch(error => {
                         console.error(error);
@@ -78,12 +91,16 @@ const RecordForm = () => {
                                 setType={setType}
                                 setAmount={setAmount}
                             />
-                            <AccountType setAccount={setAccount}  />
+                            <AccountType setAccount={setAccount}/>
                             {/* Category selection */}
                             <VStack>
                                 <Text fontSize={16} fontWeight="medium" paddingBottom={1}>Category</Text>
                                 <Pressable
-                                    onPress={() => setModalVisible(!modalVisible)}
+                                    onPress={() => {
+                                        setModalVisible(!modalVisible);
+                                        Keyboard.dismiss();
+                                        }
+                                    }
                                     borderRadius="full"
                                     padding={1.5}
                                     _pressed={{
