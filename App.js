@@ -1,3 +1,4 @@
+import "react-native-reanimated";
 import 'react-native-gesture-handler';
 import {NativeBaseProvider, Text, View, VStack} from "native-base";
 import AppNavigation from "./App/Navigations/AppNavigation";
@@ -48,7 +49,7 @@ export default function App() {
     return (
         <NativeBaseProvider>
             <AuthProvider>
-            <AppNavigation initialRoute={initialRoute} />
+                <AppNavigation initialRoute={initialRoute} />
             </AuthProvider>
         </NativeBaseProvider>
     )
