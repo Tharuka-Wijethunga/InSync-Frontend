@@ -14,7 +14,7 @@ export const AuthProvider=({children})=>{
         setIsLoading(true);
         try {
             const requestData = qs.stringify({username, password});
-            const response = await axios.post('http://192.168.147.230:8005/token', requestData, {
+            const response = await axios.post('http://192.168.84.230:8005/token', requestData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -42,7 +42,7 @@ export const AuthProvider=({children})=>{
 
     const getUserData = async () => {
         try {
-            let response = await axios.get('http://192.168.147.230:8005/me');
+            let response = await axios.get('http://192.168.84.230:8005/me');
             await AsyncStorage.setItem('userID', response.data._id);
         } catch (error) {
             console.error('Error getting user ID:', error);
@@ -68,7 +68,7 @@ export const AuthProvider=({children})=>{
     const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            const response = await axios.post('http://192.168.147.230:8005/refresh-token', {}, {
+            const response = await axios.post('http://192.168.84.230:8005/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }

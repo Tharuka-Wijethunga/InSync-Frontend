@@ -62,10 +62,10 @@ const RecordForm = () => {
             'date': today,
             'time': sltime
         };
-        axios.post('http://192.168.147.230:8005/api/addrecord', record)
+        axios.post('http://192.168.84.230:8005/api/addrecord', record)
             .then(response => {
                 console.log(response);
-                axios.put(`https://323d-2a09-bac5-4862-18c8-00-278-33.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
+                axios.put(`http://192.168.84.230:8005/api/dashboard/account/${account}`,{amount:amount, type:type})
                     .then(response => {
                         console.log(response);
                         navigation.navigate('Dashboard');
