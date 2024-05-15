@@ -3,6 +3,7 @@ import qs from "qs";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Alert} from "react-native";
+import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 
 export const AuthContext=createContext();
 
@@ -14,7 +15,7 @@ export const AuthProvider=({children})=>{
         setIsLoading(true);
         try {
             const requestData = qs.stringify({username, password});
-            const response = await axios.post('http://192.168.84.230:8005/token', requestData, {
+            const response = await axios.post('https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/token', requestData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -42,8 +43,10 @@ export const AuthProvider=({children})=>{
 
     const getUserData = async () => {
         try {
-            let response = await axios.get('http://192.168.84.230:8005/me');
+            let response = await axios.get('https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/me');
             await AsyncStorage.setItem('userID', response.data._id);
+            // let x = await asyncStorage.getItem('userID');
+            // console.log(x);
         } catch (error) {
             console.error('Error getting user ID:', error);
         }
@@ -68,7 +71,7 @@ export const AuthProvider=({children})=>{
     const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            const response = await axios.post('http://192.168.84.230:8005/refresh-token', {}, {
+            const response = await axios.post('https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }

@@ -18,7 +18,7 @@ const OnboardingFourthPage = ({ route }) => {
 
 
         //post request to pass this data to the backend
-        fetch('http://192.168.147.230:8005/signup', {
+        fetch('https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,11 +37,13 @@ const OnboardingFourthPage = ({ route }) => {
             })
         })
             .then(response => {
-                console.log("successfully added onborading data");
+                console.log("successfully added onboarding data");
+
             })
             .catch(error => console.error(error));
 
-        navigation.navigate({name: 'Login'});
+        navigation.navigate('Login');
+
     };
 
     const windowHeight = Dimensions.get('window').height;

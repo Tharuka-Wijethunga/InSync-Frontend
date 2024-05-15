@@ -39,21 +39,21 @@ export default function Dashboard() {
     useEffect(()=> {
         if(isFocused){
             fetch_Records();
-            axios.get('http://192.168.84.230:8005/api/dashboard/account?type=cash')
+            axios.get('https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/api/dashboard/account?type=cash')
                 .then(response => {
                     setCashBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('http://192.168.84.230:8005/api/dashboard/account?type=bank')
+            axios.get('https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/api/dashboard/account?type=bank')
                 .then(response => {
                     setBankBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('http://192.168.84.230:8005/api/dashboard/today_spending')
+            axios.get('https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/api/dashboard/today_spending')
                 .then(response=> {
                     setTodaySpending(response.data)
                 })

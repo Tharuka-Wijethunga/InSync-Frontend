@@ -43,7 +43,8 @@
     "react-native-simple-select-button": "^0.0.6",
     "react-native-svg": "15.2.0",
     "react-native-tab-view": "^3.5.2",
-    "untitledui-js": "^2.1.0"
+    "untitledui-js": "^2.1.0",
+    "react-native-reanimated": "~3.10.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0"

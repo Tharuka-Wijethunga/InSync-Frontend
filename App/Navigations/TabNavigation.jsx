@@ -22,7 +22,6 @@ export default function TabNavigation() {
             <Tab.Screen
                 name='Dashboard'
                 component={Dashboard}
-
                 options={{
                     tabBarIcon: ({color}) => <Octicons name="home" size={28} color={color}/>,
                 }}
