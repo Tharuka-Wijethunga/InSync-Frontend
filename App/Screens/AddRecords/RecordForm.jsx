@@ -23,6 +23,7 @@ import axios from "axios";
 import moment from 'moment-timezone';
 import {useNavigation,useIsFocused} from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import catIcon from "./CatIcon";
 
 const RecordForm = () => {
     const navigation = useNavigation();
@@ -31,6 +32,7 @@ const RecordForm = () => {
     const [selectedCategory,setSelectedCategory]=useState("tag-plus" );
     const [avatarColor,setAvatarColor]=useState(Colors.IconColor);
     const [categoryName,setCategoryName]=useState("Select a Category");
+    const [iconSize, setIconSize]=useState("");
     const [type, setType] = useState( "expense");
     const [amount, setAmount] = useState(0 );
     const [account, setAccount] = useState("cash");
@@ -59,13 +61,16 @@ const RecordForm = () => {
             'amount': amount,
             'account': account,
             'category': categoryName,
+            'icon_name': selectedCategory,
+            'icon_size': iconSize,
+            'icon_color': avatarColor,
             'date': today,
             'time': sltime
         };
-        axios.post('https://4219-2a09-bac5-4864-18c8-00-278-33.ngrok-free.app/api/addrecord', record)
+        axios.post('https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/api/addrecord', record)
             .then(response => {
                 console.log(response);
-                axios.put(`https://4219-2a09-bac5-4864-18c8-00-278-33.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
+                axios.put(`https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
                     .then(response => {
                         console.log(response);
                         navigation.navigate('Dashboard');
@@ -110,13 +115,13 @@ const RecordForm = () => {
                                         <Avatar size="45px" bgColor={avatarColor} alignSelf={"center"}>
                                             <MaterialCommunityIcons name={selectedCategory} size={25} color={"white"}/>
                                         </Avatar>
-
-                                            <Text fontWeight={"medium"}>{categoryName}</Text>
+                                        <Text fontWeight={"medium"}>{categoryName}</Text>
                                         <Spacer/>
                                             <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
                                             <Category setSelectedCategory={setSelectedCategory}
                                                       setAvatarColor={setAvatarColor}
                                                       setCategoryName={setCategoryName}
+                                                      setIconSize={setIconSize}
                                                       modalVisible={modalVisible}
                                                       setModalVisible={setModalVisible}
                                             />
