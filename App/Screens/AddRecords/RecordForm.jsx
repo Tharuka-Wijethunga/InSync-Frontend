@@ -62,7 +62,6 @@ const RecordForm = () => {
             'account': account,
             'category': categoryName,
             'icon_name': selectedCategory,
-            'icon_size': iconSize,
             'icon_color': avatarColor,
             'date': today,
             'time': sltime

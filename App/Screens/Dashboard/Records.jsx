@@ -4,7 +4,7 @@ import Colors from "../../Config/Colors";
 import {TouchableHighlight} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import axios from "axios";
-import { MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Records = forwardRef((props, ref) => {
     const navigation = useNavigation();
@@ -22,8 +22,7 @@ const Records = forwardRef((props, ref) => {
                     type: item.type,
                     account: item.account,
                     icon_name: item.icon_name,
-                    icon_color: item.icon_color,
-                    icon_size: item.icon_size
+                    icon_color: item.icon_color
                 })));
 
             } catch (e) {
@@ -41,7 +40,7 @@ const Records = forwardRef((props, ref) => {
                     <View paddingX={1}>
                         <HStack space={[2, 3]} justifyContent="space-between" paddingBottom={2} paddingTop={2} flex={1}>
                             <Avatar size="42px" bgColor={item.icon_color}>
-                                {<MaterialCommunityIcons name={item.icon_name} size={item.item_size} color="white" />}
+                                {<MaterialCommunityIcons name={item.icon_name} size={22} color="white" />}
                             </Avatar>
                             <VStack>
                                 <Text fontWeight={"semibold"} fontSize="16">
