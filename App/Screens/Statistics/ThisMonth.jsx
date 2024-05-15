@@ -1,28 +1,77 @@
 import { PieChart } from "react-native-gifted-charts";
 import {View, Text, HStack,Box,Spacer} from "native-base";
 import {FlatList} from "react-native";
+import { Button } from "native-base";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import {useEffect, useState} from "react";
+import {useIsFocused} from "@react-navigation/native";
+export default function ThisMonth() {
+    const isFocused = useIsFocused();
+    const [pieData, setPieData] = useState([]);
+    const [TotalAmount, setTotalAmount] = useState(0);
 
-export default  function ThisMonth() {
-    const pieData = [
-        {value: 60, color: '#F87171',gradientCenterColor: '#F87171',categoryName:"Food", amount:30000},
-        {value: 9, color: '#60A5FA',gradientCenterColor: '#60A5FA',categoryName:"Shopping", amount:4500},
-        {value: 2, color: '#4ADE80',gradientCenterColor: '#4ADE80',categoryName:"Health", amount:1000},
-        {value: 10, color: '#A8A29E',gradientCenterColor: '#A8A29E',categoryName:"Vehicle", amount:5000},
-        {value: 12, color: '#FACC15',gradientCenterColor: '#FACC15',categoryName:"Rent", amount:6000},
-        {value: 1, color: '#818CF8',gradientCenterColor: '#818CF8',categoryName:"Transport", amount:500},
-        {value: 6, color: '#FB923C',gradientCenterColor: '#FB923C',categoryName:"Other", amount:3000},
+    const categoryColors = {
+        "Foods & Drinks": {color: '#F87171', gradientCenterColor: '#F87171'},
+        "shopping": {color: '#60A5FA', gradientCenterColor: '#60A5FA'},
+        "Health": {color: '#4ADE80', gradientCenterColor: '#4ADE80'},
+        "Vehicle": {color: '#FFEB3B', gradientCenterColor: '#FFEB3B'},
+        "Public transport": {color: '#818CF8', gradientCenterColor: '#818CF8'},
+        "Bills": {color: '#FB923C', gradientCenterColor: '#FB923C'},
+        "Loans": {color: '#42A5F5', gradientCenterColor: '#42A5F5'},
+        "Rent": {color: '#FF5733', gradientCenterColor: '#FF5733'},
+        "Other": {color: '#808080', gradientCenterColor: '#808080'},
+    };
 
-    ];
+    const categoryOrder = ["Foods & Drinks", "shopping", "Health", "Vehicle", "Public transport", "Bills", "Loans", "Rent", "Other"];  // Ordered list of category names
 
-    const renderItem=({item})=>{
-        return(
+    useEffect(() => {
+        if(isFocused){
+            fetchMonthStat();
+            fetchMonthTotal();
+        }
+    }, [isFocused]);
+    const fetchMonthTotal = async () => {
+        let userID = await AsyncStorage.getItem("userID");
+        axios.get(`http://192.168.84.230:8005/api/statistics/thisMonthTotal?userID=${userID}`)
+            .then(response => {
+                setTotalAmount(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+    const fetchMonthStat = async () => {
+        let userID = await AsyncStorage.getItem("userID");
+        axios.get(`http://192.168.84.230:8005/api/statistics/thisMonthStat?userID=${userID}`)
+            .then(response => {
+                let data = response.data.map(item => {
+                    const colors = categoryColors[item._id]; //get the color according tho the category name
+                    return {
+                        value: item.value,
+                        color: colors.color,
+                        gradientCenterColor: colors.gradientCenterColor,
+                        categoryName: item._id,
+                        amount: item.sum
+                    };
+                });
+                data.sort((a, b) => categoryOrder.indexOf(a.categoryName) - categoryOrder.indexOf(b.categoryName));  // Sort the data based on the order of category names in categoryOrder
+                setPieData(data);  // Set pieData with the sorted data
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
+    const renderItem = ({item}) => {
+        return (
             <View>
                 <Box pl={["8", "4"]} pr={["8", "5"]} py="3">
-                    <HStack space={[2,3]} justifyContent={"space-between"} alignItems={"center"}>
+                    <HStack space={[2, 3]} justifyContent={"space-between"} alignItems={"center"}>
                         {renderDot(item.color)}
                         <Text>{item.categoryName}</Text>
                         <Spacer/>
-                        <Text>{item.amount}</Text>
+                        <Text>LKR {item.amount}</Text>
                     </HStack>
                 </Box>
             </View>
@@ -38,9 +87,9 @@ export default  function ThisMonth() {
 
 
     return (
-        <View  flex={1} backgroundColor={"white"}>
+        <View flex={1} backgroundColor={"white"}>
 
-            <Text style={{fontSize: 16, fontWeight: 'bold', paddingLeft:20,  paddingTop:15}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold', paddingLeft: 20, paddingTop: 15}}>
                 Spending
             </Text>
             <View style={{padding: 22, alignItems: 'center'}}>
@@ -57,7 +106,7 @@ export default  function ThisMonth() {
                                     style={{fontSize: 22, fontWeight: 'bold'}}>
                                     All
                                 </Text>
-                                <Text style={{fontSize: 14}}>LKR 50000</Text>
+                                <Text style={{fontSize: 14}}>LKR {TotalAmount}</Text>
                             </View>
                         );
                     }}
