@@ -55,7 +55,7 @@ export const AuthProvider=({children})=>{
     const isLoggedIn=async ()=> {
         try {
             setIsLoading(true);
-            let accessTokens = await AsyncStorage.getItem('accessToken');
+            let accessToken = await AsyncStorage.getItem('accessToken');
             await refreshAccessToken();
             //if there is an access token already in the AsyncStorage use that for login
             if (accessToken) {
