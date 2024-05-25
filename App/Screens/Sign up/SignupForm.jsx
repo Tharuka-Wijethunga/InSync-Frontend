@@ -17,6 +17,8 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
 import {useNavigation} from "@react-navigation/native";
+import axios from "axios";
+
 
 
 const SignupForm = () => {
@@ -32,6 +34,7 @@ const SignupForm = () => {
     const [showGenderModal, setShowGenderModal] = useState(false);
     const [showModal, setShowModal] = useState(false); // State to toggle
     const [selectedGender, setSelectedGender] = useState('');
+    const [isEmailExists,setIsEmailExits]=useState(false);
     const handleBack = () => {
         navigation.goBack();
     };
@@ -45,15 +48,25 @@ const SignupForm = () => {
             Alert.alert('Validation Error', 'Please fill in all fields');
             return;
         }
-        if (validateForm()) {
-            console.log('Logging in with:', {fullName, email, gender, password});
-            navigation.navigate('OnboardingFirstPage',{
-                fullName:fullName,
-                email:email,
-                gender:gender,
-                password:password,
+
+        axios.post(`http://192.168.99.230:8005/checkMail?email=${email}`)
+            .then(response => {
+                if (response.data.exists) {
+                    Alert.alert('Error', 'Email already exists, Try another one.');
+                } else if (validateForm()) {
+                    // If the email does not exist in the database
+                    console.log('Logging in with:', {fullName, email, gender, password});
+                    navigation.navigate('OnboardingFirstPage',{
+                        fullName:fullName,
+                        email:email,
+                        gender:gender,
+                        password:password,
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
             });
-        }
     };
 
     const validateForm = () => {

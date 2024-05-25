@@ -3,7 +3,6 @@ import {View, Text, HStack,Box,Spacer} from "native-base";
 import {FlatList} from "react-native";
 import {useIsFocused} from "@react-navigation/native";
 import {useEffect, useState} from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 export default  function PreviousMonth() {
@@ -33,8 +32,7 @@ export default  function PreviousMonth() {
     }, [isFocused]);
 
     const fetchMonthTotal = async () => {
-        let userID = await AsyncStorage.getItem("userID");
-        axios.get(`https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/api/statistics/previousMonthTotal?userID=${userID}`)
+        axios.get(`http://192.168.99.230:8005/api/statistics/previousMonthTotal`)
             .then(response => {
                 setTotalAmount(response.data);
             })
@@ -43,8 +41,7 @@ export default  function PreviousMonth() {
             });
     };
     const fetchMonthStat = async () => {
-        let userID = await AsyncStorage.getItem("userID");
-        axios.get(`https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/api/statistics/previousMonthStat?userID=${userID}`)
+        axios.get(`http://192.168.99.230:8005/api/statistics/previousMonthStat`)
             .then(response => {
                 let data = response.data.map(item => {
                     const colors = categoryColors[item._id];

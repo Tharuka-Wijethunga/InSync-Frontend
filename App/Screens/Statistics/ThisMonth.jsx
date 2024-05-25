@@ -1,8 +1,6 @@
 import { PieChart } from "react-native-gifted-charts";
 import {View, Text, HStack,Box,Spacer} from "native-base";
 import {FlatList} from "react-native";
-import { Button } from "native-base";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {useIsFocused} from "@react-navigation/native";
@@ -32,8 +30,7 @@ export default function ThisMonth() {
         }
     }, [isFocused]);
     const fetchMonthTotal = async () => {
-        let userID = await AsyncStorage.getItem("userID");
-        axios.get(`https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/api/statistics/thisMonthTotal?userID=${userID}`)
+        axios.get(`http://192.168.99.230:8005/api/statistics/thisMonthTotal`)
             .then(response => {
                 setTotalAmount(response.data);
             })
@@ -42,8 +39,7 @@ export default function ThisMonth() {
             });
     };
     const fetchMonthStat = async () => {
-        let userID = await AsyncStorage.getItem("userID");
-        axios.get(`https://25a7-2a09-bac5-4863-1d05-00-2e4-f8.ngrok-free.app/api/statistics/thisMonthStat?userID=${userID}`)
+        axios.get(`http://192.168.99.230:8005/api/statistics/thisMonthStat`)
             .then(response => {
                 let data = response.data.map(item => {
                     const colors = categoryColors[item._id]; //get the color according tho the category name
