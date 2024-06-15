@@ -32,7 +32,7 @@ export default  function PreviousMonth() {
     }, [isFocused]);
 
     const fetchMonthTotal = async () => {
-        axios.get(`http://192.168.99.230:8005/api/statistics/previousMonthTotal`)
+        axios.get(`http://192.168.114.230:8005/api/statistics/previousMonthTotal`)
             .then(response => {
                 setTotalAmount(response.data);
             })
@@ -41,7 +41,7 @@ export default  function PreviousMonth() {
             });
     };
     const fetchMonthStat = async () => {
-        axios.get(`http://192.168.99.230:8005/api/statistics/previousMonthStat`)
+        axios.get(`http://192.168.114.230:8005/api/statistics/previousMonthStat`)
             .then(response => {
                 let data = response.data.map(item => {
                     const colors = categoryColors[item._id];

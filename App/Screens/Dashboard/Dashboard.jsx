@@ -1,4 +1,5 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet,TouchableOpacity, } from "react-native";
+import {Badge, Flex, Input, Popover, Pressable, Spacer} from 'native-base';
 import React,{useState, useEffect,useRef} from 'react';
 import Colors from "../../Config/Colors";
 import {
@@ -10,7 +11,8 @@ import {
     VStack,
     IconButton,
     ScrollView,
-    Center
+    Center,
+    Button,
 } from "native-base";
 import BalanceCard from "./BalanceCard";
 import {MaterialIcons} from '@expo/vector-icons';
@@ -39,21 +41,21 @@ export default function Dashboard() {
     useEffect(()=> {
         if(isFocused){
             fetch_Records();
-            axios.get('http://192.168.99.230:8005/api/dashboard/account?type=cash')
+            axios.get('http://192.168.114.230:8005/api/dashboard/account?type=cash')
                 .then(response => {
                     setCashBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('http://192.168.99.230:8005/api/dashboard/account?type=bank')
+            axios.get('http://192.168.114.230:8005/api/dashboard/account?type=bank')
                 .then(response => {
                     setBankBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('http://192.168.99.230:8005/api/dashboard/today_spending')
+            axios.get('http://192.168.114.230:8005/api/dashboard/today_spending')
                 .then(response=> {
                     setTodaySpending(response.data)
                 })
@@ -74,9 +76,79 @@ export default function Dashboard() {
                                     todaySpending={todaySpending}
                                 />
                             </HStack>
-                            <HStack space={3} alignSelf="center">
-                                <BalanceCard account="Bank" balance={bankBalance}/>
-                                <BalanceCard account="Cash" balance={cashBalance}/>
+                            <HStack space={3}  alignSelf="center">
+                                <View flex={1}>
+                                <Popover
+                                    trigger={(triggerProps) => {
+                                        return (
+                                                <Pressable {...triggerProps}>
+                                                    {({isPressed}) => {
+                                                        return <Box style={{
+                                                            transform: [{
+                                                                scale: isPressed ? 0.96 : 1
+                                                            }]
+                                                        }} >
+                                                            <BalanceCard account="Bank" balance={bankBalance}/>
+                                                        </Box>;
+                                                    } }
+                                                </Pressable>
+                                        );
+                                    }}
+                                >
+                                    <Popover.Content marginLeft={2} width="56">
+                                        <Popover.Arrow />
+                                        <Popover.Body>
+                                            <VStack flex={1} width={"100%"} space={1} alignItems={"center"}>
+                                            <Input marginBottom={2} variant="outline"placeholder="Change Balance" />
+                                            <HStack alignSelf="center" space={1} >
+                                                    <Button bg={Colors.DBlue} borderRadius={"full"} w="50%" size="md" >
+                                                    Save
+                                                </Button>
+                                                <Button borderRadius={"full"} w="50%" size="md" variant="outline">
+                                                    <Text color={"black"}>Cancel</Text>
+                                                </Button>
+                                            </HStack>
+                                            </VStack>
+                                        </Popover.Body>
+                                    </Popover.Content>
+                                </Popover>
+                                </View>
+                                <View flex={1}>
+                                <Popover
+                                    trigger={(triggerProps) => {
+                                        return (
+                                            <Pressable {...triggerProps}>
+                                                {({isPressed}) => {
+                                                    return <Box style={{
+                                                        transform: [{
+                                                            scale: isPressed ? 0.96 : 1
+                                                        }]
+                                                    }} >
+                                                        <BalanceCard account="Bank" balance={cashBalance}/>
+                                                    </Box>;
+                                                } }
+                                            </Pressable>
+                                        );
+                                    }}
+                                >
+                                    <Popover.Content marginRight={2} width="56">
+                                        <Popover.Arrow />
+                                        <Popover.Body>
+                                            <VStack flex={1} width={"100%"} space={1} alignItems={"center"}>
+                                                <Input marginBottom={2} variant="outline"placeholder="Change Balance" />
+                                                <HStack alignSelf="center" space={1} >
+                                                    <Button bg={Colors.DBlue} borderRadius={"full"} w="50%" size="md" >
+                                                        Save
+                                                    </Button>
+                                                    <Button borderRadius={"full"} w="50%" size="md" variant="outline">
+                                                        <Text color={"black"}>Cancel</Text>
+                                                    </Button>
+                                                </HStack>
+                                            </VStack>
+                                        </Popover.Body>
+                                    </Popover.Content>
+                                </Popover>
+                                </View>
                             </HStack>
                             <HStack>
                                 <UpcomingCard/>
@@ -123,5 +195,5 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.BGColor,
         alignItems: 'center',
         flex: 1,
-    }
+    },
 })

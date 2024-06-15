@@ -18,7 +18,7 @@ const OnboardingFourthPage = ({ route }) => {
 
 
         //post request to pass this data to the backend
-        fetch('http://192.168.99.230:8005/signup', {
+        fetch('http://192.168.114.230:8005/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
