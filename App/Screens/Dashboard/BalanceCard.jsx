@@ -4,7 +4,7 @@ import Colors from "../../Config/Colors";
 
 const BalanceCard = (props) => {
     return (
-        <View w="48.5%">
+        <View w="100%">
             <Box h="112" bg="white" rounded="2xl" shadow={3}>
                 <VStack space={4} padding={4}>
                     <View>

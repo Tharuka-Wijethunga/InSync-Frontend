@@ -15,7 +15,7 @@ export const AuthProvider=({children})=>{
         setIsLoading(true);
         try {
             const requestData = qs.stringify({username, password});
-            const response = await axios.post('http://192.168.99.230:8005/token', requestData, {
+            const response = await axios.post('http://192.168.114.230:8005/token', requestData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -30,7 +30,6 @@ export const AuthProvider=({children})=>{
                 await AsyncStorage.setItem('accessToken', data.access_token);
                 await AsyncStorage.setItem('refreshToken', data.refresh_token);
                 axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
-                getUserData();
             } else {
                 throw new Error('Tokens not found');
             }
@@ -41,16 +40,6 @@ export const AuthProvider=({children})=>{
         setIsLoading(false);
     }
 
-    const getUserData = async () => {
-        try {
-            let response = await axios.get('http://192.168.99.230:8005/me');
-            await AsyncStorage.setItem('userID', response.data._id);
-            // let x = await asyncStorage.getItem('userID');
-            // console.log(x);
-        } catch (error) {
-            console.error('Error getting user ID:', error);
-        }
-    }
 
     const isLoggedIn=async ()=> {
         try {
@@ -71,7 +60,7 @@ export const AuthProvider=({children})=>{
     const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            const response = await axios.post('http://192.168.99.230:8005/refresh-token', {}, {
+            const response = await axios.post('http://192.168.114.230:8005/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }
@@ -111,7 +100,6 @@ export const AuthProvider=({children})=>{
         setAccessToken(null);
         await AsyncStorage.removeItem('accessToken');
         await AsyncStorage.removeItem('refreshToken');
-        await AsyncStorage.removeItem('userID');
         delete axios.defaults.headers.common['Authorization'];
         setIsLoading(false);
     }

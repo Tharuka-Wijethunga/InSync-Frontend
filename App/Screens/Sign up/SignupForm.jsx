@@ -49,7 +49,7 @@ const SignupForm = () => {
             return;
         }
 
-        axios.post(`http://192.168.99.230:8005/checkMail?email=${email}`)
+        axios.post(`http://192.168.114.230:8005/checkMail?email=${email}`)
             .then(response => {
                 if (response.data.exists) {
                     Alert.alert('Error', 'Email already exists, Try another one.');
