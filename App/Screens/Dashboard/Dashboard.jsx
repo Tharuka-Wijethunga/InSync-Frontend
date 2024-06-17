@@ -124,7 +124,7 @@ export default function Dashboard() {
                                                             scale: isPressed ? 0.96 : 1
                                                         }]
                                                     }} >
-                                                        <BalanceCard account="Bank" balance={cashBalance}/>
+                                                        <BalanceCard account="Cash" balance={cashBalance}/>
                                                     </Box>;
                                                 } }
                                             </Pressable>
