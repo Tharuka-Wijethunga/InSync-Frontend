@@ -18,7 +18,7 @@ const OnboardingFourthPage = ({ route }) => {
 
 
         //post request to pass this data to the backend
-        fetch('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/signup', {
+        fetch('https://a831-2402-4000-11c5-60ea-9006-9e51-2f9d-b006.ngrok-free.app/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

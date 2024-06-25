@@ -1,23 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions } from 'react-native';
-import {
-    Box,
-    Button,
-    Input,
-    Icon,
-    NativeBaseProvider,
-    Text,
-    VStack,
-    HStack,
-    Checkbox,
-    Modal,
-    Radio,
-    View
-} from 'native-base';
+import {Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, HStack, Checkbox, Modal, Radio, View} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
 import {useNavigation} from "@react-navigation/native";
 import axios from "axios";
+import {is_valid_email, is_valid_fullName, is_valid_password} from "./password";
 
 
 
@@ -49,7 +37,7 @@ const SignupForm = () => {
             return;
         }
 
-        axios.post(`https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/checkMail?email=${email}`)
+        axios.post(`https://a831-2402-4000-11c5-60ea-9006-9e51-2f9d-b006.ngrok-free.app/checkMail?email=${email}`)
             .then(response => {
                 if (response.data.exists) {
                     Alert.alert('Error', 'Email already exists, Try another one.');
@@ -69,65 +57,28 @@ const SignupForm = () => {
             });
     };
 
-    const validateForm = () => {
-        const fullNameLetters = fullName.replace(/[.\s]/g, '');
-        if (fullNameLetters.length < 4) {
-            Alert.alert('Validation Error', 'Full name must have at least 4 letters');
-            return false;
-        }
+    const validateForm = ()=>{
+    if (!is_valid_fullName(fullName)) {
+        return false;
+    }
 
-        const fullNameRegex = /^[a-zA-Z\s.]+$/;
-        if (!fullNameRegex.test(fullName)) {
-            Alert.alert('Validation Error', 'Full name must contain only alphabetic characters, spaces, and dots');
-            return false;
-        }
+    if (!is_valid_email(email)) {
+        return false;
+    }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            Alert.alert('Validation Error', 'Please enter a valid email address');
-            return false;
-        }
+    if (!is_valid_password(password)) {
+        return false;
+    }
 
-        if (!is_valid_password(password)) {
-            return false;
-        }
-
-        if (password !== confirmPassword) {
+    if (password !== confirmPassword) {
             Alert.alert('Validation Error', 'Passwords did not match');
             return false;
-        }
-        if (!isChecked) {
+    }
+
+    if (!isChecked) {
             Alert.alert('Validation Error', 'Please agree to the terms and conditions');
             return false;
-        }
-        return true;
-    };
-    const is_valid_password = (password) => {
-        if (password.length < 8) {
-            Alert.alert('Validation Error', 'Password must be at least 8 characters long');
-            return false;
-        }
-
-        if (!/[A-Z]/.test(password)) {
-            Alert.alert('Validation Error', 'Password must contain at least one uppercase letter');
-            return false;
-        }
-
-        if (!/[a-z]/.test(password)) {
-            Alert.alert('Validation Error', 'Password must contain at least one lowercase letter');
-            return false;
-        }
-
-        if (!/[0-9]/.test(password)) {
-            Alert.alert('Validation Error', 'Password must contain at least one digit');
-            return false;
-        }
-
-        if (!/[!@#$%^&*()\-_=+{};:,<.>]/.test(password)) {
-            Alert.alert('Validation Error', 'Password must contain at least one special character');
-            return false;
-        }
-
+    }
         return true;
     };
 

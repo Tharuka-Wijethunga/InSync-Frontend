@@ -5,7 +5,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../Context/AuthContext';
 import Colors from "../../Config/Colors";
-import { is_valid_password } from "../Sign up/password";
+import {is_valid_email, is_valid_fullName, is_valid_password} from "../Sign up/password";
 
 const EditProfile = ({ navigation }) => {
     const { setAccessToken } = useContext(AuthContext);
@@ -27,13 +27,17 @@ const EditProfile = ({ navigation }) => {
 
     const validate = () => {
         const newErrors = {};
-        if (!formData.fullName) newErrors.fullName = 'Full Name is required';
-        if (!formData.email) newErrors.email = 'Email is required';
+        if (!is_valid_fullName(formData.fullName)) {
+            newErrors.fullName = 'Invalid full name';
+        }
+        if (!is_valid_email(formData.email)) {
+            newErrors.email = 'Invalid email';
+        }
         if (formData.password && formData.password !== formData.confirmPassword) {
             newErrors.confirmPassword = 'Passwords do not match';
         }
         if (formData.confirmPassword && formData.confirmPassword !== formData.password) {
-            newErrors.confirmPassword = 'Fill the new password field';
+            newErrors.confirmPassword = 'Fill the above new password field';
         }
         else if (formData.password && !is_valid_password(formData.password)) {
             newErrors.password = 'Invalid password';
@@ -48,7 +52,7 @@ const EditProfile = ({ navigation }) => {
             if (!token) {
                 throw new Error('No token found');
             }
-            const response = await axios.get('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/user/fullname_email', {
+            const response = await axios.get('https://a831-2402-4000-11c5-60ea-9006-9e51-2f9d-b006.ngrok-free.app/api/user/fullname_email', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -81,7 +85,7 @@ const EditProfile = ({ navigation }) => {
                     new_password: formData.password,
                     confirm_password: formData.confirmPassword
                 };
-                const response = await axios.put('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/user/update', data, {
+                const response = await axios.put('https://a831-2402-4000-11c5-60ea-9006-9e51-2f9d-b006.ngrok-free.app/api/user/update', data, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
