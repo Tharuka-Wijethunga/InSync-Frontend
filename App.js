@@ -10,7 +10,7 @@ const SplashScreen = () => {
         <NativeBaseProvider>
             <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <VStack space={1}>
-                    <Text fontSize={50} fontWeight="bold">InSync</Text>
+                      <Text fontSize={50} fontWeight="bold">InSync</Text>
                     <Text fontWeight="medium" fontSize={18}>Financial Forecasting</Text>
                 </VStack>
             </View>

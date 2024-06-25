@@ -74,14 +74,14 @@ const OnboardingFirstPage = ({ route }) => {
                                         keyboardType="numeric"
                                     />
                                 </View>
-                                <View paddingRight={2}>
-                                    <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
-                                        <MaterialIcons name="keyboard-arrow-right" size={40} color='white'/>
-                                    </TouchableOpacity>
-                                </View>
                             </VStack>
                         </View>
                     </KeyboardAwareScrollView>
+                    <View style={styles.nextButtonContainer}>
+                        <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
+                            <MaterialIcons name="keyboard-arrow-right" size={40} color='white'/>
+                        </TouchableOpacity>
+                    </View>
                 </SafeAreaView>
             </TouchableWithoutFeedback>
         </NativeBaseProvider>
@@ -111,7 +111,11 @@ const styles = StyleSheet.create({
         height: '22%',
         alignSelf: "center"
     },
-
+    nextButtonContainer: {
+        position: 'absolute',
+        bottom:40,
+        right: 20,
+    },
     nextButton: {
         backgroundColor: Colors.Blue,
         borderRadius: 20,

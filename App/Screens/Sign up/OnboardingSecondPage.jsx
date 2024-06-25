@@ -40,7 +40,7 @@ const OnboardingSecondPage = ({ route }) => {
         }
     };
 
-    const screen = Dimensions.get('screen');
+    const windowHeight = Dimensions.get('window').height;
 
     return (
         <NativeBaseProvider>
@@ -53,34 +53,36 @@ const OnboardingSecondPage = ({ route }) => {
                     source={require("../../../assets/pic.png")}
                     style={styles.image}
                     resizeMode="contain"
-                    marginTop={screen.height * 0.20}
+                    marginTop={windowHeight * 0.20}
                     alt='assets'
                 />
                 <VStack marginTop={20} space={10}>
                     <Text style={styles.title}>Choose Your Assets</Text>
                     <VStack style={styles.optionsContainer} space={4}>
                         <Checkbox checked={carVanChecked} onPress={() => setCarVanChecked(!carVanChecked)}
-                                  value="Car/Van" colorScheme={"blue"}>
+                                  value="Car/Van" colorScheme={"green"}>
                             Car/Van
                         </Checkbox>
                         <Checkbox checked={bikeChecked} onPress={() => setBikeChecked(!bikeChecked)} value="Bike"
-                                  colorScheme={"blue"}>
+                                  colorScheme={"green"}>
                             Bike
                         </Checkbox>
                         <Checkbox checked={threeWheelerChecked}
                                   onPress={() => setThreeWheelerChecked(!threeWheelerChecked)} value="Threewheeler"
-                                  colorScheme={"blue"}>
+                                  colorScheme={"green"}>
                             Three-wheeler
                         </Checkbox>
                         <Checkbox checked={noneChecked} onPress={() => setNoneChecked(!noneChecked)} value="None"
-                                  colorScheme={"blue"}>
+                                  colorScheme={"green"}>
                             None
                         </Checkbox>
                     </VStack>
+                </VStack>
+                <View style={styles.nextButtonContainer}>
                     <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
                         <MaterialIcons name="keyboard-arrow-right" size={40} color='white'/>
                     </TouchableOpacity>
-                </VStack>
+                </View>
             </SafeAreaView>
         </NativeBaseProvider>
     );
@@ -89,7 +91,6 @@ const OnboardingSecondPage = ({ route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
         alignItems: 'center',
         backgroundColor: 'white'
     },
@@ -114,6 +115,11 @@ const styles = StyleSheet.create({
         width: '60%',
         height: '22%',
 
+    },
+    nextButtonContainer: {
+        position: 'absolute',
+        bottom: 40,
+        right: 20,
     },
     nextButton: {
         backgroundColor: Colors.Blue,

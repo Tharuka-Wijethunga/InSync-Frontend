@@ -41,21 +41,21 @@ export default function Dashboard() {
     useEffect(()=> {
         if(isFocused){
             fetch_Records();
-            axios.get('http://192.168.114.230:8005/api/dashboard/account?type=cash')
+            axios.get('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/dashboard/account?type=cash')
                 .then(response => {
                     setCashBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('http://192.168.114.230:8005/api/dashboard/account?type=bank')
+            axios.get('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/dashboard/account?type=bank')
                 .then(response => {
                     setBankBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('http://192.168.114.230:8005/api/dashboard/today_spending')
+            axios.get('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/dashboard/today_spending')
                 .then(response=> {
                     setTodaySpending(response.data)
                 })

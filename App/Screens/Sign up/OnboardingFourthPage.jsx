@@ -10,7 +10,7 @@ const OnboardingFourthPage = ({ route }) => {
     const navigation = useNavigation();
 
     //getting all the data from the previous onboarding pages
-    const { fullName,email,gender,password,incomeRange,carVanChecked, bikeChecked, threeWheelerChecked, noneChecked,loanAmount } = route.params;
+    const { fullName,email,gender,password,incomeRange,carVanChecked, bikeChecked, threeWheelerChecked, noneChecked,occupation } = route.params;
     const handleBack = () => {
         navigation.goBack();
     };
@@ -18,13 +18,13 @@ const OnboardingFourthPage = ({ route }) => {
 
 
         //post request to pass this data to the backend
-        fetch('http://192.168.114.230:8005/signup', {
+        fetch('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                fullname:fullName,
+                fullName:fullName,
                 email:email,
                 gender:gender,
                 password:password,
@@ -33,7 +33,7 @@ const OnboardingFourthPage = ({ route }) => {
                 bike:bikeChecked,
                 threeWheeler:threeWheelerChecked,
                 none:noneChecked,
-                loanAmount:loanAmount,
+                occupation: occupation,
             })
         })
             .then(response => {
