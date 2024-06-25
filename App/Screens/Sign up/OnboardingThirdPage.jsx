@@ -61,13 +61,10 @@ const OnboardingThirdPage = ({ route }) => {
                                     onChange={(value) => setOccupation(value)}
                                     colorScheme="green"
                                 >
-                                    <VStack space={4}>
+                                    <VStack space={4} marginLeft={5}>
                                         <Radio value="Student">Student</Radio>
-                                        <Radio value="Doctor">Doctor</Radio>
-                                        <Radio value="Engineer">Engineer</Radio>
-                                        <Radio value="Teacher">Teacher</Radio>
-                                        <Radio value="Software Engineer">Software Engineer</Radio>
-                                        <Radio value="Other">Other</Radio>
+                                        <Radio value="Employee (Full Time)">Employee (Full Time)</Radio>
+                                        <Radio value="Employee (Part Time)">Employee (Part Time)</Radio>
                                     </VStack>
                                 </Radio.Group>
                             </VStack>
