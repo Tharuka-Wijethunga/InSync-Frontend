@@ -1,137 +1,221 @@
-import React, { useState } from 'react';
-import { View, VStack, FormControl, Input, Button, Text, HStack, IconButton, Box } from 'native-base';
-import { MaterialIcons, WarningOutlineIcon } from 'react-native-vector-icons';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, VStack, FormControl, Input, Button, Text, HStack, IconButton, Box, Spinner, Center } from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../Context/AuthContext';
 import Colors from "../../Config/Colors";
+import { is_valid_password } from "../Sign up/password";
 
 const EditProfile = ({ navigation }) => {
+    const { setAccessToken } = useContext(AuthContext);
     const [formData, setFormData] = useState({
-
-        //fill this "lihaj" hardcoded value from by taking as a variable from the back end
-        firstName:'Lihaj'|| '',
-        lastName:'Wickramsinghe' ||'',
-        email: 'lihajwickramasinghe@gmail.com'||'',
+        fullName: '',
+        email: '',
         password: '',
-        confirmPassword: '',
+        confirmPassword: ''
     });
+
     const [errors, setErrors] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
+    const [updateMessage, setUpdateMessage] = useState('');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchUserDetails();
+    }, []);
 
     const validate = () => {
-        setErrors({}); // Clear previous errors
-
         const newErrors = {};
-        let isValid = true;
-
-        // Check if passwords match
-        if (formData.password !== formData.confirmPassword) {
-            newErrors.confirmPassword = 'Passwords do not match.';
-            isValid = false;
+        if (!formData.fullName) newErrors.fullName = 'Full Name is required';
+        if (!formData.email) newErrors.email = 'Email is required';
+        if (formData.password && formData.password !== formData.confirmPassword) {
+            newErrors.confirmPassword = 'Passwords do not match';
         }
-
-        // Check if a new password is entered and meets the minimum length requirement
-        if (formData.password && formData.password.length < 6) {
-            newErrors.password = 'Password must be at least 6 characters.';
-            isValid = false;
+        if (formData.confirmPassword && formData.confirmPassword !== formData.password) {
+            newErrors.confirmPassword = 'Fill the new password field';
         }
-
+        else if (formData.password && !is_valid_password(formData.password)) {
+            newErrors.password = 'Invalid password';
+        }
         setErrors(newErrors);
-        return isValid;
+        return Object.keys(newErrors).length === 0;
     };
 
-
-    const handleChange = (field, value) => {
-        setFormData({ ...formData, [field]: value });
+    const fetchUserDetails = async () => {
+        try {
+            const token = await AsyncStorage.getItem('accessToken');
+            if (!token) {
+                throw new Error('No token found');
+            }
+            const response = await axios.get('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/user/fullname_email', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const userDetails = response.data;
+            setFormData((prevData) => ({
+                ...prevData,
+                fullName: userDetails.fullname,
+                email: userDetails.email,
+            }));
+            console.log('Fetched user details:', userDetails);
+        } catch (error) {
+            console.error('Error fetching user details:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (validate()) {
-            // Handle successful form submission (e.g., send data to server)
-            console.log('Form submitted:', formData);
+            setLoading(true);
+            try {
+                const token = await AsyncStorage.getItem('accessToken');
+                if (!token) {
+                    throw new Error('No token found');
+                }
+                const data = {
+                    fullname: formData.fullName,
+                    new_email: formData.email,
+                    new_password: formData.password,
+                    confirm_password: formData.confirmPassword
+                };
+                const response = await axios.put('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/user/update', data, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                setUpdateMessage('Profile updated successfully');
+                console.log('Profile updated successfully:', response.data);
+
+                if (response.data.new_access_token) {
+                    await AsyncStorage.setItem('accessToken', response.data.new_access_token);
+                    setAccessToken(response.data.new_access_token);
+                    console.log('Access token updated:', response.data.new_access_token);
+                }
+                // Clear password fields after successful update
+                setFormData((prevData) => ({
+                    ...prevData,
+                    password: '',
+                    confirmPassword: ''
+                }));
+            } catch (error) {
+                // console.error('Error updating user details:', error);
+                // setUpdateMessage('Error updating profile');
+            } finally {
+                setLoading(false);
+            }
         } else {
             console.log('Validation failed:', errors);
         }
     };
 
+    const handleChange = (field, value) => {
+        setFormData({ ...formData, [field]: value });
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
-        <View paddingY={3} flex={1}>
-            <Box backgroundColor={"white"} w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3}>
-                <HStack justifyContent="space-between" alignItems="center" paddingLeft={1} marginTop={2}>
-                    <IconButton
-                        icon={<MaterialIcons name="keyboard-arrow-left" size={28} color="black" />}
-                        onPress={() => navigation.navigate('Profile')}
-                        borderRadius="full"
-                        _pressed={{ bg: "blueGray.200:alpha.50" }}
-                    />
-                    <Text fontSize={18} fontWeight={"medium"} paddingRight={6}>
-                        Edit Profile
-                    </Text>
-                </HStack>
-                <View h={0.480} bg="black"/>
+        <View flex={1} backgroundColor={Colors.LightGray}>
+            {loading ? (
+                <Center flex={1}>
+                    <Spinner size="lg" color={Colors.DBlue} />
+                </Center>
+            ) : (
+                <VStack space={3} paddingY={3} alignItems="center">
+                    <Box backgroundColor={"white"} w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3}>
+                        <HStack justifyContent="space-between" alignItems="center" paddingLeft={1} marginTop={2}>
+                            <IconButton
+                                icon={<MaterialIcons name="keyboard-arrow-left" size={28} color="black" />}
+                                onPress={() => navigation.navigate('Profile')}
+                                borderRadius="full"
+                                _pressed={{ bg: "blueGray.200:alpha.50" }}
+                            />
+                            <Text fontSize={18} fontWeight={"medium"} paddingRight={6}>
+                                Edit Profile
+                            </Text>
+                        </HStack>
+                        <View h={0.480} bg="black" />
 
-                <VStack space={3} padding={5}>
-                    <FormControl isInvalid={'firstName' in errors}>
-                        <FormControl.Label>Change Profile Details</FormControl.Label>
-                        <Input
-                            variant="underlined"
-                            placeholder="First Name"
-                            value={formData.firstName}
-                            onChangeText={(text) => handleChange('firstName', text)}
-                        />
-                    </FormControl>
+                        <VStack space={3} padding={5}>
+                            <FormControl isInvalid={'fullName' in errors}>
+                                <FormControl.Label>Change Profile Details</FormControl.Label>
+                                <Input
+                                    variant="underlined"
+                                    placeholder="Full Name"
+                                    value={formData.fullName}
+                                    onChangeText={(text) => handleChange('fullName', text)}
+                                />
+                                {'fullName' in errors && <FormControl.ErrorMessage>{errors.fullName}</FormControl.ErrorMessage>}
+                            </FormControl>
 
-                    <FormControl isInvalid={'lastName' in errors}>
-                        <Input
-                            variant="underlined"
-                            placeholder="Last Name"
-                            value={formData.lastName}
-                            onChangeText={(text) => handleChange('lastName', text)}
-                        />
-                    </FormControl>
+                            <FormControl isInvalid={'email' in errors}>
+                                <Input
+                                    variant="underlined"
+                                    placeholder="Email"
+                                    value={formData.email}
+                                    onChangeText={(text) => handleChange('email', text)}
+                                />
+                                {'email' in errors && <FormControl.ErrorMessage>{errors.email}</FormControl.ErrorMessage>}
+                            </FormControl>
 
-                    <FormControl  isInvalid={'email' in errors}>
-                        <Input
-                            variant="underlined"
-                            placeholder="Email"
-                            value={formData.email}
-                            onChangeText={(text) => handleChange('email', text)}
-                        />
-                    </FormControl>
+                            <FormControl isInvalid={'password' in errors}>
+                                <FormControl.Label>Change Password</FormControl.Label>
+                                <Input
+                                    type={showPassword ? "text" : "password"}
+                                    variant="underlined"
+                                    placeholder="Enter a new password"
+                                    value={formData.password}
+                                    onChangeText={(text) => handleChange('password', text)}
+                                />
+                                {'password' in errors && <FormControl.ErrorMessage>{errors.password}</FormControl.ErrorMessage>}
+                                <FormControl.HelperText>
+                                    Must be at least 8 characters.
+                                </FormControl.HelperText>
+                            </FormControl>
 
-                    <FormControl  isInvalid={'password' in errors}>
-                        <FormControl.Label>Change Password</FormControl.Label>
-                        <Input
-                            type="password"
-                            variant="underlined"
-                            placeholder="Enter a new password"
-                            value={formData.password}
-                            onChangeText={(text) => handleChange('password', text)}
-                        />
-                        {'password' in errors && <FormControl.ErrorMessage>{errors.password}</FormControl.ErrorMessage>}
-                        <FormControl.HelperText>
-                            Must be at least 6 characters.
-                        </FormControl.HelperText>
-                    </FormControl>
-
-                    <FormControl isInvalid={'confirmPassword' in errors}>
-                        <Input
-                            type="password"
-                            variant="underlined"
-                            placeholder="Confirm password"
-                            value={formData.confirmPassword}
-                            onChangeText={(text) => handleChange('confirmPassword', text)}
-                        />
-                        {'confirmPassword' in errors && <FormControl.ErrorMessage>{errors.confirmPassword}</FormControl.ErrorMessage>}
-                    </FormControl>
+                            <FormControl isInvalid={'confirmPassword' in errors}>
+                                <Input
+                                    type={showPassword ? "text" : "password"}
+                                    variant="underlined"
+                                    placeholder="Confirm password"
+                                    value={formData.confirmPassword}
+                                    onChangeText={(text) => handleChange('confirmPassword', text)}
+                                    InputRightElement={
+                                        <IconButton
+                                            icon={<MaterialIcons name={showPassword ? 'visibility' : 'visibility-off'} size={20} color="gray.700" />}
+                                            onPress={togglePasswordVisibility}
+                                            variant="unstyled"
+                                        />
+                                    }
+                                />
+                                {'confirmPassword' in errors && <FormControl.ErrorMessage>{errors.confirmPassword}</FormControl.ErrorMessage>}
+                            </FormControl>
+                        </VStack>
+                    </Box>
+                    {updateMessage && (
+                        <Text color={updateMessage.includes('success') ? 'green.500' : 'red.500'} textAlign="center" mt={4}>
+                            {updateMessage}
+                        </Text>
+                    )}
+                    <Button
+                        bg={Colors.DBlue}
+                        borderRadius={"full"}
+                        w="94%"
+                        size="md"
+                        alignSelf="center"
+                        mt={8}
+                        mb={4}
+                        onPress={handleSubmit}
+                    >
+                        Save
+                    </Button>
                 </VStack>
-            </Box>
-            <Button bg={Colors.DBlue}
-                    borderRadius={"full"}
-                    w="94%"
-                    size="md"
-                    alignSelf="center"
-                    marginTop={4}
-                    onPress={handleSubmit}>
-                Save
-            </Button>
+            )}
         </View>
     );
 };

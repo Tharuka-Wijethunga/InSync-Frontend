@@ -15,7 +15,7 @@ export const AuthProvider=({children})=>{
         setIsLoading(true);
         try {
             const requestData = qs.stringify({username, password});
-            const response = await axios.post('http://192.168.114.230:8005/token', requestData, {
+            const response = await axios.post('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/token', requestData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -60,7 +60,7 @@ export const AuthProvider=({children})=>{
     const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            const response = await axios.post('http://192.168.114.230:8005/refresh-token', {}, {
+            const response = await axios.post('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }

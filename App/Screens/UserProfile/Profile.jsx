@@ -1,91 +1,200 @@
-import React, {useContext} from 'react';
-import Colors from "../../Config/Colors";
-import {Text, Box, HStack, VStack, Avatar, Spacer, IconButton, View,Button} from "native-base";
-import {MaterialIcons} from "@expo/vector-icons";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome6 } from '@expo/vector-icons';
-import {useNavigation} from "@react-navigation/native";
+import React, { useContext, useState, useEffect, useCallback } from 'react';
+import { View, VStack, HStack, Avatar, Spacer, Button, AlertDialog, Center, Spinner, Box, Text } from 'native-base';
+import { MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {AuthContext} from "../../Context/AuthContext";
+import { AuthContext } from "../../Context/AuthContext";
+import Colors from "../../Config/Colors";
 
 export default function Profile() {
     const navigation = useNavigation();
-    const {logout}=useContext(AuthContext)
+    const { logout } = useContext(AuthContext);
 
-    //Deleting access token with the  logout.
-    const handelLogout=async ()=>{
+    const [isOpen, setIsOpen] = useState(false);
+    const onClose = () => setIsOpen(false);
+    const cancelRef = React.useRef(null);
+
+    const [fullName, setFullName] = useState('');
+    const [loading, setLoading] = useState(true);
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchUserDetails();
+        }, [])
+    );
+
+    const fetchUserDetails = async () => {
+        try {
+            const token = await AsyncStorage.getItem('accessToken');
+            if (!token) {
+                throw new Error('No token found');
+            }
+            const response = await axios.get('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/user/fullname_email', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const userDetails = response.data;
+            setFullName(userDetails.fullname);
+        } catch (error) {
+            console.error('Error fetching user details:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleLogout = async () => {
         logout();
     };
+
+    const handleDeleteAccount = async () => {
+        try {
+            const token = await AsyncStorage.getItem('accessToken');
+            if (!token) {
+                throw new Error('No token found');
+            }
+            await axios.delete('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/user/delete-account', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            // Clear the token and logout
+            await AsyncStorage.removeItem('accessToken');
+            logout();
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }],
+            });
+        } catch (error) {
+            console.error('Error deleting account:', error);
+        } finally {
+            onClose();
+        }
+    };
+
     return (
-        <VStack space={3} paddingY={3}>
-            <Box backgroundColor={"white"}  w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3} padding={3}>
-                <HStack  justifyContent="space-between"  alignItems={"center"}  w={"100%"} >
-                    <VStack>
-                        <Text fontWeight={"medium"} fontSize={20}>Hello!</Text>
-                        <Text fontWeight={"semibold"} fontSize={22}>Tharuka Wijethunga</Text>
-                    </VStack>
-                    <Spacer/>
-                    <Avatar size={70} bgColor={Colors.Blue}>
-                        <Text fontWeight={"medium"} fontSize={20} color={"white"}>TW</Text>
-                    </Avatar>
-                </HStack>
-            </Box>
+        <View flex={1} backgroundColor="white">
+            {loading ? (
+                <Center flex={1}>
+                    <Spinner size="lg" color={Colors.DBlue} />
+                </Center>
+            ) : (
+                <VStack space={3} paddingY={3}>
+                    <Box backgroundColor={"white"} w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3} padding={3}>
+                        <HStack justifyContent="space-between" alignItems={"center"} w={"100%"}>
+                            <VStack>
+                                <Text fontWeight={"medium"} fontSize={20}>Hello!</Text>
+                                <Text fontWeight={"semibold"} fontSize={22}>{fullName}</Text>
+                            </VStack>
+                            <Spacer />
+                            <Avatar size={70} bgColor={Colors.Blue}>
+                                <Text fontWeight={"medium"} fontSize={30} color={"white"}>
+                                    {fullName.split(' ').map(name => name[0]).join('')}
+                                </Text>
+                            </Avatar>
+                        </HStack>
+                    </Box>
 
-            <Box backgroundColor={"white"}  w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3} padding={1} >
-                <VStack>
-                    <Button
-                        variant="ghost"
-                        borderRadius={30}
-                        w={"100%"}
-                        _pressed={{
-                            bg: "blueGray.200:alpha.50",
-                        }}
-                        onPress={() => navigation.navigate("EditProfile")}
+                    <Box backgroundColor={"white"} w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3} padding={1}>
+                        <VStack>
+                            <Button
+                                variant="ghost"
+                                borderRadius={30}
+                                w={"100%"}
+                                _pressed={{
+                                    bg: "blueGray.200:alpha.50",
+                                }}
+                                onPress={() => navigation.navigate("EditProfile")}
+                            >
+                                <HStack justifyContent="space-between" alignItems={"center"} w={"100%"} space={3}>
+                                    <Avatar size={42} bgColor={Colors.Blue}><FontAwesome6 name="edit" size={24} color="white" /></Avatar>
+                                    <Text fontSize={16}>Edit Profile</Text>
+                                    <Spacer />
+                                    <MaterialIcons name="keyboard-arrow-right" size={30} color="black" />
+                                </HStack>
+                            </Button>
+
+                            <Button
+                                variant="ghost"
+                                borderRadius={30}
+                                w={"100%"}
+                                _pressed={{
+                                    bg: "blueGray.200:alpha.50",
+                                }}
+                                onPress={() => navigation.navigate("Help")}
+                            >
+                                <HStack justifyContent="space-between" alignItems={"center"} w={"100%"} space={3}>
+                                    <Avatar size={42} bgColor={Colors.Blue}><MaterialCommunityIcons name="help" size={24} color="white" /></Avatar>
+                                    <Text fontSize={16}>Help</Text>
+                                    <Spacer />
+                                    <MaterialIcons name="keyboard-arrow-right" size={30} color="black" />
+                                </HStack>
+                            </Button>
+
+                            <Button
+                                variant="ghost"
+                                borderRadius={30}
+                                w={"100%"}
+                                _pressed={{
+                                    bg: "blueGray.200:alpha.50",
+                                }}
+                                onPress={handleLogout}
+                            >
+                                <HStack justifyContent="space-between" alignItems={"center"} w={"100%"} space={3}>
+                                    <Avatar size={42} bgColor={Colors.Red}><MaterialIcons name="logout" size={24} color="white" /></Avatar>
+                                    <Text fontSize={16} color={Colors.Red}>Log Out</Text>
+                                    <Spacer />
+                                    <MaterialIcons name="keyboard-arrow-right" size={30} color="black" />
+                                </HStack>
+                            </Button>
+                        </VStack>
+                    </Box>
+
+                    <Box backgroundColor={"white"} w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3} padding={1}>
+                        <Button
+                            variant="ghost"
+                            borderRadius={30}
+                            w={"100%"}
+                            _pressed={{
+                                bg: "blueGray.200:alpha.50",
+                            }}
+                            onPress={() => setIsOpen(true)}
+                        >
+                            <HStack justifyContent="space-between" alignItems={"center"} w={"100%"} space={3}>
+                                <Avatar size={42} bgColor={Colors.Red}><MaterialIcons name="delete" size={24} color="white" /></Avatar>
+                                <Text fontSize={16} color={Colors.Red}>Delete Account</Text>
+                                <Spacer />
+                                <MaterialIcons name="keyboard-arrow-right" size={30} color="black" />
+                            </HStack>
+                        </Button>
+                    </Box>
+
+                    <AlertDialog
+                        leastDestructiveRef={cancelRef}
+                        isOpen={isOpen}
+                        onClose={onClose}
                     >
-                    <HStack  justifyContent="space-between"  alignItems={"center"}  w={"100%"} space={3} >
-                        <Avatar size={42} bgColor={Colors.Blue}><FontAwesome6 name="edit" size={24} color="white" /></Avatar>
-                        <Text  fontSize={16}>Edit Profile</Text>
-                        <Spacer/>
-                            <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
-                    </HStack>
-                    </Button>
-
-                    <Button
-                        variant="ghost"
-                        borderRadius={30}
-                        w={"100%"}
-                        _pressed={{
-                            bg: "blueGray.200:alpha.50",
-                        }}
-                        onPress={() => navigation.navigate("Help")}
-                    >
-                    <HStack  justifyContent="space-between"  alignItems={"center"}  w={"100%"} space={3} >
-                        <Avatar size={42} bgColor={Colors.Blue}><MaterialCommunityIcons name="help" size={24} color="white" /></Avatar>
-                        <Text  fontSize={16}>Help</Text>
-                        <Spacer/>
-                            <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
-                    </HStack>
-                    </Button>
-
-
-                    <Button
-                        variant="ghost"
-                        borderRadius={30}
-                        w={"100%"}
-                        _pressed={{
-                            bg: "blueGray.200:alpha.50",
-                        }}
-                        onPress={handelLogout}
-                    >
-                    <HStack  justifyContent="space-between" alignItems={"center"}  w={"100%"} space={3} >
-                        <Avatar size={42} bgColor={Colors.Red}><MaterialIcons name="logout" size={24} color="white" /></Avatar>
-                        <Text  fontSize={16} color={Colors.Red}>Log Out</Text>
-                        <Spacer/>
-                            <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
-                    </HStack>
-                    </Button>
+                        <AlertDialog.Content>
+                            <AlertDialog.CloseButton />
+                            <AlertDialog.Header>Delete Account</AlertDialog.Header>
+                            <AlertDialog.Body>
+                                Are you sure you want to delete your account? This action cannot be undone.
+                            </AlertDialog.Body>
+                            <AlertDialog.Footer>
+                                <Button.Group space={2}>
+                                    <Button variant="unstyled" colorScheme="coolGray" onPress={onClose} ref={cancelRef}>
+                                        Cancel
+                                    </Button>
+                                    <Button colorScheme="red" onPress={handleDeleteAccount}>
+                                        Delete
+                                    </Button>
+                                </Button.Group>
+                            </AlertDialog.Footer>
+                        </AlertDialog.Content>
+                    </AlertDialog>
                 </VStack>
-            </Box>
-        </VStack>
-    )
+            )}
+        </View>
+    );
 }
