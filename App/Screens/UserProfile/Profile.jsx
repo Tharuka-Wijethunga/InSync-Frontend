@@ -26,15 +26,7 @@ export default function Profile() {
 
     const fetchUserDetails = async () => {
         try {
-            const token = await AsyncStorage.getItem('accessToken');
-            if (!token) {
-                throw new Error('No token found');
-            }
-            const response = await axios.get('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/user/fullname_email', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const response = await axios.get('http://192.168.248.230:8005/api/user/fullname_email');
             const userDetails = response.data;
             setFullName(userDetails.fullname);
         } catch (error) {
@@ -50,22 +42,8 @@ export default function Profile() {
 
     const handleDeleteAccount = async () => {
         try {
-            const token = await AsyncStorage.getItem('accessToken');
-            if (!token) {
-                throw new Error('No token found');
-            }
-            await axios.delete('https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app/api/user/delete-account', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            // Clear the token and logout
-            await AsyncStorage.removeItem('accessToken');
+            await axios.delete('http://192.168.248.230:8005/api/user/delete-account');
             logout();
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Login' }],
-            });
         } catch (error) {
             console.error('Error deleting account:', error);
         } finally {
@@ -74,7 +52,7 @@ export default function Profile() {
     };
 
     return (
-        <View flex={1} backgroundColor="white">
+        <View flex={1} backgroundColor={Colors.LightGray}>
             {loading ? (
                 <Center flex={1}>
                     <Spinner size="lg" color={Colors.DBlue} />

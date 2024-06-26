@@ -29,8 +29,9 @@ const OnboardingThirdPage = ({ route }) => {
                 bikeChecked: bikeChecked,
                 threeWheelerChecked: threeWheelerChecked,
                 noneChecked: noneChecked,
-                occupation: occupation,
+                occupation:occupation,
             });
+            console.log(occupation)
         } else {
             alert('Please select an occupation.');
         }

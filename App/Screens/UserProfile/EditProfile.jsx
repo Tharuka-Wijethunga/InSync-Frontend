@@ -48,15 +48,7 @@ const EditProfile = ({ navigation }) => {
 
     const fetchUserDetails = async () => {
         try {
-            const token = await AsyncStorage.getItem('accessToken');
-            if (!token) {
-                throw new Error('No token found');
-            }
-            const response = await axios.get('https://a831-2402-4000-11c5-60ea-9006-9e51-2f9d-b006.ngrok-free.app/api/user/fullname_email', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const response = await axios.get('http://192.168.248.230:8005/api/user/fullname_email');
             const userDetails = response.data;
             setFormData((prevData) => ({
                 ...prevData,
@@ -75,28 +67,20 @@ const EditProfile = ({ navigation }) => {
         if (validate()) {
             setLoading(true);
             try {
-                const token = await AsyncStorage.getItem('accessToken');
-                if (!token) {
-                    throw new Error('No token found');
-                }
                 const data = {
                     fullname: formData.fullName,
                     new_email: formData.email,
                     new_password: formData.password,
                     confirm_password: formData.confirmPassword
                 };
-                const response = await axios.put('https://a831-2402-4000-11c5-60ea-9006-9e51-2f9d-b006.ngrok-free.app/api/user/update', data, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
+                const response = await axios.put('http://192.168.248.230:8005/api/user/update', data);
                 setUpdateMessage('Profile updated successfully');
                 console.log('Profile updated successfully:', response.data);
 
                 if (response.data.new_access_token) {
                     await AsyncStorage.setItem('accessToken', response.data.new_access_token);
+                    await AsyncStorage.setItem('refreshToken', response.data.new_refresh_token);
                     setAccessToken(response.data.new_access_token);
-                    console.log('Access token updated:', response.data.new_access_token);
                 }
                 // Clear password fields after successful update
                 setFormData((prevData) => ({

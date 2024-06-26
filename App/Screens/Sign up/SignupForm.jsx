@@ -37,7 +37,7 @@ const SignupForm = () => {
             return;
         }
 
-        axios.post(`https://a831-2402-4000-11c5-60ea-9006-9e51-2f9d-b006.ngrok-free.app/checkMail?email=${email}`)
+        axios.post(`http://192.168.248.230:8005/checkMail?email=${email}`)
             .then(response => {
                 if (response.data.exists) {
                     Alert.alert('Error', 'Email already exists, Try another one.');
@@ -73,9 +73,8 @@ const SignupForm = () => {
     if (password !== confirmPassword) {
             Alert.alert('Validation Error', 'Passwords did not match');
             return false;
-    }
-
-    if (!isChecked) {
+        }
+        if (!isChecked) {
             Alert.alert('Validation Error', 'Please agree to the terms and conditions');
             return false;
     }
