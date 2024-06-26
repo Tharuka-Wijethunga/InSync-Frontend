@@ -18,13 +18,13 @@ const OnboardingFourthPage = ({ route }) => {
 
 
         //post request to pass this data to the backend
-        fetch('https://a831-2402-4000-11c5-60ea-9006-9e51-2f9d-b006.ngrok-free.app/signup', {
+        fetch('http://192.168.248.230:8005/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                fullName:fullName,
+                fullname:fullName,
                 email:email,
                 gender:gender,
                 password:password,
@@ -33,7 +33,7 @@ const OnboardingFourthPage = ({ route }) => {
                 bike:bikeChecked,
                 threeWheeler:threeWheelerChecked,
                 none:noneChecked,
-                occupation: occupation,
+                occupation:occupation,
             })
         })
             .then(response => {

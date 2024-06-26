@@ -34,7 +34,7 @@ export default function ThisMonth() {
     }, [isFocused]);
 
     const fetchMonthTotal = async () => {
-        axios.get(` https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app//api/statistics/thisMonthTotal`)
+        axios.get(` http://192.168.248.230:8005/api/statistics/thisMonthTotal`)
             .then(response => {
                 setTotalAmount(response.data);
                 setErrorMessage("");  // Clear any previous error messages
@@ -45,7 +45,7 @@ export default function ThisMonth() {
     };
 
     const fetchMonthStat = async () => {
-        axios.get(` https://1289-2402-4000-2180-9088-9d7d-eff-75a1-eb2e.ngrok-free.app//api/statistics/thisMonthStat`)
+        axios.get(` http://192.168.248.230:8005/api/statistics/thisMonthStat`)
             .then(response => {
                 let data = response.data.map(item => {
                     const colors = categoryColors[item._id]; //get the color according tho the category name
