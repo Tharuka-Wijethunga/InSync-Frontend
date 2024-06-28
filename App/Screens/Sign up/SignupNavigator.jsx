@@ -7,6 +7,8 @@ import OnboardingThirdPage from "./OnboardingThirdPage";
 import Signup from "./Signup";
 import Login from "../Login/Login";
 import SignupForm from "./SignupForm";
+import EmailVerificationFirstPage from "./EmailVerificationFirstPage";
+import EmailVerificationSecondPage from "./EmailVerificationSecondPage";
 
 const SignupNavigator = (initialRoute) => {
     const Stack = createNativeStackNavigator();
@@ -14,6 +16,8 @@ const SignupNavigator = (initialRoute) => {
         <Stack.Navigator initialRouteName={initialRoute} screenOptions={{headerShown: false}}>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Signup" component={Signup}/>
+            <Stack.Screen name="SignupForm" component={SignupForm}/>
+            <Stack.Screen name="EmailVerificationSecondPage" component={EmailVerificationSecondPage}/>
             <Stack.Screen name="OnboardingFirstPage" component={OnboardingFirstPage}/>
             <Stack.Screen name="OnboardingSecondPage" component={OnboardingSecondPage}/>
             <Stack.Screen name="OnboardingThirdPage" component={OnboardingThirdPage}/>

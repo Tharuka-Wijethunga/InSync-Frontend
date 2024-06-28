@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
 import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions } from 'react-native';
-import {Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, HStack, Checkbox, Modal, Radio, View} from 'native-base';
+import {
+    Box,
+    Button,
+    Input,
+    Icon,
+    NativeBaseProvider,
+    Text,
+    VStack,
+    HStack,
+    Checkbox,
+    Modal,
+    Radio,
+    View,
+    Image
+} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
 import {useNavigation} from "@react-navigation/native";
-import axios from "axios";
-import {is_valid_email, is_valid_fullName, is_valid_password} from "./password";
+import {is_valid_fullName, is_valid_password} from "./password";
 
 
 
-const SignupForm = () => {
+const SignupForm = ({ route }) => {
     const navigation = useNavigation();
+    const { email} = route.params;
 
     const [fullName, setFullName] = useState('');
-    const [email, setEmail] = useState('');
     const [gender, setGender] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -32,37 +45,21 @@ const SignupForm = () => {
     };
 
     const handleSignup = () => {
-        if (!fullName || !email || !gender || !password || !confirmPassword) {
+        if (!fullName || !gender || !password || !confirmPassword) {
             Alert.alert('Validation Error', 'Please fill in all fields');
             return;
         }
+        navigation.navigate('OnboardingFirstPage',{
+            fullName:fullName,
+            email:email,
+            gender:gender,
+            password:password,
+        });
 
-        axios.post(`http://192.168.248.230:8005/checkMail?email=${email}`)
-            .then(response => {
-                if (response.data.exists) {
-                    Alert.alert('Error', 'Email already exists, Try another one.');
-                } else if (validateForm()) {
-                    // If the email does not exist in the database
-                    console.log('Logging in with:', {fullName, email, gender, password});
-                    navigation.navigate('OnboardingFirstPage',{
-                        fullName:fullName,
-                        email:email,
-                        gender:gender,
-                        password:password,
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
     };
 
     const validateForm = ()=>{
     if (!is_valid_fullName(fullName)) {
-        return false;
-    }
-
-    if (!is_valid_email(email)) {
         return false;
     }
 
@@ -90,27 +87,19 @@ const SignupForm = () => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Box style={[styles.container, {width: '100%', height: '100%'}]}>
-                <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                    <MaterialIcons name="keyboard-arrow-left" size={24} color={Colors.black}/>
-                    <Text fontWeight={"bold"} color={Colors.black}>Back</Text>
-                </TouchableOpacity>
+                {/*<TouchableOpacity onPress={handleBack} style={styles.backButton}>*/}
+                {/*    <MaterialIcons name="keyboard-arrow-left" size={24} color={Colors.black}/>*/}
+                {/*    <Text fontWeight={"bold"} color={Colors.black}>Back</Text>*/}
+                {/*</TouchableOpacity>*/}
                 <VStack space={4} alignItems="center" width="100%">
-                    <Text fontSize={40} fontWeight="bold" color="black">Get Started</Text>
-                    <Text fontSize={13} color="gray.500" mt={-4}>by creating a free account.</Text>
+                    <Text fontSize={38} fontWeight="bold" color="black">We're almost there!</Text>
+                    <Text fontSize={13} color="gray.500" mt={-4}>Set up your info and password.</Text>
                     <Input mt={5}
                            variant="rounded"
                            borderColor={Colors.Blue}
                            placeholder="Full Name"
                            value={fullName}
                            onChangeText={setFullName}
-                           style={styles.input}
-                    />
-                    <Input mt={2}
-                           variant="rounded"
-                           borderColor={Colors.Blue}
-                           placeholder="Email"
-                           value={email}
-                           onChangeText={setEmail}
                            style={styles.input}
                     />
                     <TouchableOpacity onPress={() => setShowGenderModal(true)} style={styles.inputWrapper}>
@@ -219,6 +208,10 @@ const styles = StyleSheet.create({
     },
     inputWrapper: {
         width: '100%',
+    },
+    image: {
+        height: '25%',
+        alignSelf: "center"
     },
 });
 
