@@ -8,7 +8,7 @@ import Colors from "../../Config/Colors";
 import {is_valid_email, is_valid_fullName, is_valid_password} from "../Sign up/password";
 
 const EditProfile = ({ navigation }) => {
-    const { setAccessToken } = useContext(AuthContext);
+    const { setAccessToken,refreshAccessToken } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -77,11 +77,12 @@ const EditProfile = ({ navigation }) => {
                 setUpdateMessage('Profile updated successfully');
                 console.log('Profile updated successfully:', response.data);
 
-                if (response.data.new_access_token) {
-                    await AsyncStorage.setItem('accessToken', response.data.new_access_token);
-                    await AsyncStorage.setItem('refreshToken', response.data.new_refresh_token);
-                    setAccessToken(response.data.new_access_token);
-                }
+                // if (response.data.new_access_token) {
+                //     await AsyncStorage.setItem('accessToken', response.data.new_access_token);
+                //     await AsyncStorage.setItem('refreshToken', response.data.new_refresh_token);
+                //     setAccessToken(response.data.new_access_token);
+                //     refreshAccessToken();
+                // }
                 // Clear password fields after successful update
                 setFormData((prevData) => ({
                     ...prevData,

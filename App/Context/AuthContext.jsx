@@ -57,7 +57,7 @@ export const AuthProvider=({children})=>{
         }
     }
 
-    const refreshAccessToken = async () => {
+ const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
             const response = await axios.post('http://192.168.248.230:8005/refresh-token', {}, {

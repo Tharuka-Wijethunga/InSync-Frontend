@@ -5,12 +5,14 @@ import {MaterialIcons} from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
 import {useNavigation} from "@react-navigation/native";
 import SignupForm from "./SignupForm";
+import EmailVerificationFirstPage from "./EmailVerificationFirstPage";
 
 
 const Signup = () => {
     return (
         <NativeBaseProvider>
-            <SignupForm/>
+            {/*<SignupForm/>*/}
+            <EmailVerificationFirstPage/>
         </NativeBaseProvider>
     );
 }
