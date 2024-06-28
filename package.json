@@ -11,7 +11,7 @@
   "dependencies": {
     "@clerk/clerk-expo": "^0.20.2",
     "@expo-google-fonts/inter": "^0.2.3",
-    "@expo/vector-icons": "^14.0.0",
+    "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/cli": "^12.3.6",
     "@react-native-community/datetimepicker": "8.0.1",
@@ -22,7 +22,7 @@
     "@react-navigation/stack": "^6.3.25",
     "axios": "^1.6.8",
     "base-64": "^1.0.0",
-    "expo": "~51.0.14",
+    "expo": "~51.0.16",
     "expo-font": "~12.0.5",
     "expo-status-bar": "~1.12.1",
     "expo-web-browser": "~13.0.3",
