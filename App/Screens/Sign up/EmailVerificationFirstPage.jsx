@@ -34,12 +34,12 @@ const EmailVerificationFirstPage = () => {
             Alert.alert('Validation Error', 'Please fill in all fields');
             return;
         }
-        axios.post(`http://192.168.248.230:8005/checkMail?email=${email}`)
+        axios.post(`https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/checkMail?email=${email}`)
             .then(response => {
                 if (response.data.exists) {
                     Alert.alert('Error', 'Email already exists, Try another one.');
                 } else if (validateForm()) {
-                    axios.post(`http://192.168.248.230:8005/send-verification-email?email=${email}`)
+                    axios.post(`https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/send-verification-email?email=${email}`)
                     navigation.navigate('EmailVerificationSecondPage',{
                         email:email
                     });
