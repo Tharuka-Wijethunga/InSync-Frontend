@@ -26,7 +26,6 @@ import {Alert, Platform} from 'react-native';
 
 
 const EditProfile = ({ navigation }) => {
-    const { setAccessToken,refreshAccessToken } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -90,16 +89,7 @@ const EditProfile = ({ navigation }) => {
 
     const fetchUserDetails = async () => {
         try {
-            const token = await AsyncStorage.getItem('accessToken');
-            if (!token) {
-                throw new Error('No token found');
-            }
-            console.log('Token:', token); // Debugging line to check token retrieval
-            const response = await axios.get('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/api/user/fullname_email', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const response = await axios.get('http://192.168.248.230:8005/api/user/fullname_email');
             const userDetails = response.data;
             console.log('Fetched user details:', userDetails); // Debugging line to check response
             setFormData((prevData) => ({
@@ -146,7 +136,7 @@ const EditProfile = ({ navigation }) => {
                     new_password: formData.password,
                     confirm_password: formData.confirmPassword
                 };
-                const response = await axios.put('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/api/user/update', data, {
+                const response = await axios.put('http://192.168.248.230:8005/api/user/update', data, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -208,7 +198,7 @@ const EditProfile = ({ navigation }) => {
                             <Spinner size="lg" color={Colors.DBlue} />
                         </Center>
                     ) : (
-                        <VStack space={3} paddingY={3} alignItems="center">
+                        <VStack space={2} paddingY={3} alignItems="center">
                             <Box backgroundColor={"white"} w="94%" overflow={"hidden"} rounded="2xl" alignSelf="center" shadow={3}>
                                 <HStack justifyContent="space-between" alignItems="center" paddingLeft={1} marginTop={2}>
                                     <IconButton
@@ -323,7 +313,6 @@ const EditProfile = ({ navigation }) => {
                                 w="94%"
                                 size="md"
                                 alignSelf="center"
-                                mt={8}
                                 mb={4}
                                 onPress={handleSubmit}
                             >
