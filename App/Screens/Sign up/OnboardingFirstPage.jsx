@@ -159,10 +159,9 @@ const OnboardingFirstPage = ({ route }) => {
                                 </View>
                             </VStack>
                             </Animated.View>
-
                             </KeyboardAwareScrollView>
 
-                    <Animated.View style={[styles.nextButtonContainer ,{opacity:fadeAnim}]}>
+                    <Animated.View style={[styles.nextButtonContainer , { transform: [{ translateY: translateYAnim }] }]}>
                             <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
                                 <MaterialIcons name="keyboard-arrow-right" size={40} color='white' />
                             </TouchableOpacity>
@@ -204,7 +203,7 @@ const styles = StyleSheet.create({
     nextButtonContainer: {
         position: 'absolute',
         bottom: 60,
-        right: 50,
+        right: 30,
     },
     nextButton: {
         backgroundColor: Colors.Blue,
