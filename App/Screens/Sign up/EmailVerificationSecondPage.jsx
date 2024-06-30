@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import {Box, Button, Text, VStack, Spinner, Image} from 'native-base';
+import {Box, Button, Text, VStack, Spinner, Image, View} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -17,7 +17,7 @@ const EmailVerificationSecondPage = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            axios.get(`https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/check-verification-status?email=${email}`)
+            axios.get(`https://7731-2402-4000-2180-d8b2-68e8-5994-eb74-46a7.ngrok-free.app/check-verification-status?email=${email}`)
                 .then(response => {
                     if (response.data.verified) {
                         setIsVerified(true);
@@ -38,7 +38,7 @@ const EmailVerificationSecondPage = () => {
 
     const handleContinueSignup = async () => {
         try {
-            await axios.delete(`https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/delete-verification-info?email=${email}`);
+            await axios.delete(`https://7731-2402-4000-2180-d8b2-68e8-5994-eb74-46a7.ngrok-free.app/delete-verification-info?email=${email}`);
             navigation.navigate('SignupForm', {
                 email: email
             });
@@ -52,7 +52,7 @@ const EmailVerificationSecondPage = () => {
         if (remainingChances > 0) {
             setIsLoading(true);
             try {
-                await axios.post(`https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/send-verification-email?email=${email}`);
+                await axios.post(`https://7731-2402-4000-2180-d8b2-68e8-5994-eb74-46a7.ngrok-free.app/send-verification-email?email=${email}`);
                 setRemainingChances(remainingChances - 1);
                 Alert.alert('Verification email sent', `Please check your email for the new verification link. You have ${remainingChances - 1} chances left.`);
             } catch (error) {
@@ -68,10 +68,12 @@ const EmailVerificationSecondPage = () => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Box style={[styles.container, { width: '100%', height: '100%' }]}>
-                <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                    <MaterialIcons name="keyboard-arrow-left" size={24} color={Colors.black} />
-                    <Text fontWeight={"bold"} color={Colors.black}>Back</Text>
-                </TouchableOpacity>
+                <View style={styles.backButtonContainer}>
+                    <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+                        <MaterialIcons name="keyboard-arrow-left" size={24}/>
+                        <Text fontWeight='bold'>Back</Text>
+                    </TouchableOpacity>
+                </View>
                 <VStack space={4} alignItems="center" width="100%">
                     {!isVerified ? (
                         <>
@@ -119,10 +121,13 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: '8%',
-        left: '5%',
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    backButtonContainer: {
+        position: 'absolute',
+        top: 60,
+        left: 20,
     },
     input: {
         width: '100%',
