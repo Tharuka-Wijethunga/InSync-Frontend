@@ -1,43 +1,59 @@
-import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
-import {NativeBaseProvider, Checkbox, VStack, View, Text, Image} from 'native-base';
-import {MaterialIcons} from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { NativeBaseProvider, Checkbox, VStack, View, Text, Image } from 'native-base';
+import { MaterialIcons } from '@expo/vector-icons';
 import Colors from '../../Config/Colors';
-import {useNavigation} from "@react-navigation/native";
-import {SafeAreaView} from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const OnboardingSecondPage = ({ route }) => {
     const navigation = useNavigation();
 
-    //get incomeRange data
-    const {  fullName,email,gender,password,incomeRange } = route.params;
+    // Get incomeRange data
+    const { fullName, email, gender, password, incomeRange } = route.params;
 
     const [carVanChecked, setCarVanChecked] = useState(false);
     const [bikeChecked, setBikeChecked] = useState(false);
     const [threeWheelerChecked, setThreeWheelerChecked] = useState(false);
     const [noneChecked, setNoneChecked] = useState(false);
+
     const handleBack = () => {
         navigation.goBack();
     };
 
     const handleNext = () => {
         if (carVanChecked || bikeChecked || threeWheelerChecked || noneChecked) {
-
-            //navigate to next page and pass incomeRage data also with the carVanChecked etc... data.
+            // Navigate to next page and pass incomeRange data also with the carVanChecked etc... data.
             navigation.navigate('OnboardingThirdPage', {
-                fullName:fullName,
-                email:email,
-                gender:gender,
-                password:password,
-                incomeRange: incomeRange,
-                carVanChecked: carVanChecked,
-                bikeChecked: bikeChecked,
-                threeWheelerChecked: threeWheelerChecked,
-                noneChecked: noneChecked,
+                fullName,
+                email,
+                gender,
+                password,
+                incomeRange,
+                carVanChecked,
+                bikeChecked,
+                threeWheelerChecked,
+                noneChecked,
             });
         } else {
             alert('Please select at least one asset option.');
         }
+    };
+
+    const handleNoneChecked = () => {
+        if (!noneChecked) {
+            setCarVanChecked(false);
+            setBikeChecked(false);
+            setThreeWheelerChecked(false);
+        }
+        setNoneChecked(!noneChecked);
+    };
+
+    const handleOtherChecked = (setChecked, isChecked) => {
+        if (noneChecked) {
+            setNoneChecked(false);
+        }
+        setChecked(!isChecked);
     };
 
     const windowHeight = Dimensions.get('window').height;
@@ -45,10 +61,12 @@ const OnboardingSecondPage = ({ route }) => {
     return (
         <NativeBaseProvider>
             <SafeAreaView style={styles.container}>
-                <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                    <MaterialIcons name="keyboard-arrow-left" size={24}/>
-                    <Text fontWeight='bold'>Back</Text>
-                </TouchableOpacity>
+                <View style={styles.backButtonContainer}>
+                    <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+                        <MaterialIcons name="keyboard-arrow-left" size={24}/>
+                        <Text fontWeight='bold'>Back</Text>
+                    </TouchableOpacity>
+                </View>
                 <Image
                     source={require("../../../assets/pic.png")}
                     style={styles.image}
@@ -59,28 +77,46 @@ const OnboardingSecondPage = ({ route }) => {
                 <VStack marginTop={20} space={10}>
                     <Text style={styles.title}>Choose Your Assets</Text>
                     <VStack style={styles.optionsContainer} space={4}>
-                        <Checkbox checked={carVanChecked} onPress={() => setCarVanChecked(!carVanChecked)}
-                                  value="Car/Van" colorScheme={"green"}>
+                        <Checkbox
+                            isChecked={carVanChecked}
+                            onPress={() => handleOtherChecked(setCarVanChecked)}
+                            value="Car/Van"
+                            isDisabled={noneChecked}
+                            colorScheme={"green"}
+                        >
                             Car/Van
                         </Checkbox>
-                        <Checkbox checked={bikeChecked} onPress={() => setBikeChecked(!bikeChecked)} value="Bike"
-                                  colorScheme={"green"}>
+                        <Checkbox
+                            isChecked={bikeChecked}
+                            onPress={() => handleOtherChecked(setBikeChecked)}
+                            value="Bike"
+                            isDisabled={noneChecked}
+                            colorScheme={"green"}
+                        >
                             Bike
                         </Checkbox>
-                        <Checkbox checked={threeWheelerChecked}
-                                  onPress={() => setThreeWheelerChecked(!threeWheelerChecked)} value="Threewheeler"
-                                  colorScheme={"green"}>
+                        <Checkbox
+                            isChecked={threeWheelerChecked}
+                            onPress={() => handleOtherChecked(setThreeWheelerChecked)}
+                            value="Threewheeler"
+                            isDisabled={noneChecked}
+                            colorScheme={"green"}
+                        >
                             Three-wheeler
                         </Checkbox>
-                        <Checkbox checked={noneChecked} onPress={() => setNoneChecked(!noneChecked)} value="None"
-                                  colorScheme={"green"}>
+                        <Checkbox
+                            isChecked={noneChecked}
+                            onPress={handleNoneChecked}
+                            value="None"
+                            colorScheme={"green"}
+                        >
                             None
                         </Checkbox>
                     </VStack>
                 </VStack>
                 <View style={styles.nextButtonContainer}>
                     <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
-                        <MaterialIcons name="keyboard-arrow-right" size={40} color='white'/>
+                        <MaterialIcons name="keyboard-arrow-right" size={40} color='white' />
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>
@@ -96,10 +132,13 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: '8%',
-        left: '5%',
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    backButtonContainer: {
+        position: 'absolute',
+        top:60,
+        left: 20,
     },
     title: {
         fontSize: 28,
@@ -110,16 +149,14 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         fontWeight: "normal",
     },
-
     image: {
         width: '60%',
         height: '22%',
-
     },
     nextButtonContainer: {
         position: 'absolute',
-        bottom: 40,
-        right: 20,
+        bottom:60,
+        right: 30,
     },
     nextButton: {
         backgroundColor: Colors.Blue,

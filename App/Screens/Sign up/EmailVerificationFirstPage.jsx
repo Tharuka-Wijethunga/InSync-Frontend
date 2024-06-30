@@ -1,5 +1,13 @@
-import React, { useState } from 'react';
-import { StyleSheet, Alert, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions } from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+    StyleSheet,
+    Alert,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    Keyboard,
+    Dimensions,
+    Animated, Easing
+} from 'react-native';
 import {
     Box,
     Button,
@@ -54,23 +62,92 @@ const EmailVerificationFirstPage = () => {
         return is_valid_email(email);
     };
 
+    const fadeAnim = useRef(new Animated.Value(1)).current;
+    const translateYAnim = useRef(new Animated.Value(1)).current;
+    const scaleAnim = useRef(new Animated.Value(1)).current;
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+    }, []);
+
+    const keyboardDidShow = () => {
+        Animated.parallel([
+            Animated.timing(fadeAnim, {
+                toValue: 0,
+                duration:0,
+                useNativeDriver: true,
+            }),
+            Animated.timing(translateYAnim, {
+                toValue: -40,
+                duration: 800,
+                easing: Easing.ease,
+                useNativeDriver: true,
+
+            }),
+            Animated.timing(scaleAnim, {
+                toValue: 0.8,
+                duration: 800,
+                easing: Easing.ease,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    };
+
+    const keyboardDidHide = () => {
+        Animated.parallel([
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 800,
+                useNativeDriver: true,
+            }),
+            Animated.timing(translateYAnim, {
+                toValue: 1,
+                duration: 800,
+                easing: Easing.ease,
+                useNativeDriver: true,
+            }),
+            Animated.timing(scaleAnim, {
+                toValue: 1,
+                duration: 800,
+                easing: Easing.ease,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    }
+
+    const windowHeight = Dimensions.get('window').height;
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Box style={[styles.container, {width: '100%', height: '100%'}]}>
-                <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                    <MaterialIcons name="keyboard-arrow-left" size={24} color={Colors.black}/>
-                    <Text fontWeight={"bold"} color={Colors.black}>Back</Text>
-                </TouchableOpacity>
+                <View style={styles.backButtonContainer}>
+                    <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+                        <MaterialIcons name="keyboard-arrow-left" size={24} />
+                        <Text fontWeight='bold'>Back</Text>
+                    </TouchableOpacity>
+                </View>
                 <VStack space={4} alignItems="center" width="100%">
-                    <Image
-                        source={require("../../../assets/pic7.png")}
-                        style={styles.image}
-                        resizeMode={"contain"}
-                        alt='verified icon'
-                    />
-                    <Text fontSize={38} fontWeight="bold" color="black">Get Started</Text>
-                    <Text fontSize={13} color="gray.500" mt={-4}>by creating a free account.</Text>
+                    <Animated.Image source={require("../../../assets/pic7.png")} style={[styles.image,{ transform: [{ scale: scaleAnim }],marginTop: windowHeight*0.05 }]} />
+
+                    {/*<Image*/}
+                    {/*    source={require("../../../assets/pic7.png")}*/}
+                    {/*    style={styles.image}*/}
+                    {/*    alt='verified icon'*/}
+                    {/*/>*/}
+                    <Animated.View style={{  transform: [{ translateY: translateYAnim }] }}>
+                        <VStack space={4} alignItems="center" width="100%">
+
+                            <Text fontSize={38} fontWeight="bold" color="black">Get Started</Text>
+                            <Text fontSize={13} color="gray.500" mt={-4}>by creating a free account.</Text>
+                        </VStack>
+                    </Animated.View>
+                    <Animated.View style={[ styles.inputWrapper,{ transform: [{ translateY: translateYAnim }]}]}>
                     <Input mt={2}
                            variant="rounded"
                            borderColor={Colors.Blue}
@@ -82,6 +159,7 @@ const EmailVerificationFirstPage = () => {
                     <Button onPress={handleSignup} colorScheme={"blue"} width="100%" rounded={20} mt={4}>
                         <Text color="white" textAlign="center" fontSize="16">Next</Text>
                     </Button>
+                    </Animated.View>
                 </VStack>
             </Box>
         </TouchableWithoutFeedback>
@@ -98,10 +176,13 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: '8%',
-        left: '5%',
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    backButtonContainer: {
+        position: 'absolute',
+        top: 60,
+        left: 20,
     },
     input: {
         width: '100%',
@@ -114,7 +195,9 @@ const styles = StyleSheet.create({
     },
     image: {
         height: '38%',
-        alignSelf: "center"
+        alignSelf: "center",
+        resizeMode: "contain"
+
     },
 });
 

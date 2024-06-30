@@ -42,10 +42,12 @@ const OnboardingThirdPage = ({ route }) => {
     return (
         <NativeBaseProvider>
                 <SafeAreaView style={styles.container}>
-                    <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                        <MaterialIcons name="keyboard-arrow-left" size={24} />
-                        <Text fontWeight="bold">Back</Text>
-                    </TouchableOpacity>
+                    <View style={styles.backButtonContainer}>
+                        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+                            <MaterialIcons name="keyboard-arrow-left" size={24}/>
+                            <Text fontWeight='bold'>Back</Text>
+                        </TouchableOpacity>
+                    </View>
                         <Image
                             source={require("../../../assets/pic6.png")}
                             style={styles.image}
@@ -86,21 +88,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
     },
-
     backButton: {
         position: 'absolute',
-        top: '8%',
-        left: '5%',
         flexDirection: 'row',
         alignItems: 'center',
     },
-
+    backButtonContainer: {
+        position: 'absolute',
+        top:60,
+        left: 20,
+    },
     title: {
         fontSize: 28,
         fontWeight: 'bold',
         lineHeight: 30,
     },
-
     optionsContainer: {
         alignSelf: 'flex-start',
         fontWeight: "normal",
@@ -108,12 +110,11 @@ const styles = StyleSheet.create({
     image: {
         width: '70%',
         height: '22%',
-
     },
     nextButtonContainer: {
         position: 'absolute',
-        bottom: 40,
-        right: 20,
+        bottom:60,
+        right: 30,
     },
     nextButton: {
         backgroundColor: Colors.Blue,
