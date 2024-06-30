@@ -142,7 +142,7 @@ const SignupForm = ({ route }) => {
                         <Box style={[styles.container, { width: '100%', height: '100%' }]}>
                             <VStack space={4} alignItems="center" width="100%">
                                 <Animated.View style={{ opacity: fadeAnim}}>
-                                    <Text fontSize={38} fontWeight="bold" color="black">We're almost there!</Text>
+                                    <Text fontSize={38} fontWeight="bold" color="black" mt={0}>We're almost there!</Text>
                                     <Center><Text fontSize={13} color="gray.500" mt={-1} t>Set up your info and password.</Text></Center>
                                 </Animated.View>
                             </VStack>
@@ -223,14 +223,13 @@ const SignupForm = ({ route }) => {
                                        }
                                     // style={styles.input}
                                 />
-                                        <HStack alignItems="center" mt={3}>
+                                <HStack alignItems="center" mt={3}>
                                             <Checkbox value="isChecked" isChecked={isChecked} onChange={(val) => setIsChecked(val)}
                                                       colorScheme={"blue"}>
                                                 <Text fontSize={11}>By checking the box you agree to our
                                                     <Text color={Colors.Blue}> Terms </Text>and<Text color={Colors.Blue}> Conditions. </Text></Text>
                                             </Checkbox>
                                         </HStack>
-
                                         <Button onPress={handleSignup} colorScheme={"blue"} width="100%" rounded={20} mt={3}>
                                             <Center><Text color="white" fontSize="16">Next</Text></Center>
                                         </Button>

@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     nextButtonContainer: {
         position: 'absolute',
         bottom:60,
-        right: 50,
+        right: 30,
     },
     nextButton: {
         backgroundColor: Colors.Blue,
