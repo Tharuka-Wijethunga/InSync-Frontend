@@ -18,7 +18,7 @@ const OnboardingFourthPage = ({ route }) => {
 
 
         //post request to pass this data to the backend
-        fetch('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/signup', {
+        fetch('https://7731-2402-4000-2180-d8b2-68e8-5994-eb74-46a7.ngrok-free.app/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -51,10 +51,12 @@ const OnboardingFourthPage = ({ route }) => {
     return (
         <NativeBaseProvider>
             <SafeAreaView style={styles.container}>
-                <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-                    <MaterialIcons name="keyboard-arrow-left" size={24}/>
-                    <Text fontWeight={"bold"}>Back</Text>
-                </TouchableOpacity>
+                <View style={styles.backButtonContainer}>
+                    <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+                        <MaterialIcons name="keyboard-arrow-left" size={24} />
+                        <Text fontWeight='bold'>Back</Text>
+                    </TouchableOpacity>
+                </View>
                 <VStack style={{flex: 1}}>
                     <Text style={styles.title} marginTop={windowHeight * 0.20}>Welcome !</Text>
                     <View marginTop={20}>
@@ -85,10 +87,13 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: '8%',
-        left: '5%',
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    backButtonContainer: {
+        position: 'absolute',
+        top: 60,
+        left: 20,
     },
     title: {
         fontSize: 40,
