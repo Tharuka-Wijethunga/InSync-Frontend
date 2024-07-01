@@ -17,7 +17,7 @@ const EmailVerificationSecondPage = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            axios.get(`https://7731-2402-4000-2180-d8b2-68e8-5994-eb74-46a7.ngrok-free.app/check-verification-status?email=${email}`)
+            axios.get(`https://4c0c-104-28-242-102.ngrok-free.app/check-verification-status?email=${email}`)
                 .then(response => {
                     if (response.data.verified) {
                         setIsVerified(true);
@@ -38,7 +38,7 @@ const EmailVerificationSecondPage = () => {
 
     const handleContinueSignup = async () => {
         try {
-            await axios.delete(`https://7731-2402-4000-2180-d8b2-68e8-5994-eb74-46a7.ngrok-free.app/delete-verification-info?email=${email}`);
+            await axios.delete(`https://4c0c-104-28-242-102.ngrok-free.app/delete-verification-info?email=${email}`);
             navigation.navigate('SignupForm', {
                 email: email
             });
@@ -52,7 +52,7 @@ const EmailVerificationSecondPage = () => {
         if (remainingChances > 0) {
             setIsLoading(true);
             try {
-                await axios.post(`https://7731-2402-4000-2180-d8b2-68e8-5994-eb74-46a7.ngrok-free.app/send-verification-email?email=${email}`);
+                await axios.post(`https://4c0c-104-28-242-102.ngrok-free.app/send-verification-email?email=${email}`);
                 setRemainingChances(remainingChances - 1);
                 Alert.alert('Verification email sent', `Please check your email for the new verification link. You have ${remainingChances - 1} chances left.`);
             } catch (error) {

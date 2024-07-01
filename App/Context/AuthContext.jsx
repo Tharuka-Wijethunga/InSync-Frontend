@@ -15,7 +15,7 @@ export const AuthProvider=({children})=>{
         setIsLoading(true);
         try {
             const requestData = qs.stringify({username, password});
-            const response = await axios.post('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/token', requestData, {
+            const response = await axios.post('https://7113-104-28-210-102.ngrok-free.app/token', requestData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -30,6 +30,7 @@ export const AuthProvider=({children})=>{
                 await AsyncStorage.setItem('accessToken', data.access_token);
                 await AsyncStorage.setItem('refreshToken', data.refresh_token);
                 axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
+                // getUserData();
             } else {
                 throw new Error('Tokens not found');
             }
@@ -40,6 +41,16 @@ export const AuthProvider=({children})=>{
         setIsLoading(false);
     }
 
+    // const getUserData = async () => {
+    //     try {
+    //         let response = await axios.get('https://a269-2a09-bac5-4867-18be-00-277-38.ngrok-free.app/me');
+    //         await AsyncStorage.setItem('userID', response.data._id);
+    //         // let x = await asyncStorage.getItem('userID');
+    //         // console.log(x);
+    //     } catch (error) {
+    //         console.error('Error getting user ID:', error);
+    //     }
+    // }
 
     const isLoggedIn=async ()=> {
         try {
@@ -60,7 +71,7 @@ export const AuthProvider=({children})=>{
  const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            const response = await axios.post('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/refresh-token', {}, {
+            const response = await axios.post('https://7113-104-28-210-102.ngrok-free.app/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }
