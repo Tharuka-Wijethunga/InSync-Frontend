@@ -1,5 +1,5 @@
-import {StyleSheet,TouchableOpacity, } from "react-native";
-import {Badge, Flex, Input, Popover, Pressable, Spacer} from 'native-base';
+import {StyleSheet} from "react-native";
+import {Input, Popover, Pressable} from 'native-base';
 import React,{useState, useEffect,useRef} from 'react';
 import Colors from "../../Config/Colors";
 import {
@@ -32,6 +32,7 @@ export default function Dashboard() {
     const [bankBalance, setBankBalance] = useState(0);
     const [todaySpending, setTodaySpending] = useState(0)
 
+
     const fetch_Records = () => {
         if(recordRef.current){
             recordRef.current.fetchRecords();
@@ -41,21 +42,21 @@ export default function Dashboard() {
     useEffect(()=> {
         if(isFocused){
             fetch_Records();
-            axios.get('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/api/dashboard/account?type=cash')
+            axios.get('https://7113-104-28-210-102.ngrok-free.app/api/dashboard/account?type=cash')
                 .then(response => {
                     setCashBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/api/dashboard/account?type=bank')
+            axios.get('https://7113-104-28-210-102.ngrok-free.app/api/dashboard/account?type=bank')
                 .then(response => {
                     setBankBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/api/dashboard/today_spending')
+            axios.get('https://7113-104-28-210-102.ngrok-free.app/api/dashboard/today_spending')
                 .then(response=> {
                     setTodaySpending(response.data)
                 })
@@ -64,6 +65,17 @@ export default function Dashboard() {
                 });
         }
     }, [isFocused,recordRef.current]);
+
+
+    const handleSave = async(account, amount) => {
+        axios.put(`https://7113-104-28-210-102.ngrok-free.app/api/dashboard/account/${account}/manual`,{balance:amount})
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
 
     return (
         <NativeBaseProvider>
@@ -81,17 +93,17 @@ export default function Dashboard() {
                                 <Popover
                                     trigger={(triggerProps) => {
                                         return (
-                                                <Pressable {...triggerProps}>
-                                                    {({isPressed}) => {
-                                                        return <Box style={{
-                                                            transform: [{
-                                                                scale: isPressed ? 0.96 : 1
-                                                            }]
-                                                        }} >
-                                                            <BalanceCard account="Bank" balance={bankBalance}/>
-                                                        </Box>;
-                                                    } }
-                                                </Pressable>
+                                            <Pressable {...triggerProps}>
+                                                {({isPressed}) => {
+                                                    return <Box style={{
+                                                        transform: [{
+                                                            scale: isPressed ? 0.96 : 1
+                                                        }]
+                                                    }} >
+                                                        <BalanceCard account="Bank" balance={bankBalance}/>
+                                                    </Box>;
+                                                } }
+                                            </Pressable>
                                         );
                                     }}
                                 >
@@ -99,10 +111,21 @@ export default function Dashboard() {
                                         <Popover.Arrow />
                                         <Popover.Body>
                                             <VStack flex={1} width={"100%"} space={1} alignItems={"center"}>
-                                            <Input marginBottom={2} variant="outline"placeholder="Change Balance" />
+                                            <Input
+                                                marginBottom={2}
+                                                variant="outline"
+                                                placeholder="Change Balance"
+                                                value={bankBalance}
+                                                onChangeText={setBankBalance}
+                                            />
                                             <HStack alignSelf="center" space={1} >
-                                                    <Button bg={Colors.DBlue} borderRadius={"full"} w="50%" size="md" >
-                                                    Save
+                                                <Button
+                                                    onPress={()=> handleSave('Bank', bankBalance)}
+                                                    bg={Colors.DBlue}
+                                                    borderRadius={"full"}
+                                                    w="50%" size="md"
+                                                >
+                                                    <Text>Save</Text>
                                                 </Button>
                                                 <Button borderRadius={"full"} w="50%" size="md" variant="outline">
                                                     <Text color={"black"}>Cancel</Text>
@@ -135,10 +158,21 @@ export default function Dashboard() {
                                         <Popover.Arrow />
                                         <Popover.Body>
                                             <VStack flex={1} width={"100%"} space={1} alignItems={"center"}>
-                                                <Input marginBottom={2} variant="outline"placeholder="Change Balance" />
+                                                <Input
+                                                    marginBottom={2}
+                                                    variant="outline"
+                                                    placeholder="Change Balance"
+                                                    value={cashBalance}
+                                                    onChangeText={setCashBalance}
+                                                />
                                                 <HStack alignSelf="center" space={1} >
-                                                    <Button bg={Colors.DBlue} borderRadius={"full"} w="50%" size="md" >
-                                                        Save
+                                                    <Button
+                                                        onPress={()=> handleSave('Cash', cashBalance)}
+                                                        bg={Colors.DBlue}
+                                                        borderRadius={"full"}
+                                                        w="50%" size="md"
+                                                    >
+                                                        <Text>Save</Text>
                                                     </Button>
                                                     <Button borderRadius={"full"} w="50%" size="md" variant="outline">
                                                         <Text color={"black"}>Cancel</Text>
@@ -195,5 +229,5 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.BGColor,
         alignItems: 'center',
         flex: 1,
-    },
+    }
 })

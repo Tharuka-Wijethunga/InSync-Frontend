@@ -1,11 +1,9 @@
-import { Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import React from 'react';
 import Colors from "../../Config/Colors";
-import {NativeBaseProvider, Button, View} from "native-base";
+import {NativeBaseProvider, View} from "native-base";
 import Profile from "./Profile";
 import ProfileNavigation from "./ProfileNavigation";
-import TestAPI from "./TestAPI";
-import Help from "./Help";
 import Helptoken from "./Helptoken";
 
 
@@ -14,7 +12,6 @@ export default function UserProfile() {
         <NativeBaseProvider>
             <View style={styles.container}>
                 {/*<Helptoken/>*/}
-                {/*<TestAPI/>*/}
                 <ProfileNavigation><Profile/></ProfileNavigation>
             </View>
         </NativeBaseProvider>

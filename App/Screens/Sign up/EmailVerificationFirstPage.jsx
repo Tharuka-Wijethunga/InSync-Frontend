@@ -12,14 +12,8 @@ import {
     Box,
     Button,
     Input,
-    Icon,
-    NativeBaseProvider,
     Text,
     VStack,
-    HStack,
-    Checkbox,
-    Modal,
-    Radio,
     View,
     Image
 } from 'native-base';
@@ -42,12 +36,12 @@ const EmailVerificationFirstPage = () => {
             Alert.alert('Validation Error', 'Please fill in all fields');
             return;
         }
-        axios.post(`https://7731-2402-4000-2180-d8b2-68e8-5994-eb74-46a7.ngrok-free.app/checkMail?email=${email}`)
+        axios.post(`https://4c0c-104-28-242-102.ngrok-free.app/checkMail?email=${email}`)
             .then(response => {
-                // if (response.data.exists) {
-                //     Alert.alert('Error', 'Email already exists, Try another one.');}
+                if (response.data.exists) {
+                    Alert.alert('Error', 'Email already exists, Try another one.');}
                 if (validateForm()) {
-                    axios.post(`https://7731-2402-4000-2180-d8b2-68e8-5994-eb74-46a7.ngrok-free.app/send-verification-email?email=${email}`)
+                    axios.post(`https://4c0c-104-28-242-102.ngrok-free.app/send-verification-email?email=${email}`)
                     navigation.navigate('EmailVerificationSecondPage',{
                         email:email
                     });

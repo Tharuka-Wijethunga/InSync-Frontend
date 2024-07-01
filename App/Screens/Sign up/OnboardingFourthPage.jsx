@@ -15,10 +15,8 @@ const OnboardingFourthPage = ({ route }) => {
         navigation.goBack();
     };
     const handleNext = () => {
-
-
         //post request to pass this data to the backend
-        fetch('https://7731-2402-4000-2180-d8b2-68e8-5994-eb74-46a7.ngrok-free.app/signup', {
+        fetch('https://4c0c-104-28-242-102.ngrok-free.app/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect, useCallback } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import { View, VStack, HStack, Avatar, Spacer, Button, AlertDialog, Center, Spinner, Box, Text } from 'native-base';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from "../../Context/AuthContext";
 import Colors from "../../Config/Colors";
 
@@ -26,7 +25,7 @@ export default function Profile() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/api/user/fullname_email');
+            const response = await axios.get('https://7113-104-28-210-102.ngrok-free.app/api/user/fullname_email');
             const userDetails = response.data;
             setFullName(userDetails.fullname);
         } catch (error) {
@@ -42,7 +41,7 @@ export default function Profile() {
 
     const handleDeleteAccount = async () => {
         try {
-            await axios.delete('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/api/user/delete-account');
+            await axios.delete('https://7113-104-28-210-102.ngrok-free.app/api/user/delete-account');
             logout();
         } catch (error) {
             console.error('Error deleting account:', error);
