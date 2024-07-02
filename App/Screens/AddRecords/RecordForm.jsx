@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
     Box,
     Button,
@@ -21,15 +21,16 @@ import IncomeExpenseInput from "./IncomeExpenseInput";
 import AccountType from "./AccountType";
 import axios from "axios";
 import moment from 'moment-timezone';
-import {useNavigation,useIsFocused} from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import catIcon from "./CatIcon";
+import {useFocusEffect, useNavigation} from "@react-navigation/native";
+
 
 const RecordForm = () => {
     const navigation = useNavigation();
+    const incomeExpenseInputRef = useRef();
+    const accountTypeRef = useRef();
 
     const [modalVisible, setModalVisible] = React.useState(false);
-    const [selectedCategory,setSelectedCategory]=useState("tag-plus" );
+    const [selectedCategory,setSelectedCategory]=useState("tag-plus");
     const [avatarColor,setAvatarColor]=useState(Colors.IconColor);
     const [categoryName,setCategoryName]=useState("Select a Category");
     const [iconSize, setIconSize]=useState("");
@@ -39,17 +40,27 @@ const RecordForm = () => {
     const [myDate, setDate] = useState(new Date());
     const [myTime, setTime] = useState(new Date());
 
-    const resetState = () => {
+    const resetForm = () => {
+        setSelectedCategory("tag-plus");
+        setAvatarColor(Colors.IconColor);
+        setCategoryName("Select a Category");
+        setIconSize("");
         setType("expense");
         setAmount(0);
         setAccount("cash");
-        setCategoryName("Select a Category");
-        setAvatarColor(Colors.IconColor);
-        setSelectedCategory("tag-plus")
         setDate(new Date());
         setTime(new Date());
-    }
 
+        // Reset IncomeExpenseInput
+        if (incomeExpenseInputRef.current) {
+            incomeExpenseInputRef.current.resetInputs();
+        }
+
+        // Reset AccountType
+        if (accountTypeRef.current) {
+            accountTypeRef.current.resetAccount();
+        }
+    };
 
     const handleSubmit = async () => {
         const today = moment(myDate).format('YYYY-MM-DD');
@@ -71,7 +82,7 @@ const RecordForm = () => {
                     .then(response => {
                         console.log(response);
                         navigation.navigate('Dashboard');
-                        resetState();
+                        resetForm();
                     })
                     .catch(error => {
                         console.error(error);
@@ -90,10 +101,17 @@ const RecordForm = () => {
                     <Box w="100%" rounded="2xl" shadow={3} bg="white">
                         <VStack paddingX={4} h="84%" space={4}>
                             <IncomeExpenseInput
+                                ref={incomeExpenseInputRef}
                                 setType={setType}
                                 setAmount={setAmount}
+                                type={type}
+                                amount={amount}
                             />
-                            <AccountType setAccount={setAccount}/>
+                            <AccountType
+                                ref={accountTypeRef}
+                                setAccount={setAccount}
+                                account={account}
+                            />
                             {/* Category selection */}
                             <VStack>
                                 <Text fontSize={16} fontWeight="medium" paddingBottom={1}>Category</Text>

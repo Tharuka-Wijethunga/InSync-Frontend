@@ -1,11 +1,24 @@
-import React, {useRef, useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Box, HStack, Input, Pressable, Text, VStack} from "native-base";
 import Colors from "../../Config/Colors";
 import {useFocusEffect} from "@react-navigation/native";
 
-const IncomeExpenseInput = ({setType,setAmount}) => {
-    const [incomePressed, setIncomePressed] = useState(false);
-    const [expensePressed, setExpensePressed] = useState(true);
+const IncomeExpenseInput = forwardRef(({ setType, setAmount, type, amount }, ref) => {
+    const [incomePressed, setIncomePressed] = useState(type === "income");
+    const [expensePressed, setExpensePressed] = useState(type === "expense");
+    const [element, setElement] = useState(type === "income" ? '+' : '-');
+    const [placeholderColor, setPlaceholderColor] = useState(type === "income" ? Colors.Green : Colors.Red);
+
+    useImperativeHandle(ref, () => ({
+        resetInputs: () => {
+            setIncomePressed(false);
+            setExpensePressed(true);
+            setElement('-');
+            setPlaceholderColor(Colors.Red);
+            setType("expense");
+            setAmount(0);
+        }
+    }));
 
     const handleIncomePress = () => {
         setIncomePressed(true);
@@ -17,9 +30,6 @@ const IncomeExpenseInput = ({setType,setAmount}) => {
         setIncomePressed(false);
         setType("expense");
     };
-
-    const [element, setElement] = useState('-');
-    const [placeholderColor, setPlaceholderColor] = useState(Colors.Red);
 
     // Keyboard popup each time the AddRecord tab is opened
     const inputRef = useRef();
@@ -80,6 +90,7 @@ const IncomeExpenseInput = ({setType,setAmount}) => {
                 ref={inputRef}
                 variant="filled"
                 placeholder={'0'}
+                value={amount.toString()}
                 onChangeText={setAmount}
                 InputLeftElement={
                     <HStack space={4} alignItems='center' >
@@ -105,6 +116,6 @@ const IncomeExpenseInput = ({setType,setAmount}) => {
         </VStack>
         </VStack>
     );
-};
+});
 
 export default IncomeExpenseInput;

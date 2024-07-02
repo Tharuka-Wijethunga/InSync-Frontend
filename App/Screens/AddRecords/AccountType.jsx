@@ -1,12 +1,20 @@
-import React, {useState} from 'react';
+import React, {forwardRef, useImperativeHandle, useState} from 'react';
 import {HStack, IconButton, Text, VStack} from "native-base";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import Colors from "../../Config/Colors";
 import {Keyboard} from "react-native";
 
-const AccountType = ({setAccount}) => {
-    const [bankPressed, setBankPressed] = useState(false);
-    const [cashPressed, setCashPressed] = useState(true);
+const AccountType = forwardRef(({ setAccount, account }, ref) => {
+    const [bankPressed, setBankPressed] = useState(account === "bank");
+    const [cashPressed, setCashPressed] = useState(account === "cash");
+
+    useImperativeHandle(ref, () => ({
+        resetAccount: () => {
+            setBankPressed(false);
+            setCashPressed(true);
+            setAccount("cash");
+        }
+    }));
 
     const handleBankPress = () => {
         setBankPressed(true);
@@ -52,6 +60,6 @@ const AccountType = ({setAccount}) => {
             </HStack>
         </VStack>
     );
-};
+});
 
 export default AccountType;

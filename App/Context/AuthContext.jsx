@@ -30,6 +30,7 @@ export const AuthProvider=({children})=>{
                 await AsyncStorage.setItem('accessToken', data.access_token);
                 await AsyncStorage.setItem('refreshToken', data.refresh_token);
                 axios.defaults.headers.common['Authorization'] = `Bearer ${data.access_token}`;
+                // getUserData();
             } else {
                 throw new Error('Tokens not found');
             }
@@ -40,6 +41,16 @@ export const AuthProvider=({children})=>{
         setIsLoading(false);
     }
 
+    // const getUserData = async () => {
+    //     try {
+    //         let response = await axios.get('https://a269-2a09-bac5-4867-18be-00-277-38.ngrok-free.app/me');
+    //         await AsyncStorage.setItem('userID', response.data._id);
+    //         // let x = await asyncStorage.getItem('userID');
+    //         // console.log(x);
+    //     } catch (error) {
+    //         console.error('Error getting user ID:', error);
+    //     }
+    // }
 
     const isLoggedIn=async ()=> {
         try {

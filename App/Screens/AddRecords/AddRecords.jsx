@@ -5,7 +5,9 @@ import {NativeBaseProvider} from "native-base";
 import RecordForm from "./RecordForm";
 import {SafeAreaView} from "react-native-safe-area-context";
 
+
 export default function AddRecords() {
+
     return (
         <NativeBaseProvider>
             <SafeAreaView style={styles.container}>

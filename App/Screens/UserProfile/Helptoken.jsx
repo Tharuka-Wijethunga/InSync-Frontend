@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Box, VStack, View, HStack, IconButton} from "native-base";
+import {Text, Box, VStack, View} from "native-base";
 import {Button} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from 'axios';
@@ -38,7 +38,7 @@ export default function Helptoken(){
             const refreshToken = await AsyncStorage.getItem('refreshToken');
 
             // Make a POST request to the /refresh-token endpoint
-            const response = await axios.post('http://192.168.72.230:8005/refresh-token', {}, {
+            const response = await axios.post('https://7113-104-28-210-102.ngrok-free.app/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }
@@ -83,7 +83,7 @@ export default function Helptoken(){
             let accessToken = await AsyncStorage.getItem('accessToken');
 
             // Make a GET request to the /me endpoint
-            let response = await axios.get('http://192.168.147.230:8005/me', {
+            let response = await axios.get('https://7113-104-28-210-102.ngrok-free.app/me', {
 
             });
 
@@ -91,7 +91,7 @@ export default function Helptoken(){
             if (response.status === 401) {
                 await refreshAccessToken();
                 accessToken = await AsyncStorage.getItem('accessToken');
-                response = await axios.get('http://192.168.72.230:8005/me', {
+                response = await axios.get('https://7113-104-28-210-102.ngrok-free.app/me', {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }

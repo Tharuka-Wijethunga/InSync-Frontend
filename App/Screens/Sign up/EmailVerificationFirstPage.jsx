@@ -12,8 +12,6 @@ import {
     Box,
     Button,
     Input,
-    Icon,
-    NativeBaseProvider,
     Text,
     VStack,
     HStack,

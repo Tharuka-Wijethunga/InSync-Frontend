@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect, useCallback } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import { View, VStack, HStack, Avatar, Spacer, Button, AlertDialog, Center, Spinner, Box, Text } from 'native-base';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from "../../Context/AuthContext";
 import Colors from "../../Config/Colors";
 

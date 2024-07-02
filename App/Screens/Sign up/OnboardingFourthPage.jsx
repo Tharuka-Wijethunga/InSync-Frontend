@@ -15,8 +15,6 @@ const OnboardingFourthPage = ({ route }) => {
         navigation.goBack();
     };
     const handleNext = () => {
-
-
         //post request to pass this data to the backend
         fetch('http://192.168.248.230:8005/signup', {
             method: 'POST',
