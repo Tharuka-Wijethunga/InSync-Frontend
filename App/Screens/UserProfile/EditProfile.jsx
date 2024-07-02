@@ -95,7 +95,7 @@ const EditProfile = ({ navigation }) => {
                 throw new Error('No token found');
             }
             console.log('Token:', token); // Debugging line to check token retrieval
-            const response = await axios.get('https://7113-104-28-210-102.ngrok-free.app/api/user/fullname_email', {
+            const response = await axios.get('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/user/fullname_email', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -146,7 +146,7 @@ const EditProfile = ({ navigation }) => {
                     new_password: formData.password,
                     confirm_password: formData.confirmPassword
                 };
-                const response = await axios.put('https://7113-104-28-210-102.ngrok-free.app/api/user/update', data, {
+                const response = await axios.put('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/user/update', data, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

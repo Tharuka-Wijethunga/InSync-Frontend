@@ -38,7 +38,7 @@ export default function Helptoken(){
             const refreshToken = await AsyncStorage.getItem('refreshToken');
 
             // Make a POST request to the /refresh-token endpoint
-            const response = await axios.post('https://7113-104-28-210-102.ngrok-free.app/refresh-token', {}, {
+            const response = await axios.post('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }
@@ -83,7 +83,7 @@ export default function Helptoken(){
             let accessToken = await AsyncStorage.getItem('accessToken');
 
             // Make a GET request to the /me endpoint
-            let response = await axios.get('https://7113-104-28-210-102.ngrok-free.app/me', {
+            let response = await axios.get('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/me', {
 
             });
 
@@ -91,7 +91,7 @@ export default function Helptoken(){
             if (response.status === 401) {
                 await refreshAccessToken();
                 accessToken = await AsyncStorage.getItem('accessToken');
-                response = await axios.get('https://7113-104-28-210-102.ngrok-free.app/me', {
+                response = await axios.get('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/me', {
                     headers: {
                         Authorization: `Bearer ${accessToken}`
                     }

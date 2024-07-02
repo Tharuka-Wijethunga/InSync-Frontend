@@ -75,10 +75,10 @@ const RecordForm = () => {
             'date': today,
             'time': sltime
         };
-        axios.post('https://7113-104-28-210-102.ngrok-free.app/api/addrecord', record)
+        axios.post('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/addrecord', record)
             .then(response => {
                 console.log(response);
-                axios.put(`https://7113-104-28-210-102.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
+                axios.put(`https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
                     .then(response => {
                         console.log(response);
                         navigation.navigate('Dashboard');
