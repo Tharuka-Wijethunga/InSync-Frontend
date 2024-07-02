@@ -51,7 +51,7 @@ export default function Dashboard() {
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('https://ef7a-2402-4000-2180-9088-e95f-5682-e8eb-bdde.ngrok-free.app/api/dashboard/account?type=bank')
+            axios.get('http://192.168.248.230:8005/api/dashboard/account?type=bank')
                 .then(response => {
                     setBankBalance(response.data)
                 })

@@ -1,19 +1,65 @@
 import { PieChart } from "react-native-gifted-charts";
 import {View, Text, HStack,Box,Spacer} from "native-base";
+import axios from "axios";
 import {FlatList} from "react-native";
+import {useIsFocused} from "@react-navigation/native";
+import {useEffect, useState} from "react";
 
 export default  function NextMonth() {
-    const pieData = [
-        {value: 60, color: '#F87171',gradientCenterColor: '#F87171',categoryName:"Food", amount:30000},
-        {value: 9, color: '#60A5FA',gradientCenterColor: '#60A5FA',categoryName:"Shopping", amount:4500},
-        {value: 2, color: '#4ADE80',gradientCenterColor: '#4ADE80',categoryName:"Health", amount:1000},
-        {value: 10, color: '#A8A29E',gradientCenterColor: '#A8A29E',categoryName:"Vehicle", amount:5000},
-        {value: 12, color: '#FACC15',gradientCenterColor: '#FACC15',categoryName:"Rent", amount:6000},
-        {value: 1, color: '#818CF8',gradientCenterColor: '#818CF8',categoryName:"Transport", amount:500},
-        {value: 6, color: '#FB923C',gradientCenterColor: '#FB923C',categoryName:"Other", amount:3000},
+    const isFocused = useIsFocused();
+    const [pieData, setPieData] = useState([]);
+    const [TotalAmount, setTotalAmount] = useState(0);
+    const [errorMessage, setErrorMessage] = useState("");
 
-    ];
+    const categoryColors = {
+        "Foods & Drinks": { color: '#F87171', gradientCenterColor: '#F87171' },
+        "shopping": { color: '#60A5FA', gradientCenterColor: '#60A5FA' },
+        "Health": { color: '#4ADE80', gradientCenterColor: '#4ADE80' },
+        "Vehicle": { color: '#FFEB3B', gradientCenterColor: '#FFEB3B' },
+        "Public transport": { color: '#818CF8', gradientCenterColor: '#818CF8' },
+        "Bills": { color: '#FB923C', gradientCenterColor: '#FB923C' },
+        "Loans": { color: '#42A5F5', gradientCenterColor: '#42A5F5' },
+        "Rent": { color: '#FF5733', gradientCenterColor: '#FF5733' },
+        "Other": { color: '#808080', gradientCenterColor: '#808080' },
+    };
 
+    const categoryOrder = ["Foods & Drinks", "shopping", "Health", "Vehicle", "Public transport", "Bills", "Loans", "Rent", "Other"];  // Ordered list of category names
+
+    useEffect(() => {
+        if (isFocused) {
+            fetchStat();
+        }
+    }, [isFocused]);
+
+
+    const fetchStat = async () => {
+        try {
+            const response = await axios.get(`http://192.168.248.230:8005/api/statistics/ForecastNextDay_GeneralModel`);
+            const data = response.data;
+            setTotalAmount(data.Total);
+
+            const pieData = categoryOrder.map(category => {
+                if (data[category]) {
+                    const { Amount, Value } = data[category];
+                    const colors = categoryColors[category];
+                    return {
+                        value: Value,
+                        color: colors.color,
+                        gradientCenterColor: colors.gradientCenterColor,
+                        categoryName: category,
+                        amount: Amount
+                    };
+                }
+                return null;
+            }).filter(item => item !== null); // Filter out any null items
+
+            setPieData(pieData);
+            setErrorMessage("");  // Clear any previous error messages
+        } catch (error) {
+            console.error(error);
+            setErrorMessage("Error fetching data");
+        }
+    };
     const renderItem=({item})=>{
         return(
             <View>
@@ -39,7 +85,6 @@ export default  function NextMonth() {
 
     return (
         <View  flex={1} backgroundColor={"white"}>
-
             <Text style={{fontSize: 16, fontWeight: 'bold', paddingLeft:20,  paddingTop:15}}>
                 Expected Spending
             </Text>
@@ -57,7 +102,7 @@ export default  function NextMonth() {
                                     style={{fontSize: 22, fontWeight: 'bold'}}>
                                     All
                                 </Text>
-                                <Text style={{fontSize: 14}}>LKR 50000</Text>
+                                <Text style={{fontSize: 14}}>LKR {TotalAmount}</Text>
                             </View>
                         );
                     }}
