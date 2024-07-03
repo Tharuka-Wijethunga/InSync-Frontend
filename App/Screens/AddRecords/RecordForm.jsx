@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import {Box, Button, HStack, NativeBaseProvider, Text, View, VStack, Avatar, Pressable, Spacer,} from "native-base";
+import {Box, Button, HStack, NativeBaseProvider, Text, View, VStack, Avatar, Pressable, Spacer,ScrollView} from "native-base";
 import Colors from "../../Config/Colors";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, Alert } from "react-native";
@@ -27,7 +27,7 @@ const RecordForm = () => {
     const [account, setAccount] = useState("cash");
     const [myDate, setDate] = useState(new Date());
     const [myTime, setTime] = useState(new Date());
-    const [loading, setLoading] = useState(false);
+
 
     const resetForm = () => {
         setSelectedCategory("tag-plus");
@@ -61,7 +61,7 @@ const RecordForm = () => {
             return;
         }
 
-        setLoading(true);
+
 
         const today = moment(myDate).format('YYYY-MM-DD');
         const sltime = moment.utc(myTime).tz('Asia/Colombo').format('HH:mm:ss');
@@ -94,11 +94,12 @@ const RecordForm = () => {
     }
 
     return (
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <NativeBaseProvider>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
-                    <VStack space={4} w="94%">
-                        <Box w="100%" rounded="2xl" shadow={3} bg="white">
+                    <VStack space={2} w="94%">
+                        <Box flex={1} w="100%" rounded="2xl" shadow={3} bg="white">
                             <VStack paddingX={4} h="84%" space={4}>
                                 <IncomeExpenseInput
                                     ref={incomeExpenseInputRef}
@@ -143,7 +144,7 @@ const RecordForm = () => {
                                     </Pressable>
                                 </VStack>
                                 {/* Date & Time picker */}
-                                <VStack space={3}>
+                                <VStack space={3} paddingBottom={3}>
                                     <Text fontSize={16} fontWeight="medium">Date & Time</Text>
                                     <HStack paddingLeft={2} space={2} alignItems={"center"}>
                                         <MaterialCommunityIcons name="calendar-clock" size={34} color={Colors.Blue} />
@@ -166,9 +167,8 @@ const RecordForm = () => {
                             w={320} size="md"
                             alignSelf="center"
                             marginTop={4}
+                            marginBottom={4}
                             onPress={handleSubmit}
-                            isLoading={loading}
-                            isLoadingText="Saving..."
                         >
                             Save
                         </Button>
@@ -176,6 +176,7 @@ const RecordForm = () => {
                 </View>
             </TouchableWithoutFeedback>
         </NativeBaseProvider>
+        </ScrollView>
     );
 };
 
