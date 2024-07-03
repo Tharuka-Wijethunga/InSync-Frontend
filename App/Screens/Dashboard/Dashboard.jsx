@@ -44,21 +44,21 @@ export default function Dashboard() {
     useEffect(()=> {
         if(isFocused){
             fetch_Records();
-            axios.get('https://http://192.168.11.70:8005/api/dashboard/account?type=cash')
+            axios.get('http://192.168.248.230:8005/api/dashboard/account?type=cash')
                 .then(response => {
                     setCashBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('https://http://192.168.11.70:8005/api/dashboard/account?type=bank')
+            axios.get('http://192.168.248.230:8005/api/dashboard/account?type=bank')
                 .then(response => {
                     setBankBalance(response.data)
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            axios.get('https://http://192.168.11.70:8005/api/dashboard/today_spending')
+            axios.get('http://192.168.248.230:8005/api/dashboard/today_spending')
                 .then(response=> {
                     setTodaySpending(response.data)
                 })
@@ -70,7 +70,7 @@ export default function Dashboard() {
 
 
     const handleSave = async(account, amount) => {
-        axios.put(`https://http://192.168.11.70:8005/api/dashboard/account/${account}/manual`,{balance:amount})
+        axios.put(`http://192.168.248.230:8005/api/dashboard/account/${account}/manual`,{balance:amount})
             .then(response => {
                 console.log(response);
             })

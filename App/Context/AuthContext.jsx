@@ -15,7 +15,7 @@ export const AuthProvider=({children})=>{
         setIsLoading(true);
         try {
             const requestData = qs.stringify({username, password});
-            const response = await axios.post('https://7113-104-28-210-102.ngrok-free.app/token', requestData, {
+            const response = await axios.post('http://192.168.248.230:8005/token', requestData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -55,8 +55,9 @@ export const AuthProvider=({children})=>{
     const isLoggedIn=async ()=> {
         try {
             setIsLoading(true);
-            let accessToken = await AsyncStorage.getItem('accessToken');
             await refreshAccessToken();
+            let accessToken = await AsyncStorage.getItem('accessToken');
+
             //if there is an access token already in the AsyncStorage use that for login
             if (accessToken) {
                 setAccessToken(accessToken);
@@ -71,7 +72,7 @@ export const AuthProvider=({children})=>{
  const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            const response = await axios.post('https://7113-104-28-210-102.ngrok-free.app/refresh-token', {}, {
+            const response = await axios.post('http://192.168.248.230:8005/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }

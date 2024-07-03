@@ -1,8 +1,8 @@
 import { PieChart } from "react-native-gifted-charts";
-import { View, Text, HStack, Box, Spacer } from "native-base";
+import { View, Text, HStack, Box, Spacer, Spinner } from "native-base";
 import { FlatList } from "react-native";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Colors from "../../Config/Colors";
 
@@ -11,6 +11,7 @@ export default function ThisMonth() {
     const [pieData, setPieData] = useState([]);
     const [TotalAmount, setTotalAmount] = useState(0);
     const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const categoryColors = {
         "Foods & Drinks": { color: '#F87171', gradientCenterColor: '#F87171' },
@@ -28,45 +29,54 @@ export default function ThisMonth() {
 
     useEffect(() => {
         if (isFocused) {
-            fetchMonthStat();
-            fetchMonthTotal();
+            fetchData();
         }
     }, [isFocused]);
 
+    const fetchData = async () => {
+        setIsLoading(true);
+        try {
+            await fetchMonthTotal();
+            await fetchMonthStat();
+        } catch (error) {
+            console.error(error);
+            setErrorMessage("Failed to fetch data. Please try again later.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const fetchMonthTotal = async () => {
-        axios.get(`https://7113-104-28-210-102.ngrok-free.app/api/statistics/thisMonthTotal`)
-            .then(response => {
-                setTotalAmount(response.data);
-                setErrorMessage("");  // Clear any previous error messages
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        try {
+            const response = await axios.get(`http://192.168.248.230:8005/api/statistics/thisMonthTotal`);
+            setTotalAmount(response.data);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const fetchMonthStat = async () => {
-        axios.get(`https://7113-104-28-210-102.ngrok-free.app/api/statistics/thisMonthStat`)
-            .then(response => {
-                let data = response.data.map(item => {
-                    const colors = categoryColors[item._id]; //get the color according tho the category name
-                    return {
-                        value: item.value,
-                        color: colors.color,
-                        gradientCenterColor: colors.gradientCenterColor,
-                        categoryName: item._id,
-                        amount: item.sum
-                    };
-                });
-                data.sort((a, b) => categoryOrder.indexOf(a.categoryName) - categoryOrder.indexOf(b.categoryName));  // Sort the data based on the order of category names in categoryOrder
-                setPieData(data);  // Set pieData with the sorted data
-                setErrorMessage("");  // Clear any previous error messages
-            })
-            .catch(error => {
-                if (error.response && error.response.data.detail) {
-                    setErrorMessage(error.response.data.detail);
-                }
-                console.error(error);
+        try {
+            const response = await axios.get(`http://192.168.248.230:8005/api/statistics/thisMonthStat`);
+            const data = response.data.map(item => {
+                const colors = categoryColors[item._id]; //get the color according to the category name
+                return {
+                    value: item.value,
+                    color: colors.color,
+                    gradientCenterColor: colors.gradientCenterColor,
+                    categoryName: item._id,
+                    amount: item.sum
+                };
             });
+            data.sort((a, b) => categoryOrder.indexOf(a.categoryName) - categoryOrder.indexOf(b.categoryName));  // Sort the data based on the order of category names in categoryOrder
+            setPieData(data);  // Set pieData with the sorted data
+            setErrorMessage("");
+        } catch (error) {
+            if (error.response && error.response.data.detail) {
+                setErrorMessage(error.response.data.detail);
+            }
+            console.error(error);
+        }
     };
 
     const renderItem = ({ item }) => {
@@ -81,13 +91,13 @@ export default function ThisMonth() {
                     </HStack>
                 </Box>
             </View>
-        )
-    }
+        );
+    };
 
     const renderDot = color => {
         return (
             <View
-                style={{ height: 10, width: 10, borderRadius: 5, backgroundColor: color, marginRight: 10, }} />
+                style={{ height: 10, width: 10, borderRadius: 5, backgroundColor: color, marginRight: 10 }} />
         );
     };
 
@@ -96,9 +106,13 @@ export default function ThisMonth() {
             <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 20, paddingTop: 15 }}>
                 Spending
             </Text>
-            {errorMessage ? (
-                <View style={{ flex:1, justifyContent:'center',alignItems:'center' }}>
-                    <Text style={{ fontSize: 14, color:Colors.DBlue }}>{errorMessage}</Text>
+            {isLoading ? (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Spinner size="lg" color={Colors.DBlue} />
+                </View>
+            ) : errorMessage ? (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 14, color: Colors.DBlue }}>{errorMessage}</Text>
                 </View>
             ) : (
                 <>
