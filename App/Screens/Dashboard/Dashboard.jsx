@@ -31,6 +31,8 @@ export default function Dashboard() {
     const [cashBalance, setCashBalance] = useState(0);
     const [bankBalance, setBankBalance] = useState(0);
     const [todaySpending, setTodaySpending] = useState(0);
+    const [isOpenBank, setIsOpenBank] = useState(false);
+    const [isOpenCash, setIsOpenCash] = useState(false);
 
 
     const fetch_Records = useCallback(() => {

@@ -18,7 +18,7 @@ export default function TopNavigation() {
                 }}>
                     <Tab.Screen name="Past Month" component={PreviousMonth}/>
                     <Tab.Screen name="This Month" component={ThisMonth}/>
-                    <Tab.Screen name="Next Month" component={NextMonth}/>
+                    <Tab.Screen name="Tomorrow" component={NextMonth}/>
                 </Tab.Navigator>
             </Box>
         </View>

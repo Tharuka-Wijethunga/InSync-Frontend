@@ -72,7 +72,7 @@ export const AuthProvider=({children})=>{
  const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            const response = await axios.post('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/refresh-token', {}, {
+            const response = await axios.post('https://7113-104-28-210-102.ngrok-free.app/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }

@@ -1,44 +1,33 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {
-    Box,
-    Button,
-    HStack,
-    NativeBaseProvider,
-    Text,
-    View,
-    VStack,
-    Avatar,
-    Pressable,
-    Spacer
-} from "native-base";
+import React, { useRef, useState } from 'react';
+import {Box, Button, HStack, NativeBaseProvider, Text, View, VStack, Avatar, Pressable, Spacer,ScrollView} from "native-base";
 import Colors from "../../Config/Colors";
-import {MaterialIcons, MaterialCommunityIcons} from "@expo/vector-icons";
-import {Keyboard, StyleSheet, TouchableWithoutFeedback} from "react-native";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { Keyboard, StyleSheet, TouchableWithoutFeedback, Alert } from "react-native";
 import DateInput from "./DateTime/DateInput";
-import TimeInput from "./DateTime/TimeInput"
+import TimeInput from "./DateTime/TimeInput";
 import Category from "./Category/Category";
 import IncomeExpenseInput from "./IncomeExpenseInput";
 import AccountType from "./AccountType";
 import axios from "axios";
 import moment from 'moment-timezone';
-import {useFocusEffect, useNavigation} from "@react-navigation/native";
-
+import { useNavigation } from "@react-navigation/native";
 
 const RecordForm = () => {
     const navigation = useNavigation();
     const incomeExpenseInputRef = useRef();
     const accountTypeRef = useRef();
 
-    const [modalVisible, setModalVisible] = React.useState(false);
-    const [selectedCategory,setSelectedCategory]=useState("tag-plus");
-    const [avatarColor,setAvatarColor]=useState(Colors.IconColor);
-    const [categoryName,setCategoryName]=useState("Select a Category");
-    const [iconSize, setIconSize]=useState("");
-    const [type, setType] = useState( "expense");
-    const [amount, setAmount] = useState(0 );
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState("tag-plus");
+    const [avatarColor, setAvatarColor] = useState(Colors.IconColor);
+    const [categoryName, setCategoryName] = useState("Select a Category");
+    const [iconSize, setIconSize] = useState("");
+    const [type, setType] = useState("expense");
+    const [amount, setAmount] = useState(0);
     const [account, setAccount] = useState("cash");
     const [myDate, setDate] = useState(new Date());
     const [myTime, setTime] = useState(new Date());
+
 
     const resetForm = () => {
         setSelectedCategory("tag-plus");
@@ -63,6 +52,17 @@ const RecordForm = () => {
     };
 
     const handleSubmit = async () => {
+        if (amount ===0) {
+            Alert.alert("Validation Error", "Please enter the amount.");
+            return;
+        }
+        if (categoryName === "Select a Category") {
+            Alert.alert("Validation Error", "Please select a category.");
+            return;
+        }
+
+
+
         const today = moment(myDate).format('YYYY-MM-DD');
         const sltime = moment.utc(myTime).tz('Asia/Colombo').format('HH:mm:ss');
         const record = {
@@ -95,11 +95,12 @@ const RecordForm = () => {
 
 
     return (
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <NativeBaseProvider>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.container}>
-                    <VStack space={4} w="94%">
-                        <Box w="100%" rounded="2xl" shadow={3} bg="white">
+                    <VStack space={2} w="94%">
+                        <Box flex={1} w="100%" rounded="2xl" shadow={3} bg="white">
                             <VStack paddingX={4} h="84%" space={4}>
                                 <IncomeExpenseInput
                                     ref={incomeExpenseInputRef}
@@ -120,20 +121,19 @@ const RecordForm = () => {
                                         onPress={() => {
                                             setModalVisible(!modalVisible);
                                             Keyboard.dismiss();
-                                        }
-                                        }
+                                        }}
                                         borderRadius="full"
                                         padding={1.5}
                                         _pressed={{
                                             bg: "blueGray.200:alpha.50"
                                         }}>
-                                        <HStack  w={"100%"} space={3} alignItems={"center"}>
+                                        <HStack w={"100%"} space={3} alignItems={"center"}>
                                             <Avatar size="45px" bgColor={avatarColor} alignSelf={"center"}>
-                                                <MaterialCommunityIcons name={selectedCategory} size={25} color={"white"}/>
+                                                <MaterialCommunityIcons name={selectedCategory} size={25} color={"white"} />
                                             </Avatar>
                                             <Text fontWeight={"medium"}>{categoryName}</Text>
-                                            <Spacer/>
-                                            <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
+                                            <Spacer />
+                                            <MaterialIcons name="keyboard-arrow-right" size={30} color="black" />
                                             <Category setSelectedCategory={setSelectedCategory}
                                                       setAvatarColor={setAvatarColor}
                                                       setCategoryName={setCategoryName}
@@ -145,22 +145,21 @@ const RecordForm = () => {
                                     </Pressable>
                                 </VStack>
                                 {/* Date & Time picker */}
-                                <VStack space={3}>
+                                <VStack space={3} paddingBottom={3}>
                                     <Text fontSize={16} fontWeight="medium">Date & Time</Text>
                                     <HStack paddingLeft={2} space={2} alignItems={"center"}>
-                                        <MaterialCommunityIcons  name="calendar-clock" size={34} color={Colors.Blue}/>
+                                        <MaterialCommunityIcons name="calendar-clock" size={34} color={Colors.Blue} />
                                         <DateInput
-                                            myDate = {myDate}
-                                            setDate = {setDate}
+                                            myDate={myDate}
+                                            setDate={setDate}
                                         />
                                         <TimeInput
-                                            myTime = {myTime}
-                                            setTime = {setTime}
+                                            myTime={myTime}
+                                            setTime={setTime}
                                         />
                                     </HStack>
                                 </VStack>
                             </VStack>
-
                         </Box>
                         {/* Save button */}
                         <Button
@@ -169,6 +168,7 @@ const RecordForm = () => {
                             w={320} size="md"
                             alignSelf="center"
                             marginTop={4}
+                            marginBottom={4}
                             onPress={handleSubmit}
                         >
                             Save
@@ -177,6 +177,7 @@ const RecordForm = () => {
                 </View>
             </TouchableWithoutFeedback>
         </NativeBaseProvider>
+        </ScrollView>
     );
 };
 
@@ -188,5 +189,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 15
     }
-})
+});
+
 export default RecordForm;
