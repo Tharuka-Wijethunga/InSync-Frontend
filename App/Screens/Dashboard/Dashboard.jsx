@@ -1,6 +1,6 @@
 import {StyleSheet} from "react-native";
 import {Input, Popover, Pressable} from 'native-base';
-import React,{useState, useEffect,useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import Colors from "../../Config/Colors";
 import {
     Box,
@@ -31,42 +31,46 @@ export default function Dashboard() {
     const [cashBalance, setCashBalance] = useState(0);
     const [bankBalance, setBankBalance] = useState(0);
     const [todaySpending, setTodaySpending] = useState(0);
-    const [isOpenBank, setIsOpenBank] = useState(false);
-    const [isOpenCash, setIsOpenCash] = useState(false);
 
 
-    const fetch_Records = () => {
+    const fetch_Records = useCallback(() => {
         if(recordRef.current){
             recordRef.current.fetchRecords();
         }
-    }
+    },[]);
+
+    const fetchBalances = useCallback(() => {
+        axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/account?type=cash')
+            .then(response => {
+                setCashBalance(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/account?type=bank')
+            .then(response => {
+                setBankBalance(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/today_spending')
+            .then(response => {
+                setTodaySpending(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
 
     useEffect(()=> {
         if(isFocused){
             fetch_Records();
-            axios.get('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/dashboard/account?type=cash')
-                .then(response => {
-                    setCashBalance(response.data)
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-            axios.get('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/dashboard/account?type=bank')
-                .then(response => {
-                    setBankBalance(response.data)
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-            axios.get('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/dashboard/today_spending')
-                .then(response=> {
-                    setTodaySpending(response.data)
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+            fetchBalances();
         }
-    }, [isFocused,recordRef.current]);
+    }, [isFocused, fetch_Records, fetchBalances]);
 
 
     return (
@@ -80,10 +84,10 @@ export default function Dashboard() {
                             </HStack>
                             <HStack space={3} alignSelf="center">
                                 <VStack flex={1}>
-                                    <BalanceCard account="Bank" balance={bankBalance} setBalance={setBankBalance}/>
+                                    <BalanceCard accountName="Bank" account="bank" balance={bankBalance} setBalance={setBankBalance} fetchBalances={fetchBalances}/>
                                 </VStack>
                                 <VStack flex={1}>
-                                    <BalanceCard account="Cash" balance={cashBalance} setBalance={setCashBalance}/>
+                                    <BalanceCard accountName="Cash" account="cash" balance={cashBalance} setBalance={setCashBalance} fetchBalances={fetchBalances}/>
                                 </VStack>
                             </HStack>
                             <HStack>

@@ -75,10 +75,10 @@ const RecordForm = () => {
             'date': today,
             'time': sltime
         };
-        axios.post('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/addrecord', record)
+        axios.post('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/addrecord', record)
             .then(response => {
                 console.log(response);
-                axios.put(`https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
+                axios.put(`https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
                     .then(response => {
                         console.log(response);
                         navigation.navigate('Dashboard');
@@ -93,45 +93,46 @@ const RecordForm = () => {
             })
     }
 
+
     return (
         <NativeBaseProvider>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={styles.container}>
-                <VStack space={4} w="94%">
-                    <Box w="100%" rounded="2xl" shadow={3} bg="white">
-                        <VStack paddingX={4} h="84%" space={4}>
-                            <IncomeExpenseInput
-                                ref={incomeExpenseInputRef}
-                                setType={setType}
-                                setAmount={setAmount}
-                                type={type}
-                                amount={amount}
-                            />
-                            <AccountType
-                                ref={accountTypeRef}
-                                setAccount={setAccount}
-                                account={account}
-                            />
-                            {/* Category selection */}
-                            <VStack>
-                                <Text fontSize={16} fontWeight="medium" paddingBottom={1}>Category</Text>
-                                <Pressable
-                                    onPress={() => {
-                                        setModalVisible(!modalVisible);
-                                        Keyboard.dismiss();
+                <View style={styles.container}>
+                    <VStack space={4} w="94%">
+                        <Box w="100%" rounded="2xl" shadow={3} bg="white">
+                            <VStack paddingX={4} h="84%" space={4}>
+                                <IncomeExpenseInput
+                                    ref={incomeExpenseInputRef}
+                                    setType={setType}
+                                    setAmount={setAmount}
+                                    type={type}
+                                    amount={amount}
+                                />
+                                <AccountType
+                                    ref={accountTypeRef}
+                                    setAccount={setAccount}
+                                    account={account}
+                                />
+                                {/* Category selection */}
+                                <VStack>
+                                    <Text fontSize={16} fontWeight="medium" paddingBottom={1}>Category</Text>
+                                    <Pressable
+                                        onPress={() => {
+                                            setModalVisible(!modalVisible);
+                                            Keyboard.dismiss();
                                         }
-                                    }
-                                    borderRadius="full"
-                                    padding={1.5}
-                                    _pressed={{
-                                        bg: "blueGray.200:alpha.50"
-                                    }}>
-                                    <HStack  w={"100%"} space={3} alignItems={"center"}>
-                                        <Avatar size="45px" bgColor={avatarColor} alignSelf={"center"}>
-                                            <MaterialCommunityIcons name={selectedCategory} size={25} color={"white"}/>
-                                        </Avatar>
-                                        <Text fontWeight={"medium"}>{categoryName}</Text>
-                                        <Spacer/>
+                                        }
+                                        borderRadius="full"
+                                        padding={1.5}
+                                        _pressed={{
+                                            bg: "blueGray.200:alpha.50"
+                                        }}>
+                                        <HStack  w={"100%"} space={3} alignItems={"center"}>
+                                            <Avatar size="45px" bgColor={avatarColor} alignSelf={"center"}>
+                                                <MaterialCommunityIcons name={selectedCategory} size={25} color={"white"}/>
+                                            </Avatar>
+                                            <Text fontWeight={"medium"}>{categoryName}</Text>
+                                            <Spacer/>
                                             <MaterialIcons name="keyboard-arrow-right" size={30} color="black"/>
                                             <Category setSelectedCategory={setSelectedCategory}
                                                       setAvatarColor={setAvatarColor}
@@ -140,40 +141,40 @@ const RecordForm = () => {
                                                       modalVisible={modalVisible}
                                                       setModalVisible={setModalVisible}
                                             />
+                                        </HStack>
+                                    </Pressable>
+                                </VStack>
+                                {/* Date & Time picker */}
+                                <VStack space={3}>
+                                    <Text fontSize={16} fontWeight="medium">Date & Time</Text>
+                                    <HStack paddingLeft={2} space={2} alignItems={"center"}>
+                                        <MaterialCommunityIcons  name="calendar-clock" size={34} color={Colors.Blue}/>
+                                        <DateInput
+                                            myDate = {myDate}
+                                            setDate = {setDate}
+                                        />
+                                        <TimeInput
+                                            myTime = {myTime}
+                                            setTime = {setTime}
+                                        />
                                     </HStack>
-                                </Pressable>
+                                </VStack>
                             </VStack>
-                            {/* Date & Time picker */}
-                            <VStack space={3}>
-                                <Text fontSize={16} fontWeight="medium">Date & Time</Text>
-                                <HStack paddingLeft={2} space={2} alignItems={"center"}>
-                                    <MaterialCommunityIcons  name="calendar-clock" size={34} color={Colors.Blue}/>
-                                    <DateInput
-                                        myDate = {myDate}
-                                        setDate = {setDate}
-                                    />
-                                    <TimeInput
-                                        myTime = {myTime}
-                                        setTime = {setTime}
-                                    />
-                                </HStack>
-                            </VStack>
-                        </VStack>
 
-                    </Box>
-                    {/* Save button */}
-                    <Button
-                        bg={Colors.DBlue}
-                        borderRadius={"full"}
-                        w={320} size="md"
-                        alignSelf="center"
-                        marginTop={4}
-                        onPress={handleSubmit}
-                    >
-                        Save
-                    </Button>
-                </VStack>
-            </View>
+                        </Box>
+                        {/* Save button */}
+                        <Button
+                            bg={Colors.DBlue}
+                            borderRadius={"full"}
+                            w={320} size="md"
+                            alignSelf="center"
+                            marginTop={4}
+                            onPress={handleSubmit}
+                        >
+                            Save
+                        </Button>
+                    </VStack>
+                </View>
             </TouchableWithoutFeedback>
         </NativeBaseProvider>
     );
