@@ -15,7 +15,7 @@ export const AuthProvider=({children})=>{
         setIsLoading(true);
         try {
             const requestData = qs.stringify({username, password});
-            const response = await axios.post('https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/token', requestData, {
+            const response = await axios.post('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/token', requestData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -55,8 +55,9 @@ export const AuthProvider=({children})=>{
     const isLoggedIn=async ()=> {
         try {
             setIsLoading(true);
-            let accessToken = await AsyncStorage.getItem('accessToken');
             await refreshAccessToken();
+            let accessToken = await AsyncStorage.getItem('accessToken');
+
             //if there is an access token already in the AsyncStorage use that for login
             if (accessToken) {
                 setAccessToken(accessToken);

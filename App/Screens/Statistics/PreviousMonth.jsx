@@ -34,7 +34,7 @@ export default function PreviousMonth() {
     }, [isFocused]);
 
     const fetchMonthTotal = async () => {
-        axios.get(`https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/statistics/previousMonthTotal`)
+        axios.get(`https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/statistics/previousMonthTotal`)
             .then(response => {
                 setTotalAmount(response.data);
             })
@@ -44,7 +44,7 @@ export default function PreviousMonth() {
     };
 
     const fetchMonthStat = async () => {
-        axios.get(`https://0434-2a09-bac5-4862-137d-00-1f1-1db.ngrok-free.app/api/statistics/previousMonthStat`)
+        axios.get(`https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/statistics/previousMonthStat`)
             .then(response => {
                 let data = response.data.map(item => {
                     const colors = categoryColors[item._id];
