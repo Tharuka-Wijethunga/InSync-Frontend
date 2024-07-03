@@ -15,6 +15,7 @@ import {
 import Colors from "../../Config/Colors";
 import { Feather } from '@expo/vector-icons';
 import axios from "axios";
+import {Platform} from 'react-native';
 import {useFocusEffect} from "@react-navigation/native";
 
 
@@ -31,7 +32,7 @@ const BalanceCard = (props) => {
     }, [isOpen]);
 
     const handleSave = async(account, amount) => {
-        axios.put(`https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/account/${account}/manual`,{balance:amount})
+        axios.put(`http://192.168.248.230:8005/api/dashboard/account/${account}/manual`,{balance:amount})
             .then(response => {
                 console.log(response);
                 props.fetchBalances();
@@ -63,8 +64,8 @@ const BalanceCard = (props) => {
                         </View>
                         <View alignItems="flex-start">
                             <Popover
-                                offset={-135}
-                                crossOffset={-53}
+                                offset={Platform.OS === 'android' ? -44 : -135}
+                                crossOffset={Platform.OS === 'android' ? -54 : -53}
                                 placement="bottom"
                                 trigger={(triggerProps) => {
                                     return (

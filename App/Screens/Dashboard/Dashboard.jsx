@@ -42,7 +42,7 @@ export default function Dashboard() {
     },[]);
 
     const fetchBalances = useCallback(() => {
-        axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/account?type=cash')
+        axios.get('http://192.168.248.230:8005/api/dashboard/account?type=cash')
             .then(response => {
                 setCashBalance(response.data);
             })
@@ -50,7 +50,7 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/account?type=bank')
+        axios.get('http://192.168.248.230:8005/api/dashboard/account?type=bank')
             .then(response => {
                 setBankBalance(response.data);
             })
@@ -58,7 +58,7 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/today_spending')
+        axios.get('http://192.168.248.230:8005/api/dashboard/today_spending')
             .then(response => {
                 setTodaySpending(response.data);
             })
