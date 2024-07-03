@@ -75,10 +75,10 @@ const RecordForm = () => {
             'date': today,
             'time': sltime
         };
-        axios.post('http://192.168.248.230:8005/api/addrecord', record)
+        axios.post('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/addrecord', record)
             .then(response => {
                 console.log(response);
-                axios.put(`http://192.168.248.230:8005/api/dashboard/account/${account}`,{amount:amount, type:type})
+                axios.put(`https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
                     .then(response => {
                         console.log(response);
                         navigation.navigate('Dashboard');
@@ -92,6 +92,7 @@ const RecordForm = () => {
                 console.error(error);
             })
     }
+
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

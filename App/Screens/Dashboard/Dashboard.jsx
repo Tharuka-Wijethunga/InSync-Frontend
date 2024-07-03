@@ -1,6 +1,6 @@
 import {StyleSheet} from "react-native";
 import {Input, Popover, Pressable} from 'native-base';
-import React,{useState, useEffect,useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import Colors from "../../Config/Colors";
 import {
     Box,
@@ -35,49 +35,45 @@ export default function Dashboard() {
     const [isOpenCash, setIsOpenCash] = useState(false);
 
 
-    const fetch_Records = () => {
+    const fetch_Records = useCallback(() => {
         if(recordRef.current){
             recordRef.current.fetchRecords();
         }
-    }
+    },[]);
+
+    const fetchBalances = useCallback(() => {
+        axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/account?type=cash')
+            .then(response => {
+                setCashBalance(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/account?type=bank')
+            .then(response => {
+                setBankBalance(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/today_spending')
+            .then(response => {
+                setTodaySpending(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    });
 
     useEffect(()=> {
         if(isFocused){
             fetch_Records();
-            axios.get('http://192.168.248.230:8005/api/dashboard/account?type=cash')
-                .then(response => {
-                    setCashBalance(response.data)
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-            axios.get('http://192.168.248.230:8005/api/dashboard/account?type=bank')
-                .then(response => {
-                    setBankBalance(response.data)
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-            axios.get('http://192.168.248.230:8005/api/dashboard/today_spending')
-                .then(response=> {
-                    setTodaySpending(response.data)
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+            fetchBalances();
         }
-    }, [isFocused,recordRef.current]);
+    }, [isFocused, fetch_Records, fetchBalances]);
 
-
-    const handleSave = async(account, amount) => {
-        axios.put(`http://192.168.248.230:8005/api/dashboard/account/${account}/manual`,{balance:amount})
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.error(error);
-            })
-    }
 
     return (
         <NativeBaseProvider>
@@ -88,119 +84,12 @@ export default function Dashboard() {
                             <HStack>
                                 <DailyExpense todaySpending={todaySpending}/>
                             </HStack>
-                            <HStack space={3}  alignSelf="center">
+                            <HStack space={3} alignSelf="center">
                                 <VStack flex={1}>
-                                    <Popover
-                                        placement="bottom"
-                                        trigger={(triggerProps) => (
-                                            <Pressable {...triggerProps} onPress={() => setIsOpenBank(true)}>
-                                                {({ isPressed }) => {
-                                                    return (
-                                                        <Box style={{ transform: [{ scale: isPressed ? 0.96 : 1 }] }}>
-                                                            <BalanceCard account="Bank" balance={bankBalance} />
-                                                        </Box>
-                                                    );
-                                                }}
-                                            </Pressable>
-                                        )}
-                                        isOpen={isOpenBank}
-                                        onClose={() => setIsOpenBank(false)}
-                                    >
-                                        <Popover.Content marginLeft={2} width="56">
-                                            <Popover.Arrow />
-                                            <Popover.Body>
-                                                <VStack flex={1} width={"100%"} space={1} alignItems={"center"}>
-                                                    <Input
-                                                        height={10}
-                                                        marginBottom={2}
-                                                        variant="outline"
-                                                        placeholder="Change Balance"
-                                                        value={bankBalance}
-                                                        onChangeText={setBankBalance}
-                                                    />
-                                                    <HStack alignSelf="center" space={1} >
-                                                        <Button
-                                                            onPress={()=> {
-                                                                handleSave('bank', bankBalance);
-                                                                setIsOpenBank(false);
-                                                            }}
-                                                            bg={Colors.DBlue}
-                                                            borderRadius={"full"}
-                                                            w="50%" size="md"
-                                                        >
-                                                            <Text color={"white"}>Save</Text>
-                                                        </Button>
-                                                        <Button
-                                                            onPress={()=> setIsOpenBank(false)}
-                                                            borderRadius={"full"}
-                                                            w="50%"
-                                                            size="md"
-                                                            variant="outline"
-                                                        >
-                                                            <Text color={"black"}>Cancel</Text>
-                                                        </Button>
-                                                    </HStack>
-                                                </VStack>
-                                            </Popover.Body>
-                                        </Popover.Content>
-                                    </Popover>
+                                    <BalanceCard accountName="Bank" account="bank" balance={bankBalance} setBalance={setBankBalance} fetchBalances={fetchBalances}/>
                                 </VStack>
                                 <VStack flex={1}>
-                                <Popover
-                                    trigger={(triggerProps) => {
-                                        return (
-                                            <Pressable {...triggerProps} onPress={()=> setIsOpenCash(true)}>
-                                                {({isPressed}) => {
-                                                    return <Box style={{
-                                                        transform: [{
-                                                            scale: isPressed ? 0.96 : 1
-                                                        }]
-                                                    }} >
-                                                        <BalanceCard account="Cash" balance={cashBalance}/>
-                                                    </Box>;
-                                                } }
-                                            </Pressable>
-                                        );
-                                    }} isOpen={isOpenCash} onClose={() => setIsOpenCash(false)}
-                                >
-                                    <Popover.Content marginRight={2} width="56">
-                                        <Popover.Arrow />
-                                        <Popover.Body>
-                                            <VStack flex={1} width={"100%"} space={1} alignItems={"center"}>
-                                                <Input
-                                                    height={10}
-                                                    marginBottom={2}
-                                                    variant="outline"
-                                                    placeholder="Change Balance"
-                                                    value={cashBalance}
-                                                    onChangeText={setCashBalance}
-                                                />
-                                                <HStack alignSelf="center" space={1} >
-                                                    <Button
-                                                        onPress={()=> {
-                                                            handleSave('cash', cashBalance);
-                                                            setIsOpenCash(false);
-                                                        }}
-                                                        bg={Colors.DBlue}
-                                                        borderRadius={"full"}
-                                                        w="50%" size="md"
-                                                    >
-                                                        <Text color={"white"}>Save</Text>
-                                                    </Button>
-                                                    <Button
-                                                        onPress={()=>setIsOpenCash(false)}
-                                                        borderRadius={"full"}
-                                                        w="50%"
-                                                        size="md"
-                                                        variant="outline"
-                                                    >
-                                                        <Text color={"black"}>Cancel</Text>
-                                                    </Button>
-                                                </HStack>
-                                            </VStack>
-                                        </Popover.Body>
-                                    </Popover.Content>
-                                </Popover>
+                                    <BalanceCard accountName="Cash" account="cash" balance={cashBalance} setBalance={setCashBalance} fetchBalances={fetchBalances}/>
                                 </VStack>
                             </HStack>
                             <HStack>

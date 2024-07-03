@@ -25,7 +25,7 @@ export default function Profile() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get('http://192.168.248.230:8005/api/user/fullname_email');
+            const response = await axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/user/fullname_email');
             const userDetails = response.data;
             setFullName(userDetails.fullname);
         } catch (error) {
@@ -41,7 +41,7 @@ export default function Profile() {
 
     const handleDeleteAccount = async () => {
         try {
-            await axios.delete('http://192.168.248.230:8005/api/user/delete-account');
+            await axios.delete('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/user/delete-account');
             logout();
         } catch (error) {
             console.error('Error deleting account:', error);
