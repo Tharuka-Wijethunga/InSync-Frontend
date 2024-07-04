@@ -89,7 +89,7 @@ const EditProfile = ({ navigation }) => {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get('http://192.168.248.230:8005/api/user/fullname_email');
+            const response = await axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/user/fullname_email');
             const userDetails = response.data;
             console.log('Fetched user details:', userDetails); // Debugging line to check response
             setFormData((prevData) => ({

@@ -52,16 +52,17 @@ const RecordForm = () => {
     };
 
     const handleSubmit = async () => {
-        if (amount ===0) {
-            Alert.alert("Validation Error", "Please enter the amount.");
+
+        if (amount === "" && categoryName === "Select a Category") {
+            Alert.alert("Insufficient data", "Please fill in the following data:\n Non zero amount\n Category");
+            return;
+        } else if (amount === "") {
+            Alert.alert("Insufficient data", "Please enter the amount.");
+            return;
+        } else if (categoryName === "Select a Category") {
+            Alert.alert("Insufficient data", "Please select a category.");
             return;
         }
-        if (categoryName === "Select a Category") {
-            Alert.alert("Validation Error", "Please select a category.");
-            return;
-        }
-
-
 
         const today = moment(myDate).format('YYYY-MM-DD');
         const sltime = moment.utc(myTime).tz('Asia/Colombo').format('HH:mm:ss');
@@ -75,10 +76,10 @@ const RecordForm = () => {
             'date': today,
             'time': sltime
         };
-        axios.post('http://192.168.248.230:8005/api/addrecord', record)
+        axios.post('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/addrecord', record)
             .then(response => {
                 console.log(response);
-                axios.put(`http://192.168.248.230:8005/api/dashboard/account/${account}`,{amount:amount, type:type})
+                axios.put(`https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/dashboard/account/${account}`,{amount:amount, type:type})
                     .then(response => {
                         console.log(response);
                         navigation.navigate('Dashboard');

@@ -70,7 +70,7 @@ const CategoryModal = ({modalVisible, setModalVisible,setSelectedCategory,setAva
                                         icon={<MaterialCommunityIcons name="road-variant" size={30} color="white" />}
                                         color={"purple.600"}
                                         name="Public transport"
-                                        onPress={()=>handleSelectedCategory("road-variant","purple.600","Public Transport")}
+                                        onPress={()=>handleSelectedCategory("road-variant","purple.600","Public transport")}
                                     />
                                 </HStack>
                                 <HStack>
