@@ -36,7 +36,7 @@ export default function NextMonth() {
     const fetchStat = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get(`http://192.168.248.230:8005/api/generalModel/ForecastNextDay`);
+            const response = await axios.get(`http://192.168.248.230:8005/api/userModel/ForecastNextDay`);
             const data = response.data;
             setTotalAmount(data.Total);
 
@@ -59,7 +59,7 @@ export default function NextMonth() {
             setErrorMessage("");  // Clear any previous error messages
         } catch (error) {
             console.error(error);
-            setErrorMessage("No records added, Minimum one record needed for the prediction. Model will train at 12.05 am, for prediction, the model should be trained.");
+            setErrorMessage("No records added, Minimum records of 3 days needed for the prediction. Model will train at 12.05 am, for prediction, the model should be trained.");
         } finally {
             setIsLoading(false);
         }
@@ -97,7 +97,7 @@ export default function NextMonth() {
                     <Spinner size="lg" color={Colors.DBlue} />
                 </View>
             ) : errorMessage ? (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}} padding={2}>
                     <Text style={{ textAlign: 'center', fontSize: 14, color: Colors.DBlue }}>{errorMessage}</Text>
                 </View>
             ) : (
