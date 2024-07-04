@@ -102,7 +102,7 @@ export default function ThisMonth() {
     };
 
     return (
-        <View flex={1} backgroundColor={"white"}>
+        <View  flex={1} backgroundColor={"white"}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 20, paddingTop: 15 }}>
                 Spending
             </Text>

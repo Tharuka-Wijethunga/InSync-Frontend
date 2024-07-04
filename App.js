@@ -52,6 +52,6 @@ export default function App() {
                 <AppNavigation initialRoute={initialRoute} />
             </AuthProvider>
         </NativeBaseProvider>
+
     )
 }
-
