@@ -33,6 +33,7 @@ export default function Dashboard() {
     const [todaySpending, setTodaySpending] = useState(0);
     const [isOpenBank, setIsOpenBank] = useState(false);
     const [isOpenCash, setIsOpenCash] = useState(false);
+    const [prediction,setPrediction]=useState(0);
 
 
     const fetch_Records = useCallback(() => {
@@ -42,7 +43,7 @@ export default function Dashboard() {
     },[]);
 
     const fetchBalances = useCallback(() => {
-        axios.get('http://192.168.248.230:8005/api/dashboard/account?type=cash')
+        axios.get('http://192.168.248.230:8006/api/dashboard/account?type=cash')
             .then(response => {
                 setCashBalance(response.data);
             })
@@ -50,7 +51,7 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('http://192.168.248.230:8005/api/dashboard/account?type=bank')
+        axios.get('http://192.168.248.230:8006/api/dashboard/account?type=bank')
             .then(response => {
                 setBankBalance(response.data);
             })
@@ -58,13 +59,20 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('http://192.168.248.230:8005/api/dashboard/today_spending')
+        axios.get('http://192.168.248.230:8006/api/dashboard/today_spending')
             .then(response => {
                 setTodaySpending(response.data);
             })
             .catch(error => {
                 console.error(error);
             });
+        axios.get('http://192.168.248.230:8006/api/userModel/ForecastNextDay')
+            .then(response=>{
+                setPrediction(response.data.Total);
+            })
+            .catch(error =>{
+                console.error(error);
+            })
     });
 
     useEffect(()=> {
@@ -93,7 +101,7 @@ export default function Dashboard() {
                                 </VStack>
                             </HStack>
                             <HStack>
-                                <UpcomingCard/>
+                                <UpcomingCard amount={prediction}/>
                             </HStack>
                             <HStack flexGrow={1} flex={1}>
                                 <Box w="100%" bg="white" borderRadius="2xl" shadow={3}>

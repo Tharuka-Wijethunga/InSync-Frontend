@@ -89,7 +89,7 @@ const EditProfile = ({ navigation }) => {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get('http://192.168.248.230:8005/api/user/fullname_email');
+            const response = await axios.get('http://192.168.248.230:8006/api/user/fullname_email');
             const userDetails = response.data;
             console.log('Fetched user details:', userDetails); // Debugging line to check response
             setFormData((prevData) => ({
@@ -136,7 +136,7 @@ const EditProfile = ({ navigation }) => {
                     new_password: formData.password,
                     confirm_password: formData.confirmPassword
                 };
-                const response = await axios.put('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/user/update', data, {
+                const response = await axios.put('http://192.168.248.230:8006/api/user/update', data, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
