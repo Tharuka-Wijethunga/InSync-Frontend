@@ -32,7 +32,7 @@ const BalanceCard = (props) => {
     }, [isOpen]);
 
     const handleSave = async(account, amount) => {
-        axios.put(`http://192.168.248.230:8005/api/dashboard/account/${account}/manual`,{balance:amount})
+        axios.put(`http://192.168.248.230:8006/api/dashboard/account/${account}/manual`,{balance:amount})
             .then(response => {
                 console.log(response);
                 props.fetchBalances();
