@@ -4,7 +4,7 @@ import Colors from "../../Config/Colors";
 import {MaterialIcons} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/native";
 
-const UpcomingCard = () => {
+const UpcomingCard = ({amount}) => {
     const navigation = useNavigation();
     return (
         <NativeBaseProvider>
@@ -23,7 +23,7 @@ const UpcomingCard = () => {
                             <HStack width="100%" justifyContent="space-between">
                                 <View>
                                     <Text fontSize="48" fontWeight={"bold"} lineHeight={48} color={Colors.DBlue}>
-                                        34500
+                                        {amount}
                                     </Text>
                                 </View>
                                 <View>
@@ -33,7 +33,7 @@ const UpcomingCard = () => {
                                         _pressed={{
                                             bg: "blueGray.200:alpha.50"
                                         }}
-                                        onPress={() => navigation.navigate('Statistics', { screen: 'Next Month' })}
+                                        onPress={() => navigation.navigate('Statistics', { screen: 'Tomorrow' })}
                                     />
                                 </View>
                             </HStack>

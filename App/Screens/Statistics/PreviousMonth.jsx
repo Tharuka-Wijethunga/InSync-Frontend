@@ -48,7 +48,7 @@ export default function ThisMonth() {
 
     const fetchMonthTotal = async () => {
         try {
-            const response = await axios.get(`https://a88d-2a09-bac5-4860-101e-00-19b-111.ngrok-free.app/api/statistics/previousMonthTotal`);
+            const response = await axios.get(`http://192.168.248.230:8005/api/statistics/previousMonthTotal`);
             setTotalAmount(response.data);
         } catch (error) {
             console.error(error);
@@ -57,7 +57,7 @@ export default function ThisMonth() {
 
     const fetchMonthStat = async () => {
         try {
-            const response = await axios.get(`https://a88d-2a09-bac5-4860-101e-00-19b-111.ngrok-free.app/api/statistics/previousMonthStat`);
+            const response = await axios.get(`http://192.168.248.230:8005/api/statistics/previousMonthStat`);
             const data = response.data.map(item => {
                 const colors = categoryColors[item._id]; //get the color according to the category name
                 return {
