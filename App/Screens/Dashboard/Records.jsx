@@ -13,7 +13,7 @@ const Records = forwardRef((props, ref) => {
     useImperativeHandle(ref, ()=>({
         fetchRecords : async () => {
             try {
-                const response = await axios.get('https://0579-2a09-bac5-4863-1028-00-19c-47.ngrok-free.app/api/addrecord')
+                const response = await axios.get('https://a88d-2a09-bac5-4860-101e-00-19b-111.ngrok-free.app/api/records')
                 const reversedData = response.data.reverse();
                 setData(reversedData.map(item => ({
                     category: item.category,

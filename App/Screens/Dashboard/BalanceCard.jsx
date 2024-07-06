@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     Box,
     Button,
@@ -16,7 +16,6 @@ import Colors from "../../Config/Colors";
 import { Feather } from '@expo/vector-icons';
 import axios from "axios";
 import {Platform} from 'react-native';
-import {useFocusEffect} from "@react-navigation/native";
 
 
 const BalanceCard = (props) => {
@@ -32,7 +31,7 @@ const BalanceCard = (props) => {
     }, [isOpen]);
 
     const handleSave = async(account, amount) => {
-        axios.put(`http://192.168.248.230:8005/api/dashboard/account/${account}/manual`,{balance:amount})
+        axios.put(`https://a88d-2a09-bac5-4860-101e-00-19b-111.ngrok-free.app/api/dashboard/account/${account}/manual`,{balance:amount})
             .then(response => {
                 console.log(response);
                 props.fetchBalances();
