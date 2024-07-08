@@ -60,7 +60,11 @@ export default function Dashboard() {
                 setTodaySpending(response.data);
             })
             .catch(error => {
-                console.error(error);
+                if (error.response && error.response.status === 404) {
+                    setTodaySpending(0);
+                } else {
+                    console.error(error);
+                }
             });
         axios.get('https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/userModel/ForecastNextDay')
             .then(response=>{
@@ -107,7 +111,7 @@ export default function Dashboard() {
                                                 Recent Activities
                                             </Text>
                                         </View>
-                                        <Records ref={recordRef} maxlines={4}/>
+                                        <Records ref={recordRef} fetchBalances={fetchBalances} maxlines={4}/>
                                         <View alignSelf="flex-end">
                                             <IconButton
                                                 icon={<MaterialIcons name="keyboard-arrow-right" size={36}

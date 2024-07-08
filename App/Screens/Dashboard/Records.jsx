@@ -5,18 +5,18 @@ import axios from "axios";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-const Records = forwardRef((props, ref) => {
+const Records = forwardRef(({props, maxlines, fetchBalances}, ref) => {
     const navigation = useNavigation();
     const [listData, setListData] = useState([]);
 
     useImperativeHandle(ref, () => ({
         fetchRecords: async () => {
             try {
-                const response = await axios.get('https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/records')
+                const response = await axios.get('http://192.168.248.230:8006/api/records')
                 const reversedData = response.data.reverse();
                 setListData(reversedData.map((item, index) => ({
                     key: `${index}`,
-                    _id: item._id,
+                    id: item.id,  // Use the string id
                     category: item.category,
                     date: item.date,
                     amount: item.amount,
@@ -40,12 +40,13 @@ const Records = forwardRef((props, ref) => {
     const deleteRow = async (rowMap, rowKey) => {
         closeRow(rowMap, rowKey);
         const item = listData.find(item => item.key === rowKey);
-        if (item && item._id) {
+        if (item && item.id) {  // Make sure you're using 'id', not '_id'
             try {
-                const response = await axios.delete(`http://192.168.248.230:8005/api/addrecord/${item._id}`);
+                const response = await axios.delete(`http://192.168.248.230:8006/api/records/${item.id}`);
                 if (response.data.success) {
-                    const newData = listData.filter(listItem => listItem._id !== item._id);
+                    const newData = listData.filter(listItem => listItem.id !== item.id);
                     setListData(newData);
+                    fetchBalances();
                 } else {
                     console.error("Failed to delete record");
                 }
@@ -53,7 +54,7 @@ const Records = forwardRef((props, ref) => {
                 console.error("Error deleting record:", error.response?.data?.detail || error.message);
             }
         } else {
-            console.error("Invalid item or missing _id", item);
+            console.error("Invalid item or missing id", item);
         }
     };
 
@@ -107,7 +108,7 @@ const Records = forwardRef((props, ref) => {
     return (
         <View style={{ flex: 1 }}>
             <SwipeListView
-                data={props.maxlines ? listData.slice(0, props.maxlines) : listData}
+                data={maxlines ? listData.slice(0, maxlines) : listData}
                 renderItem={renderItem}
                 renderHiddenItem={renderHiddenItem}
                 rightOpenValue={-70}
