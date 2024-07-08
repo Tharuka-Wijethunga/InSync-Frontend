@@ -5,7 +5,7 @@ import axios from "axios";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SwipeListView } from 'react-native-swipe-list-view';
 
-const Records = forwardRef((props, ref) => {
+const Records = forwardRef(({props, maxlines, fetchBalances}, ref) => {
     const navigation = useNavigation();
     const [listData, setListData] = useState([]);
 
@@ -46,6 +46,7 @@ const Records = forwardRef((props, ref) => {
                 if (response.data.success) {
                     const newData = listData.filter(listItem => listItem.id !== item.id);
                     setListData(newData);
+                    fetchBalances();
                 } else {
                     console.error("Failed to delete record");
                 }
@@ -107,7 +108,7 @@ const Records = forwardRef((props, ref) => {
     return (
         <View style={{ flex: 1 }}>
             <SwipeListView
-                data={props.maxlines ? listData.slice(0, props.maxlines) : listData}
+                data={maxlines ? listData.slice(0, maxlines) : listData}
                 renderItem={renderItem}
                 renderHiddenItem={renderHiddenItem}
                 rightOpenValue={-70}
