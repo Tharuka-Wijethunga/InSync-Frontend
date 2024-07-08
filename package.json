@@ -43,6 +43,7 @@
     "react-native-screens": "3.31.1",
     "react-native-simple-select-button": "^0.0.6",
     "react-native-svg": "15.2.0",
+    "react-native-swipe-list-view": "^3.2.9",
     "react-native-tab-view": "^3.5.2",
     "untitledui-js": "^2.1.0"
   },

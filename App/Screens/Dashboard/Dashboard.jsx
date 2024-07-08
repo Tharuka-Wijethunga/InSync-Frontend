@@ -31,8 +31,6 @@ export default function Dashboard() {
     const [cashBalance, setCashBalance] = useState(0);
     const [bankBalance, setBankBalance] = useState(0);
     const [todaySpending, setTodaySpending] = useState(0);
-    const [isOpenBank, setIsOpenBank] = useState(false);
-    const [isOpenCash, setIsOpenCash] = useState(false);
     const [prediction,setPrediction]=useState(0);
 
 
@@ -64,7 +62,11 @@ export default function Dashboard() {
                 setTodaySpending(response.data);
             })
             .catch(error => {
-                console.error(error);
+                if (error.response && error.response.status === 404) {
+                    setTodaySpending(0);
+                } else {
+                    console.error(error);
+                }
             });
         axios.get('http://192.168.248.230:8006/api/userModel/ForecastNextDay')
             .then(response=>{
@@ -111,7 +113,7 @@ export default function Dashboard() {
                                                 Recent Activities
                                             </Text>
                                         </View>
-                                        <Records ref={recordRef} maxlines={4}/>
+                                        <Records ref={recordRef} fetchBalances={fetchBalances} maxlines={4}/>
                                         <View alignSelf="flex-end">
                                             <IconButton
                                                 icon={<MaterialIcons name="keyboard-arrow-right" size={36}

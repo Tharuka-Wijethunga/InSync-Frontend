@@ -4,12 +4,13 @@
     "slug": "InSync",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/inSync_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/inSync_splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/inSync_adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.lihaj.InSync"
