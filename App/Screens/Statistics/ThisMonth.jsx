@@ -179,7 +179,7 @@ export default function ThisMonth() {
                                         data={lineData}
                                         rotateLabel
                                         isAnimated
-                                        xAxisLabelTextStyle={{ fontSize: 7 }}
+                                        xAxisLabelTextStyle={{ fontSize: 8 }}
                                         yAxisTextStyle={{ fontSize: 8 }}
                                         hideRules
                                         initialSpacing={10}
@@ -217,6 +217,10 @@ export default function ThisMonth() {
                                         }}
                                     />
                                 </View>
+                                <Text style={{textAlign: 'center', fontSize: 12, paddingLeft: 20, paddingTop: 30}}>
+                                    Colombo Consumer Price Index (CCPI){"\n"}
+                                    (CCPI, 2021=100)
+                                </Text>
                             </View>
                         )
                     )}
