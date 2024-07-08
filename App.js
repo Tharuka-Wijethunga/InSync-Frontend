@@ -2,17 +2,16 @@ import "react-native-reanimated";
 import 'react-native-gesture-handler';
 import {NativeBaseProvider, Text, View, VStack} from "native-base";
 import AppNavigation from "./App/Navigations/AppNavigation";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {AuthProvider} from "./App/Context/AuthContext";
+import logo from "./assets/inSync.png";
+import {Image, StyleSheet} from "react-native";
 
 const SplashScreen = () => {
     return (
         <NativeBaseProvider>
             <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <VStack space={1}>
-                      <Text fontSize={50} fontWeight="bold">InSync</Text>
-                    <Text fontWeight="medium" fontSize={18}>Financial Forecasting</Text>
-                </VStack>
+                <Image source={logo} style={styles.logo}/>
             </View>
         </NativeBaseProvider>
         )
@@ -44,7 +43,7 @@ export default function App() {
         return 'Login'
     }
 
-    if (isLoading) return <SplashScreen />
+    // if (isLoading) return <SplashScreen />
 
     return (
         <NativeBaseProvider>
@@ -55,3 +54,12 @@ export default function App() {
 
     )
 }
+
+const styles = StyleSheet.create({
+
+    logo: {
+        width: 96,
+        height: 96,
+        resizeMode: 'contain',
+    }
+});

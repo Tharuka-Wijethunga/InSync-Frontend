@@ -11,7 +11,7 @@ import {
 import {Box, Button, Input, Icon, NativeBaseProvider, Text, VStack, Link, HStack, View, Center} from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
-import logo from './../../../assets/bank.png';
+import logo from './../../../assets/inSync.png';
 import { useNavigation } from "@react-navigation/native";
 import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -87,7 +87,7 @@ const Login = () => {
 
             }),
             Animated.timing(scaleAnim, {
-                toValue: 0.7,
+                toValue: 1,
                 duration: 800,
                 easing: Easing.ease,
                 useNativeDriver: true,
@@ -122,13 +122,18 @@ const Login = () => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <Box style={[styles.container, { width: '100%', height: '100%' }]}>
                     <VStack space={4} alignItems="center" width="100%">
-                        <Animated.View style={{ opacity: fadeAnim}}>
-                            <Text fontSize={40} fontWeight="bold" color="black" mt={0} >InSync</Text>
-                            <Center><Text fontSize={13} color="gray.500" mt={0}>Login to continue.</Text></Center>
+                        <Animated.View style={{transform: [{ scale: scaleAnim }]}}>
+                            <HStack space={2} alignItems={"center"} mb={20} marginLeft={-4}>
+                                <Image source={logo} style={styles.logo}/>
+                                <VStack alignContent={"center"}>
+                                    <Text fontSize={40} fontWeight="bold" color="black" >InSync</Text>
+                                    <Text fontSize={12} color={"black"} mt={-1}>Finance Forecast</Text>
+                                </VStack>
+                            </HStack>
                         </Animated.View>
                         {/*<Image source={logo} style={styles.logo} />*/}
-                        <Animated.Image source={logo} style={[styles.logo, { transform: [{ scale: scaleAnim }],marginTop:-40 }]} />
-                        <Input mt={-4}
+                        {/*<Animated.Image source={logo} style={[styles.logo, { transform: [{ scale: scaleAnim }],marginTop:-40 }]} />*/}
+                        <Input
                                variant="rounded"
                                borderColor={Colors.Blue}
                                placeholder="Username"
@@ -153,15 +158,14 @@ const Login = () => {
                         <Button onPress={handleLogin} colorScheme={"blue"} width="100%" rounded={20} mt={5}>
                             <Text color="white" textAlign="center" fontSize="16">Login</Text>
                         </Button>
-                        <Link onPress={handleSignup} fontSize={10}><Text fontSize={11}>Forgot Password?</Text></Link>
-                        <HStack space={1} alignItems="center">
-                            <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: translateYAnim }] }}>
+                        <HStack space={1} alignItems="center" marginBottom={-10}>
+                            <View>
                                 <Text fontSize={14} fontWeight="bold" paddingRight={2} mt={2}>New to InSync?</Text>
-                            </Animated.View>
+                            </View>
                             <Link onPress={handleSignup}>
-                                <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: translateYAnim }] }}>
+                                <View>
                                     <Text color={Colors.Blue} mt={2}>Sign up</Text>
-                                </Animated.View>
+                                </View>
                             </Link>
                         </HStack>
                     </VStack>
@@ -183,8 +187,8 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     logo: {
-        width: '50%',
-        height: '42%',
+        width: 96,
+        height: 96,
         resizeMode: 'contain',
     },
 });
