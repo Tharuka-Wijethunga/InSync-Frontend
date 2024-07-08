@@ -36,7 +36,7 @@ export default function NextMonth() {
     const fetchStat = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get(`http://192.168.248.230:8005/api/userModel/ForecastNextDay`);
+            const response = await axios.get(`https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/userModel/ForecastNextDay`);
             const data = response.data;
             setTotalAmount(data.Total);
 

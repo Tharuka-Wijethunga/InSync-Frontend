@@ -15,7 +15,7 @@ export default function ThisMonth() {
 
     const categoryColors = {
         "Foods & Drinks": { color: '#F87171', gradientCenterColor: '#F87171' },
-        "shopping": { color: '#60A5FA', gradientCenterColor: '#60A5FA' },
+        "Shopping": { color: '#60A5FA', gradientCenterColor: '#60A5FA' },
         "Health": { color: '#4ADE80', gradientCenterColor: '#4ADE80' },
         "Vehicle": { color: '#FFEB3B', gradientCenterColor: '#FFEB3B' },
         "Public transport": { color: '#818CF8', gradientCenterColor: '#818CF8' },
@@ -48,7 +48,7 @@ export default function ThisMonth() {
 
     const fetchMonthTotal = async () => {
         try {
-            const response = await axios.get(`http://192.168.248.230:8005/api/statistics/thisMonthTotal`);
+            const response = await axios.get(`https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/statistics/thisMonthTotal`);
             setTotalAmount(response.data);
         } catch (error) {
             console.error(error);
@@ -57,7 +57,7 @@ export default function ThisMonth() {
 
     const fetchMonthStat = async () => {
         try {
-            const response = await axios.get(`http://192.168.248.230:8005/api/statistics/thisMonthStat`);
+            const response = await axios.get(`https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/statistics/thisMonthStat`);
             const data = response.data.map(item => {
                 const colors = categoryColors[item._id]; //get the color according to the category name
                 return {

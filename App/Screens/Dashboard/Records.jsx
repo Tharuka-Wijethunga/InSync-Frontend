@@ -1,21 +1,22 @@
-import React, {forwardRef, useImperativeHandle, useState} from 'react';
-import {HStack, Text, VStack, FlatList, Avatar, Spacer, View} from "native-base";
-import Colors from "../../Config/Colors";
-import {TouchableHighlight} from "react-native";
-import {useNavigation} from "@react-navigation/native";
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
+import { HStack, Text, VStack, Avatar, Spacer, View, Icon, Pressable } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 const Records = forwardRef((props, ref) => {
     const navigation = useNavigation();
-    const [data, setData] = useState([]);
+    const [listData, setListData] = useState([]);
 
-    useImperativeHandle(ref, ()=>({
-        fetchRecords : async () => {
+    useImperativeHandle(ref, () => ({
+        fetchRecords: async () => {
             try {
-                const response = await axios.get('http://192.168.248.230:8005/api/addrecord')
+                const response = await axios.get('https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/records')
                 const reversedData = response.data.reverse();
-                setData(reversedData.map(item => ({
+                setListData(reversedData.map((item, index) => ({
+                    key: `${index}`,
+                    _id: item._id,
                     category: item.category,
                     date: item.date,
                     amount: item.amount,
@@ -24,42 +25,99 @@ const Records = forwardRef((props, ref) => {
                     icon_name: item.icon_name,
                     icon_color: item.icon_color
                 })));
-
             } catch (e) {
                 console.error(e);
             }
         }
     }));
 
-    return (
-        <FlatList data={props.maxlines ? data.slice(0, props.maxlines) : data} renderItem={({item}) =>
-            <View style={{borderRadius: 10, overflow: 'hidden'}}>
-                <TouchableHighlight onPress={() => navigation.navigate('Add Records')}
-                                    underlayColor={Colors.PressedColor}
-                >
-                    <View paddingX={1}>
-                        <HStack space={[2, 3]} justifyContent="space-between" paddingBottom={2} paddingTop={2} flex={1}>
-                            <Avatar size="42px" bgColor={item.icon_color}>
-                                {<MaterialCommunityIcons name={item.icon_name} size={22} color="white" />}
-                            </Avatar>
-                            <VStack>
-                                <Text fontWeight={"semibold"} fontSize="16">
-                                    {item.category}
-                                </Text>
-                                <Text color="coolGray.600" fontSize="12">
-                                    {item.date}
-                                </Text>
-                            </VStack>
-                            <Spacer/>
-                            <Text fontSize="16" fontWeight={"semibold"} color={item.type === "income" ? "green.500":"red.500"} alignSelf="flex-start">
-                                {item.type === "expense" ? "-" : ""} LKR {item.amount}
-                            </Text>
-                        </HStack>
-                    </View>
-                </TouchableHighlight>
+    const closeRow = (rowMap, rowKey) => {
+        if (rowMap[rowKey]) {
+            rowMap[rowKey].closeRow();
+        }
+    };
+
+    const deleteRow = async (rowMap, rowKey) => {
+        closeRow(rowMap, rowKey);
+        const item = listData.find(item => item.key === rowKey);
+        if (item && item._id) {
+            try {
+                const response = await axios.delete(`http://192.168.248.230:8005/api/addrecord/${item._id}`);
+                if (response.data.success) {
+                    const newData = listData.filter(listItem => listItem._id !== item._id);
+                    setListData(newData);
+                } else {
+                    console.error("Failed to delete record");
+                }
+            } catch (error) {
+                console.error("Error deleting record:", error.response?.data?.detail || error.message);
+            }
+        } else {
+            console.error("Invalid item or missing _id", item);
+        }
+    };
+
+    const onRowDidOpen = rowKey => {
+        console.log('This row opened', rowKey);
+    };
+
+    const renderItem = ({ item }) => (
+        <Pressable onPress={() => navigation.navigate('Add Records')} _dark={{
+            bg: 'coolGray.800'
+        }} _light={{
+            bg: 'white'
+        }}>
+            <View paddingX={1}>
+                <HStack space={[2, 3]} justifyContent="space-between" paddingBottom={2} paddingTop={2} flex={1}>
+                    <Avatar size="42px" bgColor={item.icon_color}>
+                        {<MaterialCommunityIcons name={item.icon_name} size={22} color="white" />}
+                    </Avatar>
+                    <VStack>
+                        <Text fontWeight={"semibold"} fontSize="16">
+                            {item.category}
+                        </Text>
+                        <Text color="coolGray.600" fontSize="12">
+                            {item.date}
+                        </Text>
+                    </VStack>
+                    <Spacer />
+                    <Text fontSize="16" fontWeight={"semibold"} color={item.type === "income" ? "green.500" : "red.500"} alignSelf="flex-start">
+                        {item.type === "expense" ? "-" : ""} LKR {item.amount}
+                    </Text>
+                </HStack>
             </View>
-        }/>
-    )
+        </Pressable>
+    );
+
+    const renderHiddenItem = (data, rowMap) => (
+        <HStack flex="1" pl="2" justifyContent={"flex-end"} >
+            <Pressable w="70" cursor="pointer" bg="red.500" justifyContent="center" onPress={() => deleteRow(rowMap, data.item.key)} _pressed={{
+                opacity: 0.5
+            }}>
+                <VStack alignItems="center" space={2}>
+                    <Icon as={<MaterialCommunityIcons name="delete" />} color="white" size="xs" />
+                    <Text color="white" fontSize="xs" fontWeight="medium">
+                        Delete
+                    </Text>
+                </VStack>
+            </Pressable>
+        </HStack>
+    );
+
+    return (
+        <View style={{ flex: 1 }}>
+            <SwipeListView
+                data={props.maxlines ? listData.slice(0, props.maxlines) : listData}
+                renderItem={renderItem}
+                renderHiddenItem={renderHiddenItem}
+                rightOpenValue={-70}
+                previewRowKey={'0'}
+                previewOpenValue={-40}
+                previewOpenDelay={3000}
+                onRowDidOpen={onRowDidOpen}
+            />
+        </View>
+    );
 });
 
 export default Records;
