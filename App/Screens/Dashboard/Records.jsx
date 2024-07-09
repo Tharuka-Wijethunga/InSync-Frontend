@@ -12,7 +12,7 @@ const Records = forwardRef(({props, maxlines, fetchBalances}, ref) => {
     useImperativeHandle(ref, () => ({
         fetchRecords: async () => {
             try {
-                const response = await axios.get('http://192.168.248.230:8006/api/records')
+                const response = await axios.get('https://insyncapi.azurewebsites.net/api/records')
                 const reversedData = response.data.reverse();
                 setListData(reversedData.map((item, index) => ({
                     key: `${index}`,
@@ -42,7 +42,7 @@ const Records = forwardRef(({props, maxlines, fetchBalances}, ref) => {
         const item = listData.find(item => item.key === rowKey);
         if (item && item.id) {  // Make sure you're using 'id', not '_id'
             try {
-                const response = await axios.delete(`http://192.168.248.230:8006/api/records/${item.id}`);
+                const response = await axios.delete(`https://insyncapi.azurewebsites.net/api/records/${item.id}`);
                 if (response.data.success) {
                     const newData = listData.filter(listItem => listItem.id !== item.id);
                     setListData(newData);

@@ -75,10 +75,10 @@ const RecordForm = () => {
             'date': today,
             'time': sltime
         };
-        axios.post('http://192.168.248.230:8006/api/records', record)
+        axios.post('https://insyncapi.azurewebsites.net/api/records', record)
             .then(response => {
                 console.log(response);
-                axios.put(`http://192.168.248.230:8006/api/dashboard/account/${account}`,{amount:amount, type:type})
+                axios.put(`https://insyncapi.azurewebsites.net/api/dashboard/account/${account}`,{amount:amount, type:type})
                     .then(response => {
                         console.log(response);
                         navigation.navigate('Dashboard');
