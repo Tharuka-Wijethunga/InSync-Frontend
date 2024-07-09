@@ -10,12 +10,12 @@ export const AuthContext=createContext();
 export const AuthProvider=({children})=>{
     const [isLoading,setIsLoading]=useState(false);
     const [accessToken,setAccessToken]=useState(null);
-
+    const [user, setUser] = useState(null);
     const login=async (username,password) => {
         setIsLoading(true);
         try {
             const requestData = qs.stringify({username, password});
-            const response = await axios.post('https://7113-104-28-210-102.ngrok-free.app/token', requestData, {
+            const response = await axios.post('https://8dd8-175-157-13-142.ngrok-free.app/token', requestData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -71,7 +71,7 @@ export const AuthProvider=({children})=>{
  const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            const response = await axios.post('https://7113-104-28-210-102.ngrok-free.app/refresh-token', {}, {
+            const response = await axios.post('https://8dd8-175-157-13-142.ngrok-free.app/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }
@@ -114,9 +114,16 @@ export const AuthProvider=({children})=>{
         delete axios.defaults.headers.common['Authorization'];
         setIsLoading(false);
     }
-
+    // const requestPasswordReset = async (email) => {
+    //     await axios.post('https://8dd8-175-157-13-142.ngrok-free.app/password-reset/', { email });
+    // }
+    //
+    // const confirmPasswordReset = async (token, newPassword) => {
+    //     await axios.post('https://8dd8-175-157-13-142.ngrok-free.app/password-reset/confirm/', { token, newPassword });
+    // }
+    // requestPasswordReset,confirmPasswordReset
     return(
-        <AuthContext.Provider value={{login,logout,refreshAccessToken,isLoading,accessToken}}>
+        <AuthContext.Provider value={{login,logout,refreshAccessToken,isLoading,accessToken,user,setUser}}>
             {children}
         </AuthContext.Provider>
     );

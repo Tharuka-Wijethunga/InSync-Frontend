@@ -77,9 +77,9 @@ const RecordForm = () => {
         };
 
         try {
-            const response = await axios.post('https://http://192.168.11.70:8005/api/addrecord', record);
+            const response = await axios.post(' https://8dd8-175-157-13-142.ngrok-free.app/api/addrecord', record);
             console.log(response);
-            await axios.put(`https://http://192.168.11.70:8005/api/dashboard/account/${account}`, { amount: amount, type: type });
+            await axios.put(` https://8dd8-175-157-13-142.ngrok-free.app/api/dashboard/account/${account}`, { amount: amount, type: type });
             console.log(response);
             navigation.navigate('Dashboard');
             resetForm();

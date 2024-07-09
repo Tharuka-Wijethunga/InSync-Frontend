@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
-import {NativeBaseProvider, View, Text, Image, VStack} from 'native-base';
+import {NativeBaseProvider, View, Text, Image, VStack, Button} from 'native-base';
 import {MaterialIcons} from '@expo/vector-icons';
 import Colors from '../../Config/Colors';
 import {useNavigation} from "@react-navigation/native";
@@ -16,7 +16,7 @@ const OnboardingFourthPage = ({ route }) => {
     };
     const handleNext = () => {
         //post request to pass this data to the backend
-        fetch('https://4c0c-104-28-242-102.ngrok-free.app/signup', {
+        fetch('https://8dd8-175-157-13-142.ngrok-free.app/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -64,12 +64,16 @@ const OnboardingFourthPage = ({ route }) => {
                             alt="Welcome"
                         />
                     </View>
-                    <View marginTop={-20}>
-                        <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
-                            <Text style={styles.buttonText}>Let's Sync In!</Text>
-                        </TouchableOpacity>
+                    <View>
+                    <Button onPress={handleNext} colorScheme={"blue"} width="100%" rounded={20} mt={-20}>
+                        <Text color="white" textAlign="center" fontSize="16">Let's Sync In!</Text>
+                    </Button>
+                    {/*<View marginTop={-20}>*/}
+                    {/*    <TouchableOpacity onPress={handleNext} colorScheme={"blue"} style={styles.nextButton}>*/}
+                    {/*        <Text style={styles.buttonText}>Let's Sync In!</Text>*/}
+                    {/*    </TouchableOpacity>*/}
+                    {/*</View>*/}
                     </View>
-
                 </VStack>
 
             </SafeAreaView>
@@ -99,17 +103,17 @@ const styles = StyleSheet.create({
         lineHeight: 42,
         alignSelf: "center"
     },
-    nextButton: {
-        backgroundColor: Colors.Blue,
-        paddingVertical: 10,
-        paddingHorizontal: 60,
-        borderRadius: 20,
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
+    // nextButton: {
+    //     backgroundColor: Colors.Blue,
+    //     paddingVertical: 10,
+    //     paddingHorizontal: 60,
+    //     borderRadius: 20,
+    // },
+    // buttonText: {
+    //     color: 'white',
+    //     fontSize: 16,
+    //     fontWeight: 'bold',
+    // },
     image: {
         width: '100%',
         height: '50%',

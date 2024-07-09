@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
     StyleSheet,
     Alert,
@@ -6,7 +6,9 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
     Dimensions,
-    Animated, Easing
+    Animated,
+    Easing,
+    ActivityIndicator
 } from 'react-native';
 import {
     Box,
@@ -14,49 +16,56 @@ import {
     Input,
     Text,
     VStack,
-    View,
-    Image
+    View
 } from 'native-base';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../Config/Colors";
-import {useNavigation} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import {is_valid_email} from "./password";
 
-
-
-const EmailVerificationFirstPage = () => {
+const ResetPasswordFirstPage = () => {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false); // State to manage loading state
+
     const handleBack = () => {
         navigation.goBack();
     };
-    const handleSignup = () => {
-        if ( !email ) {
-            Alert.alert('Validation Error', 'Please fill in all fields');
+
+    const handleResetPassword = () => {
+        if (!email) {
+            Alert.alert('Validation Error', 'Please fill in your email address');
             return;
         }
-        axios.post(`https://8dd8-175-157-13-142.ngrok-free.app/checkMail?email=${email}`)
+
+        if (!validateEmail(email)) {
+            Alert.alert('Validation Error', 'Please enter a valid email address');
+            return;
+        }
+
+        setLoading(true); // Start loading state
+
+        axios.post(`https://8dd8-175-157-13-142.ngrok-free.app/api/reset_password/password-reset/request`, { email })
             .then(response => {
-                if (response.data.exists) {
-                    Alert.alert('Error', 'Email already exists, Try another one.');}
-                if (validateForm()) {
-                    axios.post(`https://8dd8-175-157-13-142.ngrok-free.app/send-verification-email?email=${email}`)
-                    navigation.navigate('EmailVerificationSecondPage',{
-                        email:email
-                    });
-                }
+                setLoading(false); // Stop loading state on success
+                navigation.navigate('ResetPasswordSecondPage', { email });
             })
             .catch((error) => {
-                console.error('Error:', error);
+                setLoading(false); // Stop loading state on error
+                if (error.response && error.response.status === 404) {
+                    Alert.alert('Error', 'Email not found. Please try again.');
+                } else {
+                    console.error('Error:', error.response?.data || error.message);
+                    Alert.alert('Error', 'An error occurred. Please try again.');
+                }
             });
     };
 
-    const validateForm = ()=>{
-        return is_valid_email(email);
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
     };
 
-    const fadeAnim = useRef(new Animated.Value(1)).current;
     const translateYAnim = useRef(new Animated.Value(1)).current;
     const scaleAnim = useRef(new Animated.Value(1)).current;
 
@@ -72,17 +81,11 @@ const EmailVerificationFirstPage = () => {
 
     const keyboardDidShow = () => {
         Animated.parallel([
-            Animated.timing(fadeAnim, {
-                toValue: 0,
-                duration:0,
-                useNativeDriver: true,
-            }),
             Animated.timing(translateYAnim, {
                 toValue: -40,
                 duration: 800,
                 easing: Easing.ease,
                 useNativeDriver: true,
-
             }),
             Animated.timing(scaleAnim, {
                 toValue: 0.8,
@@ -95,11 +98,6 @@ const EmailVerificationFirstPage = () => {
 
     const keyboardDidHide = () => {
         Animated.parallel([
-            Animated.timing(fadeAnim, {
-                toValue: 1,
-                duration: 800,
-                useNativeDriver: true,
-            }),
             Animated.timing(translateYAnim, {
                 toValue: 1,
                 duration: 800,
@@ -113,13 +111,13 @@ const EmailVerificationFirstPage = () => {
                 useNativeDriver: true,
             }),
         ]).start();
-    }
+    };
 
     const windowHeight = Dimensions.get('window').height;
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <Box style={[styles.container, {width: '100%', height: '100%'}]}>
+            <Box style={[styles.container, { width: '100%', height: '100%' }]}>
                 <View style={styles.backButtonContainer}>
                     <TouchableOpacity onPress={handleBack} style={styles.backButton}>
                         <MaterialIcons name="keyboard-arrow-left" size={24} />
@@ -127,32 +125,37 @@ const EmailVerificationFirstPage = () => {
                     </TouchableOpacity>
                 </View>
                 <VStack space={4} alignItems="center" width="100%">
-                    <Animated.Image source={require("../../../assets/pic7.png")} style={[styles.image,{ transform: [{ scale: scaleAnim }],marginTop: windowHeight*0.05 }]} />
+                    <Animated.Image source={require("../../../assets/pic9.png")} style={[styles.image, { transform: [{ scale: scaleAnim }], marginTop: windowHeight * 0.05 }]} />
 
-                    {/*<Image*/}
-                    {/*    source={require("../../../assets/pic7.png")}*/}
-                    {/*    style={styles.image}*/}
-                    {/*    alt='verified icon'*/}
-                    {/*/>*/}
-                    <Animated.View style={{  transform: [{ translateY: translateYAnim }] }}>
+                    <Animated.View style={{ transform: [{ translateY: translateYAnim }] }}>
                         <VStack space={4} alignItems="center" width="100%">
-
-                            <Text fontSize={38} fontWeight="bold" color="black">Get Started</Text>
-                            <Text fontSize={13} color="gray.500" mt={-4}>by creating a free account.</Text>
+                            <Text fontSize={38} fontWeight="bold" color="black">Access Recovery</Text>
+                            <Text fontSize={13} color="gray.500" mt={-4}>Enter your email to reset your password</Text>
                         </VStack>
                     </Animated.View>
-                    <Animated.View style={[ styles.inputWrapper,{ transform: [{ translateY: translateYAnim }]}]}>
-                    <Input mt={2}
-                           variant="rounded"
-                           borderColor={Colors.Blue}
-                           placeholder="Email"
-                           value={email}
-                           onChangeText={setEmail}
-                           style={styles.input}
-                    />
-                    <Button onPress={handleSignup} colorScheme={"blue"} width="100%" rounded={20} mt={4}>
-                        <Text color="white" textAlign="center" fontSize="16">Next</Text>
-                    </Button>
+                    <Animated.View style={[styles.inputWrapper, { transform: [{ translateY: translateYAnim }] }]}>
+                        <Input
+                            mt={2}
+                            variant="rounded"
+                            borderColor={Colors.Blue}
+                            placeholder="Email"
+                            value={email}
+                            onChangeText={setEmail}
+                            style={styles.input}
+                        />
+                        <Button
+                            onPress={handleResetPassword}
+                            colorScheme={"blue"}
+                            borderRadius={"full"}
+                            width="100%"
+                            size="lg"
+                            alignSelf="center"
+                            marginTop={4}
+                            isLoading={loading}
+                            isLoadingText="Checking"
+                        >
+                            Next
+                        </Button>
                     </Animated.View>
                 </VStack>
             </Box>
@@ -181,9 +184,6 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
     },
-    Alert:{
-        borderRadius:"30%",
-    },
     inputWrapper: {
         width: '100%',
     },
@@ -191,8 +191,7 @@ const styles = StyleSheet.create({
         height: '38%',
         alignSelf: "center",
         resizeMode: "contain"
-
     },
 });
 
-export default EmailVerificationFirstPage;
+export default ResetPasswordFirstPage;

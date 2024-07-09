@@ -25,7 +25,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const {login}=useContext(AuthContext)//getting login method from the AuthContext
+    const {login}=useContext(AuthContext);//getting login method from the AuthContext
 
     const fadeAnim = useRef(new Animated.Value(1)).current;
     const translateYAnim = useRef(new Animated.Value(1)).current;
@@ -44,6 +44,7 @@ const Login = () => {
         if (validateForm()) {
             login(username,password);
         }
+
     };
 
 
@@ -60,6 +61,9 @@ const Login = () => {
 
     const handleSignup = () => {
         navigation.navigate({ name: 'Signup' });
+    };
+    const handleForgetPassword = () => {
+        navigation.navigate({ name: 'ResetPasswordFirstPage' });
     };
 
     useEffect(() => {
@@ -153,7 +157,7 @@ const Login = () => {
                         <Button onPress={handleLogin} colorScheme={"blue"} width="100%" rounded={20} mt={5}>
                             <Text color="white" textAlign="center" fontSize="16">Login</Text>
                         </Button>
-                        <Link onPress={handleSignup} fontSize={10}><Text fontSize={11}>Forgot Password?</Text></Link>
+                        <Link onPress={handleForgetPassword} fontSize={10}><Text fontSize={11}>Forgot Password?</Text></Link>
                         <HStack space={1} alignItems="center">
                             <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: translateYAnim }] }}>
                                 <Text fontSize={14} fontWeight="bold" paddingRight={2} mt={2}>New to InSync?</Text>
