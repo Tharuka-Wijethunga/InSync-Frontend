@@ -137,6 +137,7 @@ export default function Dashboard() {
                     </Center>
                 </ScrollView>
             </View>
+
         </NativeBaseProvider>
     )
 }
