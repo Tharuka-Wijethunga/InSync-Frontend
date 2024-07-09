@@ -14,14 +14,14 @@ export default function ThisMonth() {
     const [isLoading, setIsLoading] = useState(false);
 
     const categoryColors = {
-        "Foods & Drinks": { color: '#F87171', gradientCenterColor: '#F87171' },
-        "shopping": { color: '#60A5FA', gradientCenterColor: '#60A5FA' },
-        "Health": { color: '#4ADE80', gradientCenterColor: '#4ADE80' },
-        "Vehicle": { color: '#FFEB3B', gradientCenterColor: '#FFEB3B' },
-        "Public transport": { color: '#818CF8', gradientCenterColor: '#818CF8' },
-        "Bills": { color: '#FB923C', gradientCenterColor: '#FB923C' },
-        "Loans": { color: '#42A5F5', gradientCenterColor: '#42A5F5' },
-        "Rent": { color: '#FF5733', gradientCenterColor: '#FF5733' },
+        "Foods & Drinks": { color: '#fbbf24', gradientCenterColor: '#fbbf24' },
+        "shopping": { color: '#8b5cf6', gradientCenterColor: '#8b5cf6' },
+        "Health": { color: '#f43f5e', gradientCenterColor: '#f43f5e' },
+        "Vehicle": { color: '#38bdf8', gradientCenterColor: '#38bdf8' },
+        "Public transport": { color: '#6366f1', gradientCenterColor: '#6366f1' },
+        "Bills": { color: '#34d399', gradientCenterColor: '#34d399' },
+        "Loans": { color: '#ec4899', gradientCenterColor: '#ec4899' },
+        "Rent": { color: '#F97316', gradientCenterColor: '#F97316' },
         "Other": { color: '#808080', gradientCenterColor: '#808080' },
     };
 
