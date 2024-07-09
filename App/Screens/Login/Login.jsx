@@ -61,6 +61,9 @@ const Login = () => {
     const handleSignup = () => {
         navigation.navigate({ name: 'Signup' });
     };
+    const handleForgetPassword = () => {
+        navigation.navigate({ name: 'ResetPasswordFirstPage' });
+    };
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
@@ -158,6 +161,7 @@ const Login = () => {
                         <Button onPress={handleLogin} colorScheme={"blue"} width="100%" rounded={20} mt={5}>
                             <Text color="white" textAlign="center" fontSize="16">Login</Text>
                         </Button>
+                        <Link onPress={handleForgetPassword} fontSize={10}><Text fontSize={11}>Forgot Password?</Text></Link>
                         <HStack space={1} alignItems="center" marginBottom={-10}>
                             <View>
                                 <Text fontSize={14} fontWeight="bold" paddingRight={2} mt={2}>New to InSync?</Text>

@@ -10,6 +10,7 @@ export const AuthContext=createContext();
 export const AuthProvider=({children})=>{
     const [isLoading,setIsLoading]=useState(false);
     const [accessToken,setAccessToken]=useState(null);
+    const [user, setUser] = useState(null);
 
     const login=async (username,password) => {
         setIsLoading(true);
@@ -117,7 +118,7 @@ export const AuthProvider=({children})=>{
     }
 
     return(
-        <AuthContext.Provider value={{login,logout,refreshAccessToken,isLoading,accessToken}}>
+        <AuthContext.Provider value={{login,logout,refreshAccessToken,isLoading,accessToken,user,setUser}}>
             {children}
         </AuthContext.Provider>
     );
