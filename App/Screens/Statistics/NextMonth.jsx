@@ -36,7 +36,7 @@ export default function NextMonth() {
     const fetchStat = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.get(`http://192.168.248.230:8006/api/userModel/ForecastNextDay`);
+            const response = await axios.get(`https://insyncapi.azurewebsites.net/api/userModel/ForecastNextDay`);
             const data = response.data;
             setTotalAmount(data.Total);
 

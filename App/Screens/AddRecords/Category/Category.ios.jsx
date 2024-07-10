@@ -34,23 +34,23 @@ const CategoryModal = ({modalVisible, setModalVisible,setSelectedCategory,setAva
                                 <HStack>
                                     <CatButton
                                         icon={<MaterialCommunityIcons name="food" size={30} color="white" />}
-                                        color={"yellow.400"}
+                                        color={"amber.400"}
                                         name={"Foods & Drinks"}
-                                        onPress={()=>handleSelectedCategory("food","yellow.400","Foods & Drinks")}
+                                        onPress={()=>handleSelectedCategory("food","amber.400","Foods & Drinks")}
                                     />
                                     <CatButton
                                         icon={<MaterialCommunityIcons name="shopping" size={30} color="white" />}
-                                        color={"purple.400"}
+                                        color={"violet.500"}
                                         name={"shopping"}
-                                        onPress={()=>handleSelectedCategory("shopping","purple.400","Shopping")}
+                                        onPress={()=>handleSelectedCategory("shopping","violet.500","Shopping")}
                                     />
                                 </HStack>
                                 <HStack>
                                     <CatButton
                                         icon={<MaterialCommunityIcons name="heart-pulse" size={30} color="white" />}
-                                        color={"red.500"}
+                                        color={"rose.500"}
                                         name={"Health"}
-                                        onPress={()=>handleSelectedCategory("heart-pulse","red.500","Health")}
+                                        onPress={()=>handleSelectedCategory("heart-pulse","rose.500","Health")}
                                     />
                                     <CatButton
                                         icon={<MaterialCommunityIcons name="cash-plus" size={35} color="white" />}
@@ -62,37 +62,37 @@ const CategoryModal = ({modalVisible, setModalVisible,setSelectedCategory,setAva
                                 <HStack>
                                     <CatButton
                                         icon={<MaterialCommunityIcons name="car-hatchback" size={30} color="white" />}
-                                        color={"blue.500"}
+                                        color={"lightBlue.400"}
                                         name="Vehicle"
-                                        onPress={()=>handleSelectedCategory("car-hatchback","blue.500","Vehicle")}
+                                        onPress={()=>handleSelectedCategory("car-hatchback","lightBlue.400","Vehicle")}
                                     />
                                     <CatButton
                                         icon={<MaterialCommunityIcons name="road-variant" size={30} color="white" />}
-                                        color={"purple.600"}
+                                        color={"indigo.500"}
                                         name="Public transport"
-                                        onPress={()=>handleSelectedCategory("road-variant","purple.600","Public Transport")}
+                                        onPress={()=>handleSelectedCategory("road-variant","indigo.500","Public Transport")}
                                     />
                                 </HStack>
                                 <HStack>
                                     <CatButton
                                         icon={<MaterialCommunityIcons name="file-document" size={30} color="white" />}
-                                        color={"orange.400"}
+                                        color={"emerald.400"}
                                         name="Bills"
-                                        onPress={()=>handleSelectedCategory("file-document","orange.400","Bills")}
+                                        onPress={()=>handleSelectedCategory("file-document","emerald.400","Bills")}
                                     />
                                     <CatButton
                                         icon={<MaterialCommunityIcons name="hand-coin" size={30} color="white" />}
-                                        color={"blue.400"}
+                                        color={"secondary.500"}
                                         name="Loans"
-                                        onPress={()=>handleSelectedCategory("hand-coin","blue.400","Loans")}
+                                        onPress={()=>handleSelectedCategory("hand-coin","secondary.500","Loans")}
                                     />
                                 </HStack>
                                 <HStack>
                                     <CatButton
                                         icon={<MaterialCommunityIcons name="home-alert" size={30} color="white" />}
-                                        color={"rose.400"}
+                                        color={"warning.500"}
                                         name="Rent"
-                                        onPress={()=>handleSelectedCategory("home-alert","rose.400","Rent")}
+                                        onPress={()=>handleSelectedCategory("home-alert","warning.500","Rent")}
                                     />
                                     <CatButton
                                         icon={<MaterialCommunityIcons name="menu" size={30} color="white" />}

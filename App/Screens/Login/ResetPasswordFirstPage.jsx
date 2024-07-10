@@ -45,7 +45,7 @@ const ResetPasswordFirstPage = () => {
 
         setLoading(true); // Start loading state
 
-        axios.post(`http://192.168.248.230:8006/api/reset_password/password-reset/request`, { email })
+        axios.post(`https://insyncapi.azurewebsites.net/api/reset_password/password-reset/request`, { email })
             .then(response => {
                 setLoading(false); // Stop loading state on success
                 navigation.navigate('ResetPasswordSecondPage', { email });

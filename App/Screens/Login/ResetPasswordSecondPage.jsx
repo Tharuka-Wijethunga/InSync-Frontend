@@ -49,7 +49,7 @@ const ResetPasswordSecondPage = () => {
         console.log('Request payload:', payload); // Log the request payload to inspect it
 
         try {
-            const response = await axios.post('http://192.168.248.230:8006/api/reset_password/password-reset/verify', payload);
+            const response = await axios.post('https://insyncapi.azurewebsites.net/api/reset_password/password-reset/verify', payload);
 
             console.log('Backend response status:', response.status);
             console.log('Backend response data:', response.data); // Log specific data if needed

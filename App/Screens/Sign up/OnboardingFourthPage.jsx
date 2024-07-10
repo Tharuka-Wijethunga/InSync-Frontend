@@ -16,7 +16,7 @@ const OnboardingFourthPage = ({ route }) => {
     };
     const handleNext = () => {
         //post request to pass this data to the backend
-        fetch('http://192.168.248.230:8006/signup', {
+        fetch('https://insyncapi.azurewebsites.net/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
