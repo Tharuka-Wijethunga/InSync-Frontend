@@ -4,7 +4,6 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {Stack, View} from "native-base";
 import TabNavigation from "./TabNavigation";
 import SignupNavigator from "../Screens/Sign up/SignupNavigator";
-import ProfileNavigation from "../Screens/UserProfile/ProfileNavigation";
 import {AuthContext} from "../Context/AuthContext";
 import {ActivityIndicator} from "react-native";
 
