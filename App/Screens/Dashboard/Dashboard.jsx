@@ -41,7 +41,7 @@ export default function Dashboard() {
     },[]);
 
     const fetchBalances = useCallback(() => {
-        axios.get('http://192.168.248.230:8006/api/dashboard/account?type=cash')
+        axios.get('https://insyncapi.azurewebsites.net/api/dashboard/account?type=cash')
             .then(response => {
                 setCashBalance(response.data);
             })
@@ -49,7 +49,7 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('http://192.168.248.230:8006/api/dashboard/account?type=bank')
+        axios.get('https://insyncapi.azurewebsites.net/api/dashboard/account?type=bank')
             .then(response => {
                 setBankBalance(response.data);
             })
@@ -57,7 +57,7 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('http://192.168.248.230:8006/api/dashboard/today_spending')
+        axios.get('https://insyncapi.azurewebsites.net/api/dashboard/today_spending')
             .then(response => {
                 setTodaySpending(response.data);
             })
@@ -68,7 +68,7 @@ export default function Dashboard() {
                     console.error(error);
                 }
             });
-        axios.get('http://192.168.248.230:8006/api/userModel/ForecastNextDay')
+        axios.get('https://insyncapi.azurewebsites.net/api/userModel/ForecastNextDay')
             .then(response=>{
                 setPrediction(response.data.Total);
             })

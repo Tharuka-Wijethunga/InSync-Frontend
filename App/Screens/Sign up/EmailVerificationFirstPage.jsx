@@ -40,12 +40,12 @@ const EmailVerificationFirstPage = () => {
             Alert.alert('Validation Error', 'Please fill in all fields');
             return;
         }
-        axios.post(`http://192.168.248.230:8006/checkMail?email=${email}`)
+        axios.post(`https://insyncapi.azurewebsites.net/checkMail?email=${email}`)
             .then(response => {
                 if (response.data.exists) {
                     Alert.alert('Error', 'Email already exists, Try another one.');
                 } else if (validateForm()) {
-                    axios.post(`http://192.168.248.230:8006/send-verification-email?email=${email}`)
+                    axios.post(`https://insyncapi.azurewebsites.net/send-verification-email?email=${email}`)
                     navigation.navigate('EmailVerificationSecondPage',{
                         email:email
                     });

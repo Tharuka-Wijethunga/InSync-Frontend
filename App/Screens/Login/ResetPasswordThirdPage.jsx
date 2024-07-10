@@ -79,7 +79,7 @@ const ResetPasswordThirdPage = () => {
         setLoading(true); // Start loading state
 
         try {
-            const response = await axios.post('http://192.168.248.230:8006/api/reset_password/password-reset/reset', payload);
+            const response = await axios.post('https://insyncapi.azurewebsites.net/api/reset_password/password-reset/reset', payload);
 
             if (response.data.message === 'Password reset successful') {
                 setLoading(false); // Stop loading state on success
