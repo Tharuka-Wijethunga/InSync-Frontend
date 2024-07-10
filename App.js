@@ -1,21 +1,12 @@
 import "react-native-reanimated";
 import 'react-native-gesture-handler';
-import {NativeBaseProvider, Text, View, VStack} from "native-base";
+import {NativeBaseProvider, StatusBar, Text, View, VStack} from "native-base";
 import AppNavigation from "./App/Navigations/AppNavigation";
 import React, {useEffect, useState} from "react";
 import {AuthProvider} from "./App/Context/AuthContext";
 import logo from "./assets/inSync.png";
 import {Image, StyleSheet} from "react-native";
 
-const SplashScreen = () => {
-    return (
-        <NativeBaseProvider>
-            <View style={{ backgroundColor: 'white', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Image source={logo} style={styles.logo}/>
-            </View>
-        </NativeBaseProvider>
-        )
-}
 
 export default function App() {
     const [isLoading, setIsLoading] = useState(true)
@@ -43,10 +34,9 @@ export default function App() {
         return 'Login'
     }
 
-    // if (isLoading) return <SplashScreen />
-
     return (
         <NativeBaseProvider>
+            <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
             <AuthProvider>
                 <AppNavigation initialRoute={initialRoute} />
             </AuthProvider>
