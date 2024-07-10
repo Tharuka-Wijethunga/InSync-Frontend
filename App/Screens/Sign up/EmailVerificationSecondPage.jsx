@@ -17,7 +17,7 @@ const EmailVerificationSecondPage = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            axios.get(`http://192.168.248.230:8006/check-verification-status?email=${email}`)
+            axios.get(`https://insyncapi.azurewebsites.net/check-verification-status?email=${email}`)
                 .then(response => {
                     if (response.data.verified) {
                         setIsVerified(true);
@@ -38,7 +38,7 @@ const EmailVerificationSecondPage = () => {
 
     const handleContinueSignup = async () => {
         try {
-            await axios.delete(`http://192.168.248.230:8006/delete-verification-info?email=${email}`);
+            await axios.delete(`https://insyncapi.azurewebsites.net/delete-verification-info?email=${email}`);
             navigation.navigate('SignupForm', {
                 email: email
             });
@@ -52,7 +52,7 @@ const EmailVerificationSecondPage = () => {
         if (remainingChances > 0) {
             setIsLoading(true);
             try {
-                await axios.post(`http://192.168.248.230:8006/send-verification-email?email=${email}`);
+                await axios.post(`https://insyncapi.azurewebsites.net/send-verification-email?email=${email}`);
                 setRemainingChances(remainingChances - 1);
                 Alert.alert('Verification email sent', `Please check your email for the new verification link. You have ${remainingChances - 1} chances left.`);
             } catch (error) {

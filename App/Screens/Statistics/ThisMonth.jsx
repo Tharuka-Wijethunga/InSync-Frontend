@@ -20,14 +20,14 @@ export default function ThisMonth() {
     const [lineErrorMessage, setLineErrorMessage] = useState("");
 
     const categoryColors = {
-        "Foods & Drinks": { color: '#F87171', gradientCenterColor: '#F87171' },
-        "Shopping": { color: '#60A5FA', gradientCenterColor: '#60A5FA' },
-        "Health": { color: '#4ADE80', gradientCenterColor: '#4ADE80' },
-        "Vehicle": { color: '#FFEB3B', gradientCenterColor: '#FFEB3B' },
-        "Public transport": { color: '#818CF8', gradientCenterColor: '#818CF8' },
-        "Bills": { color: '#FB923C', gradientCenterColor: '#FB923C' },
-        "Loans": { color: '#42A5F5', gradientCenterColor: '#42A5F5' },
-        "Rent": { color: '#FF5733', gradientCenterColor: '#FF5733' },
+        "Foods & Drinks": { color: '#fbbf24', gradientCenterColor: '#fbbf24' },
+        "shopping": { color: '#8b5cf6', gradientCenterColor: '#8b5cf6' },
+        "Health": { color: '#f43f5e', gradientCenterColor: '#f43f5e' },
+        "Vehicle": { color: '#38bdf8', gradientCenterColor: '#38bdf8' },
+        "Public transport": { color: '#6366f1', gradientCenterColor: '#6366f1' },
+        "Bills": { color: '#34d399', gradientCenterColor: '#34d399' },
+        "Loans": { color: '#ec4899', gradientCenterColor: '#ec4899' },
+        "Rent": { color: '#F97316', gradientCenterColor: '#F97316' },
         "Other": { color: '#808080', gradientCenterColor: '#808080' },
     };
 
@@ -54,7 +54,7 @@ export default function ThisMonth() {
 
     const fetchMonthTotal = async () => {
         try {
-            const response = await axios.get(`https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/statistics/thisMonthTotal`);
+            const response = await axios.get(`https://insyncapi.azurewebsites.net/api/statistics/thisMonthTotal`);
             setTotalAmount(response.data);
         } catch (error) {
             console.error(error);
@@ -63,7 +63,7 @@ export default function ThisMonth() {
 
     const fetchMonthStat = async () => {
         try {
-            const response = await axios.get(`https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/statistics/thisMonthStat`);
+            const response = await axios.get(`https://insyncapi.azurewebsites.net/api/statistics/thisMonthStat`);
             const data = response.data.map(item => {
                 const colors = categoryColors[item._id]; //get the color according to the category name
                 return {
@@ -87,7 +87,7 @@ export default function ThisMonth() {
 
     const fetchInflationData = async () => {
         try {
-            const response = await axios.get(`http://192.168.248.230:8006/api/statistics/inflation`);
+            const response = await axios.get(`https://insyncapi.azurewebsites.net/api/statistics/inflation`);
             const data = response.data.map(item => ({
                 value: parseFloat(item['CCPI H Inflation']),
                 label: item['Date']
@@ -236,6 +236,16 @@ export default function ThisMonth() {
                     </IconButton>
                 </>
             )}
+            <IconButton
+                style={{ position: 'absolute', bottom: 12, left: 0, right: 0, marginHorizontal: 25 }}
+                icon={<MaterialIcons name={showPieChart ? "keyboard-arrow-down" : "keyboard-arrow-up"} size={30} color="black"/>}
+                borderRadius="full"
+                _pressed={{
+                    bg: "blueGray.200:alpha.50"
+                }}
+                onPress={() => setShowPieChart(!showPieChart)}
+            >
+            </IconButton>
         </View>
     );
 }

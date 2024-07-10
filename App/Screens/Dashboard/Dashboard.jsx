@@ -1,4 +1,5 @@
 import {StyleSheet} from "react-native";
+import {Input, Popover, Pressable} from 'native-base';
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import Colors from "../../Config/Colors";
 import {
@@ -10,7 +11,8 @@ import {
     VStack,
     IconButton,
     ScrollView,
-    Center
+    Center,
+    Button,
 } from "native-base";
 import BalanceCard from "./BalanceCard";
 import {MaterialIcons} from '@expo/vector-icons';
@@ -39,7 +41,7 @@ export default function Dashboard() {
     },[]);
 
     const fetchBalances = useCallback(() => {
-        axios.get('https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/dashboard/account?type=cash')
+        axios.get('https://insyncapi.azurewebsites.net/api/dashboard/account?type=cash')
             .then(response => {
                 setCashBalance(response.data);
             })
@@ -47,7 +49,7 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/dashboard/account?type=bank')
+        axios.get('https://insyncapi.azurewebsites.net/api/dashboard/account?type=bank')
             .then(response => {
                 setBankBalance(response.data);
             })
@@ -55,7 +57,7 @@ export default function Dashboard() {
                 console.error(error);
             });
 
-        axios.get('https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/dashboard/today_spending')
+        axios.get('https://insyncapi.azurewebsites.net/api/dashboard/today_spending')
             .then(response => {
                 setTodaySpending(response.data);
             })
@@ -66,7 +68,7 @@ export default function Dashboard() {
                     console.error(error);
                 }
             });
-        axios.get('https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/userModel/ForecastNextDay')
+        axios.get('https://insyncapi.azurewebsites.net/api/userModel/ForecastNextDay')
             .then(response=>{
                 setPrediction(response.data.Total);
             })
@@ -135,6 +137,7 @@ export default function Dashboard() {
                     </Center>
                 </ScrollView>
             </View>
+
         </NativeBaseProvider>
     )
 }

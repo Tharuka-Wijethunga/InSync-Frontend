@@ -10,12 +10,13 @@ export const AuthContext=createContext();
 export const AuthProvider=({children})=>{
     const [isLoading,setIsLoading]=useState(false);
     const [accessToken,setAccessToken]=useState(null);
+    const [user, setUser] = useState(null);
 
     const login=async (username,password) => {
         setIsLoading(true);
         try {
             const requestData = qs.stringify({username, password});
-            const response = await axios.post('https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/token', requestData, {
+            const response = await axios.post('https://insyncapi.azurewebsites.net/token', requestData, {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -41,6 +42,17 @@ export const AuthProvider=({children})=>{
         setIsLoading(false);
     }
 
+    // const getUserData = async () => {
+    //     try {
+    //         let response = await axios.get('https://a269-2a09-bac5-4867-18be-00-277-38.ngrok-free.app/me');
+    //         await AsyncStorage.setItem('userID', response.data._id);
+    //         // let x = await asyncStorage.getItem('userID');
+    //         // console.log(x);
+    //     } catch (error) {
+    //         console.error('Error getting user ID:', error);
+    //     }
+    // }
+
     const isLoggedIn=async ()=> {
         try {
             setIsLoading(true);
@@ -61,7 +73,7 @@ export const AuthProvider=({children})=>{
  const refreshAccessToken = async () => {
         try {
             const refreshToken = await AsyncStorage.getItem('refreshToken');
-            const response = await axios.post('https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/refresh-token', {}, {
+            const response = await axios.post('https://insyncapi.azurewebsites.net/refresh-token', {}, {
                 headers: {
                     Authorization: `Bearer ${refreshToken}`
                 }
@@ -106,7 +118,7 @@ export const AuthProvider=({children})=>{
     }
 
     return(
-        <AuthContext.Provider value={{login,logout,refreshAccessToken,isLoading,accessToken}}>
+        <AuthContext.Provider value={{login,logout,refreshAccessToken,isLoading,accessToken,user,setUser}}>
             {children}
         </AuthContext.Provider>
     );

@@ -25,7 +25,7 @@ export default function Profile() {
 
     const fetchUserDetails = async () => {
         try {
-            const response = await axios.get('https://e2f9-2a09-bac1-4300-00-279-78.ngrok-free.app/api/users/fullname_email');
+            const response = await axios.get('https://insyncapi.azurewebsites.net/api/user/fullname_email');
             const userDetails = response.data;
             setFullName(userDetails.fullname);
         } catch (error) {
@@ -41,7 +41,7 @@ export default function Profile() {
 
     const handleDeleteAccount = async () => {
         try {
-            await axios.delete('https://90ea-2a09-bac1-4300-00-279-78.ngrok-free.app/api/users/delete-account');
+            await axios.delete('https://insyncapi.azurewebsites.net/api/user/delete-account');
             logout();
         } catch (error) {
             console.error('Error deleting account:', error);
